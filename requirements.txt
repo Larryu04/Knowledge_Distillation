@@ -1,0 +1,15 @@
+# Use the project venv (Python 3.13) — NOT the msys2 `python` on PATH (3.14, no ML wheels).
+#   .venv\Scripts\python.exe -m pip install -r requirements.txt
+#
+# Install PyTorch first, matched to CUDA (RTX 4070 Super):
+#   .venv\Scripts\python.exe -m pip install torch --index-url https://download.pytorch.org/whl/cu124
+torch==2.6.0                # +cu124 build
+
+# Verified working together on Windows + Python 3.13 (2026-09):
+transformers==5.16.1
+peft==0.20.0
+bitsandbytes==0.50.2        # official Windows wheels
+accelerate==1.14.0
+datasets==5.0.1
+sentencepiece==0.2.2        # DictaLM tokenizer
+numpy==2.5.2
