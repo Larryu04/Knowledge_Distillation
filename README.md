@@ -2,7 +2,7 @@
 
 A research project focused on offline knowledge distillation to train a specialized, resource-efficient language model serving as an academic tutor for undergraduate Computer Science students (B.Sc. in Computer Science).
 
-The tutor provides structured, step-by-step logical explanations followed by concise final answers for core CS domains: **Operating Systems**, **Computer Networking**, and **Cybersecurity**.
+The tutor provides structured, step-by-step logical explanations followed by concise final answers for core CS domains: **Operating Systems**, **Computer Networking**, **Cybersecurity**, **Fundamentals of C++**, **OOP with JAVA**, and **Advanced Programming in Python**.
 
 ---
 
