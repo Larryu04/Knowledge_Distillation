@@ -1,4 +1,5 @@
 .venv/
+.env
 *.pt
 *.bin
 *.safetensors
@@ -6,5 +7,6 @@ student_*/
 __pycache__/
 out/
 .idea/
+archive/
 clean_dataset.py
 merged_training_dataset_V4.json

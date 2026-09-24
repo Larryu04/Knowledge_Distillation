@@ -1,0 +1,142 @@
+[env] device=cuda  torch=2.6.0+cu124  base=dicta-il/dictalm2.0-instruct
+[data] loaded 24 eval rows from hebrew_cs_eval_dataset_24.json
+[data] domain distribution (keyword-mapped):
+        Computer Networks    5
+        Cybersecurity        3
+        Operating Systems    4
+        C++                  4
+        Java                 4
+        Python               4
+
+##########################################################################################
+# BASE MODEL
+##########################################################################################
+Loading weights:   0%|          | 0/291 [00:00<?, ?it/s]Loading weights:   1%|          | 2/291 [00:00<00:55,  5.20it/s]Loading weights:   1%|▏         | 4/291 [00:00<00:37,  7.57it/s]Loading weights:   2%|▏         | 5/291 [00:00<00:38,  7.52it/s]Loading weights:   2%|▏         | 6/291 [00:00<00:37,  7.51it/s]Loading weights:   4%|▍         | 11/291 [00:00<00:15, 17.71it/s]Loading weights:   5%|▍         | 14/291 [00:01<00:18, 14.82it/s]Loading weights:   5%|▌         | 16/291 [00:01<00:18, 14.91it/s]Loading weights:   8%|▊         | 22/291 [00:01<00:13, 19.24it/s]Loading weights:   9%|▊         | 25/291 [00:01<00:16, 15.98it/s]Loading weights:  11%|█         | 31/291 [00:02<00:13, 19.41it/s]Loading weights:  12%|█▏        | 34/291 [00:02<00:15, 16.52it/s]Loading weights:  14%|█▎        | 40/291 [00:02<00:12, 19.49it/s]Loading weights:  15%|█▍        | 43/291 [00:02<00:14, 16.89it/s]Loading weights:  17%|█▋        | 49/291 [00:03<00:12, 19.55it/s]Loading weights:  18%|█▊        | 52/291 [00:03<00:14, 16.98it/s]Loading weights:  20%|█▉        | 58/291 [00:03<00:11, 19.82it/s]Loading weights:  21%|██        | 61/291 [00:03<00:13, 16.97it/s]Loading weights:  22%|██▏       | 65/291 [00:03<00:11, 20.12it/s]Loading weights:  23%|██▎       | 68/291 [00:04<00:13, 16.91it/s]Loading weights:  24%|██▍       | 70/291 [00:04<00:13, 16.54it/s]Loading weights:  26%|██▌       | 76/291 [00:04<00:10, 20.02it/s]Loading weights:  27%|██▋       | 79/291 [00:04<00:12, 16.96it/s]Loading weights:  29%|██▉       | 85/291 [00:05<00:10, 19.94it/s]Loading weights:  30%|███       | 88/291 [00:05<00:12, 16.72it/s]Loading weights:  32%|███▏      | 94/291 [00:05<00:10, 19.33it/s]Loading weights:  33%|███▎      | 97/291 [00:05<00:11, 16.71it/s]Loading weights:  35%|███▌      | 103/291 [00:06<00:09, 19.23it/s]Loading weights:  36%|███▌      | 105/291 [00:06<00:12, 15.15it/s]Loading weights:  38%|███▊      | 110/291 [00:06<00:09, 20.07it/s]Loading weights:  39%|███▉      | 113/291 [00:06<00:10, 16.73it/s]Loading weights:  40%|███▉      | 116/291 [00:06<00:10, 17.39it/s]Loading weights:  42%|████▏     | 121/291 [00:07<00:08, 18.89it/s]Loading weights:  43%|████▎     | 124/291 [00:07<00:10, 15.98it/s]Loading weights:  44%|████▍     | 128/291 [00:07<00:08, 19.60it/s]Loading weights:  45%|████▌     | 131/291 [00:07<00:09, 16.25it/s]Loading weights:  46%|████▌     | 134/291 [00:07<00:09, 16.96it/s]Loading weights:  48%|████▊     | 139/291 [00:08<00:08, 18.41it/s]Loading weights:  49%|████▉     | 142/291 [00:08<00:09, 15.53it/s]Loading weights:  50%|█████     | 146/291 [00:08<00:07, 19.20it/s]Loading weights:  51%|█████     | 149/291 [00:08<00:08, 16.07it/s]Loading weights:  52%|█████▏    | 151/291 [00:08<00:08, 15.84it/s]Loading weights:  53%|█████▎    | 155/291 [00:09<00:06, 20.14it/s]Loading weights:  54%|█████▍    | 158/291 [00:09<00:08, 15.88it/s]Loading weights:  55%|█████▌    | 161/291 [00:09<00:07, 16.65it/s]Loading weights:  57%|█████▋    | 166/291 [00:09<00:06, 18.17it/s]Loading weights:  58%|█████▊    | 169/291 [00:09<00:07, 15.27it/s]Loading weights:  59%|█████▉    | 173/291 [00:10<00:06, 18.98it/s]Loading weights:  60%|██████    | 176/291 [00:10<00:07, 15.36it/s]Loading weights:  61%|██████    | 178/291 [00:10<00:07, 14.91it/s]Loading weights:  63%|██████▎   | 182/291 [00:10<00:05, 19.16it/s]Loading weights:  64%|██████▎   | 185/291 [00:10<00:06, 15.43it/s]Loading weights:  64%|██████▍   | 187/291 [00:11<00:06, 15.06it/s]Loading weights:  66%|██████▌   | 191/291 [00:11<00:05, 19.31it/s]Loading weights:  67%|██████▋   | 194/291 [00:11<00:06, 15.41it/s]Loading weights:  67%|██████▋   | 196/291 [00:11<00:06, 14.94it/s]Loading weights:  68%|██████▊   | 199/291 [00:11<00:05, 17.70it/s]Loading weights:  69%|██████▉   | 202/291 [00:11<00:04, 17.94it/s]Loading weights:  70%|███████   | 205/291 [00:12<00:05, 14.80it/s]Loading weights:  72%|███████▏  | 209/291 [00:12<00:04, 19.19it/s]Loading weights:  73%|███████▎  | 212/291 [00:12<00:05, 15.79it/s]Loading weights:  74%|███████▍  | 215/291 [00:12<00:04, 16.68it/s]Loading weights:  76%|███████▌  | 220/291 [00:12<00:03, 18.32it/s]Loading weights:  77%|███████▋  | 223/291 [00:13<00:04, 15.27it/s]Loading weights:  78%|███████▊  | 227/291 [00:13<00:03, 19.02it/s]Loading weights:  79%|███████▉  | 230/291 [00:13<00:03, 15.64it/s]Loading weights:  80%|███████▉  | 232/291 [00:13<00:03, 15.23it/s]Loading weights:  81%|████████  | 236/291 [00:13<00:02, 19.41it/s]Loading weights:  82%|████████▏ | 239/291 [00:14<00:03, 15.56it/s]Loading weights:  83%|████████▎ | 241/291 [00:14<00:03, 15.15it/s]Loading weights:  84%|████████▍ | 245/291 [00:14<00:02, 19.44it/s]Loading weights:  85%|████████▌ | 248/291 [00:14<00:02, 15.50it/s]Loading weights:  86%|████████▌ | 250/291 [00:14<00:02, 15.09it/s]Loading weights:  87%|████████▋ | 254/291 [00:14<00:01, 19.60it/s]Loading weights:  88%|████████▊ | 257/291 [00:15<00:02, 15.59it/s]Loading weights:  89%|████████▉ | 259/291 [00:15<00:02, 15.09it/s]Loading weights:  90%|█████████ | 263/291 [00:15<00:01, 19.74it/s]Loading weights:  91%|█████████▏| 266/291 [00:15<00:01, 15.59it/s]Loading weights:  92%|█████████▏| 269/291 [00:15<00:01, 16.46it/s]Loading weights:  94%|█████████▍| 274/291 [00:16<00:00, 17.99it/s]Loading weights:  95%|█████████▌| 277/291 [00:16<00:00, 15.04it/s]Loading weights:  97%|█████████▋| 281/291 [00:16<00:00, 18.75it/s]Loading weights:  98%|█████████▊| 284/291 [00:16<00:00, 15.09it/s]Loading weights:  98%|█████████▊| 286/291 [00:17<00:00, 14.67it/s]Loading weights: 100%|█████████▉| 290/291 [00:17<00:00, 18.89it/s]Loading weights: 100%|██████████| 291/291 [00:17<00:00, 16.95it/s]
+[loss:base] Q01 (Computer Networks) loss=0.7031  target_tokens=321
+[loss:base] Q02 (Computer Networks) loss=1.1721  target_tokens=243
+[loss:base] Q03 (Computer Networks) loss=0.7779  target_tokens=259
+[loss:base] Q04 (Computer Networks) loss=1.1133  target_tokens=253
+[loss:base] Q05 (Computer Networks) loss=0.9890  target_tokens=287
+[loss:base] Q06 (Cybersecurity    ) loss=0.7383  target_tokens=367
+[loss:base] Q07 (Cybersecurity    ) loss=1.2376  target_tokens=319
+[loss:base] Q08 (Cybersecurity    ) loss=0.9076  target_tokens=313
+[loss:base] Q09 (Operating Systems) loss=0.9092  target_tokens=364
+[loss:base] Q10 (Operating Systems) loss=0.8029  target_tokens=299
+[loss:base] Q11 (Operating Systems) loss=1.1418  target_tokens=341
+[loss:base] Q12 (Operating Systems) loss=0.9125  target_tokens=409
+[loss:base] Q13 (C++              ) loss=1.2413  target_tokens=308
+[loss:base] Q14 (C++              ) loss=1.1203  target_tokens=399
+[loss:base] Q15 (C++              ) loss=1.1510  target_tokens=430
+[loss:base] Q16 (C++              ) loss=1.1084  target_tokens=432
+[loss:base] Q17 (Java             ) loss=1.2508  target_tokens=352
+[loss:base] Q18 (Java             ) loss=1.4384  target_tokens=355
+[loss:base] Q19 (Java             ) loss=1.2250  target_tokens=411
+[loss:base] Q20 (Java             ) loss=1.1899  target_tokens=393
+[loss:base] Q21 (Python           ) loss=1.0907  target_tokens=435
+[loss:base] Q22 (Python           ) loss=1.1421  target_tokens=478
+[loss:base] Q23 (Python           ) loss=1.2253  target_tokens=441
+[loss:base] Q24 (Python           ) loss=1.1452  target_tokens=431
+[gen:base] Q01  ההבדלים העיקריים בין מודלי התקשורת OSI (Open Systems Interconnection) ו-TCP/ IP (Transmiss...
+[gen:base] Q02  תהליך Three-way handshake הוא פרוטוקול תקשורת המשמש ליצירת חיבור יציב ואמין בין שני מכשירי...
+[gen:base] Q03  ראשית, בואו נבין את המשמעות של כתובות IP ברשתות: הן בנויות ממספר חלקים - רשת (Network), תת...
+[gen:base] Q04  פרוטוקול Address Resolution Protocol (ARP) ממלא תפקיד חיוני בהמרת כתובות IP לכתובות MAC בר...
+[gen:base] Q05  רשת פרטית וירטואלית (VPN) מבטיחה סודיות של תעבורת משתמשים על ידי הצפנת הנתונים לפני שליחתם...
+[gen:base] Q06  הצפנה סימטריים והצפנה ציבורית-מפתח (אסימטריות) הן שתי שיטות קריפטוגרפיות נפרדות המשמשות לא...
+[gen:base] Q07  התקפת הזרקת SQL (SQL injection) היא שיטת פריצה נפוצה שבה האקר מנצל פרצת אבטחה באתר אינטרנט...
+[gen:base] Q08  עקרונות CIA הם ראשי תיבות של שלושה מושגים קריטיים לאבטחת מידעי: Confidentiality (סודיות), ...
+[gen:base] Q09  תהליך הוא יישום או משימה שרצה על המחשב, ויכול להשתמש במשאבי המערכת כמו זיכרון, עיבוד וכו'....
+[gen:base] Q10  ארבעת התכונות של מצב דדלוק הן:  1. כל תהליך מחזיק לפחות משאב אחד. 2. אף תהליך לא יכול להמש...
+[gen:base] Q11  מעבר הקשר הוא תהליך שבו המעבד עובר מביצוע משימה אחת לביצוע אחרת. זה קורה כאשר יש צורך להחל...
+[gen:base] Q12  ניהול זיכרום באמצעות פאג'ינג (Paging), הידוע גם בשם "וירטואליזציה של זיכורון", הוא שיטה שב...
+[gen:base] Q13  מצביע הוא משתנה שמכיל כתובת של משתנה אחר, ואילו ייחוס הוא קיצור דרך למשתנה עצמו. ישנם מספר...
+[gen:base] Q14  פונקציונליות וירטאולית (virtual functions) היא מנגנון המאפשר לקרוא לפונקציה שונה בהתאם לסו...
+[gen:base] Q15  זליגת פונקציה היא מצב שבו משאב כמו זיכרך או תהליכון לא מוחזר למערכת לאחר השימוש בו. זה יכו...
+[gen:base] Q16  עיקרון Rustic Acquisition is Initialization (RAII) ב-++C נועד לנהל אובייקטים המכילים משאבי...
+[gen:base] Q17  מכונת Java וירטואלי (JVM) היא שכבת ביניים בין יישומים בשפת Java לבין המערכת המארחת. היא מס...
+[gen:base] Q18  ממשקים (Interfaces) ומחלקות מופשטות (abstract classes) הם שניהם מושגים חשובים בתכנות מונחה...
+[gen:base] Q19  איסוף אשפה (Garcage Collection) הוא מנגנון ניהול זיכרון ב-Java המאפשר למפתחים להתמקד בפיתו...
+[gen:base] Q20  מחלקת String בשפת Java היא בלתי משתנה מכיוון שהיא מייצגת רצף של תווים שאינו יכול להשתנות ל...
+[gen:base] Q21  טיפוסים ניתנים לשינוי (Mutable Types) מאפשרים שינויים בנתוני המשתנה לאחר הקצאתו, כמו עדכון...
+[gen:base] Q22  ה-GIL או Global Interpreter Lock הוא מנגנון נעילת קריאה-כתיבה בשפת Python, המאפשר רק תהליך...
+[gen:base] Q23  Decorators הם מנגנון בשפת Python המאפשר להוסיף התניות או שינויים להתנהגות של פונקציות קיימ...
+[gen:base] Q24  גנרטורים (Generators) בפייתונית הם מבנים המאפשרים יצירת איטרציות (סדרות) של נתונים בצורה י...
+[mem] base model released
+[mem] cuda allocated=0.01 GB
+
+##########################################################################################
+# FINE-TUNED MODEL (base + QLoRA adapter)
+##########################################################################################
+Loading weights:   0%|          | 0/291 [00:00<?, ?it/s]Loading weights:   1%|          | 2/291 [00:00<01:15,  3.85it/s]Loading weights:   1%|▏         | 4/291 [00:00<00:45,  6.33it/s]Loading weights:   2%|▏         | 5/291 [00:00<00:45,  6.24it/s]Loading weights:   2%|▏         | 6/291 [00:01<00:44,  6.39it/s]Loading weights:   4%|▍         | 11/291 [00:01<00:17, 15.56it/s]Loading weights:   5%|▍         | 14/291 [00:01<00:20, 13.70it/s]Loading weights:   5%|▌         | 16/291 [00:01<00:19, 14.05it/s]Loading weights:   8%|▊         | 22/291 [00:01<00:14, 18.52it/s]Loading weights:   9%|▊         | 25/291 [00:02<00:17, 15.64it/s]Loading weights:  11%|█         | 31/291 [00:02<00:13, 19.14it/s]Loading weights:  12%|█▏        | 34/291 [00:02<00:15, 16.40it/s]Loading weights:  14%|█▎        | 40/291 [00:02<00:12, 19.40it/s]Loading weights:  15%|█▍        | 43/291 [00:02<00:14, 16.85it/s]Loading weights:  17%|█▋        | 49/291 [00:03<00:12, 19.54it/s]Loading weights:  18%|█▊        | 52/291 [00:03<00:14, 16.88it/s]Loading weights:  20%|█▉        | 58/291 [00:03<00:11, 19.58it/s]Loading weights:  21%|██        | 61/291 [00:03<00:13, 16.81it/s]Loading weights:  23%|██▎       | 67/291 [00:04<00:11, 19.38it/s]Loading weights:  24%|██▎       | 69/291 [00:04<00:14, 15.41it/s]Loading weights:  26%|██▌       | 76/291 [00:04<00:10, 19.60it/s]Loading weights:  27%|██▋       | 79/291 [00:04<00:12, 16.85it/s]Loading weights:  29%|██▉       | 85/291 [00:05<00:10, 19.36it/s]Loading weights:  30%|███       | 88/291 [00:05<00:12, 16.39it/s]Loading weights:  32%|███▏      | 92/291 [00:05<00:10, 19.67it/s]Loading weights:  33%|███▎      | 95/291 [00:05<00:12, 15.95it/s]Loading weights:  33%|███▎      | 97/291 [00:06<00:13, 14.79it/s]Loading weights:  35%|███▍      | 101/291 [00:06<00:10, 18.87it/s]Loading weights:  36%|███▌      | 104/291 [00:06<00:12, 15.09it/s]Loading weights:  36%|███▋      | 106/291 [00:06<00:12, 14.62it/s]Loading weights:  38%|███▊      | 110/291 [00:06<00:09, 18.80it/s]Loading weights:  39%|███▉      | 113/291 [00:07<00:11, 15.21it/s]Loading weights:  40%|███▉      | 115/291 [00:07<00:11, 14.80it/s]Loading weights:  41%|████      | 118/291 [00:07<00:09, 17.56it/s]Loading weights:  42%|████▏     | 121/291 [00:07<00:09, 17.94it/s]Loading weights:  43%|████▎     | 124/291 [00:07<00:11, 14.46it/s]Loading weights:  44%|████▍     | 128/291 [00:07<00:08, 18.52it/s]Loading weights:  45%|████▌     | 131/291 [00:08<00:10, 15.02it/s]Loading weights:  46%|████▌     | 133/291 [00:08<00:10, 14.58it/s]Loading weights:  47%|████▋     | 137/291 [00:08<00:08, 18.83it/s]Loading weights:  48%|████▊     | 140/291 [00:08<00:09, 15.25it/s]Loading weights:  49%|████▉     | 142/291 [00:08<00:10, 14.82it/s]Loading weights:  50%|█████     | 146/291 [00:08<00:07, 19.15it/s]Loading weights:  51%|█████     | 149/291 [00:09<00:09, 15.39it/s]Loading weights:  52%|█████▏    | 151/291 [00:09<00:09, 14.95it/s]Loading weights:  53%|█████▎    | 155/291 [00:09<00:07, 19.36it/s]Loading weights:  54%|█████▍    | 158/291 [00:09<00:08, 15.35it/s]Loading weights:  55%|█████▍    | 160/291 [00:09<00:08, 14.82it/s]Loading weights:  56%|█████▌    | 163/291 [00:10<00:07, 17.64it/s]Loading weights:  57%|█████▋    | 166/291 [00:10<00:06, 18.13it/s]Loading weights:  58%|█████▊    | 169/291 [00:10<00:08, 14.54it/s]Loading weights:  59%|█████▉    | 173/291 [00:10<00:06, 18.73it/s]Loading weights:  60%|██████    | 176/291 [00:10<00:07, 15.10it/s]Loading weights:  61%|██████    | 178/291 [00:11<00:07, 14.75it/s]Loading weights:  63%|██████▎   | 182/291 [00:11<00:05, 19.28it/s]Loading weights:  64%|██████▎   | 185/291 [00:11<00:06, 15.56it/s]Loading weights:  64%|██████▍   | 187/291 [00:11<00:07, 14.51it/s]Loading weights:  66%|██████▌   | 191/291 [00:11<00:05, 18.92it/s]Loading weights:  67%|██████▋   | 194/291 [00:12<00:06, 15.30it/s]Loading weights:  67%|██████▋   | 196/291 [00:12<00:06, 14.91it/s]Loading weights:  69%|██████▊   | 200/291 [00:12<00:04, 19.46it/s]Loading weights:  70%|██████▉   | 203/291 [00:12<00:05, 15.55it/s]Loading weights:  70%|███████   | 205/291 [00:12<00:05, 15.26it/s]Loading weights:  72%|███████▏  | 209/291 [00:12<00:04, 19.74it/s]Loading weights:  73%|███████▎  | 212/291 [00:13<00:05, 15.40it/s]Loading weights:  74%|███████▎  | 214/291 [00:13<00:05, 15.03it/s]Loading weights:  75%|███████▍  | 218/291 [00:13<00:03, 19.54it/s]Loading weights:  76%|███████▌  | 221/291 [00:13<00:04, 15.73it/s]Loading weights:  77%|███████▋  | 223/291 [00:13<00:04, 15.15it/s]Loading weights:  78%|███████▊  | 227/291 [00:13<00:03, 19.73it/s]Loading weights:  79%|███████▉  | 230/291 [00:14<00:03, 15.73it/s]Loading weights:  80%|████████  | 233/291 [00:14<00:03, 16.54it/s]Loading weights:  82%|████████▏ | 238/291 [00:14<00:02, 18.20it/s]Loading weights:  83%|████████▎ | 241/291 [00:14<00:03, 15.37it/s]Loading weights:  84%|████████▍ | 245/291 [00:14<00:02, 19.07it/s]Loading weights:  85%|████████▌ | 248/291 [00:15<00:02, 15.69it/s]Loading weights:  86%|████████▌ | 250/291 [00:15<00:02, 15.18it/s]Loading weights:  87%|████████▋ | 254/291 [00:15<00:01, 19.44it/s]Loading weights:  88%|████████▊ | 257/291 [00:15<00:02, 14.67it/s]Loading weights:  89%|████████▉ | 259/291 [00:16<00:02, 13.85it/s]Loading weights:  90%|█████████ | 263/291 [00:16<00:01, 18.31it/s]Loading weights:  91%|█████████▏| 266/291 [00:16<00:01, 15.04it/s]Loading weights:  92%|█████████▏| 268/291 [00:16<00:01, 14.73it/s]Loading weights:  93%|█████████▎| 272/291 [00:16<00:00, 19.17it/s]Loading weights:  95%|█████████▍| 275/291 [00:16<00:01, 15.36it/s]Loading weights:  95%|█████████▌| 277/291 [00:17<00:00, 14.44it/s]Loading weights:  96%|█████████▌| 280/291 [00:17<00:00, 16.66it/s]Loading weights:  97%|█████████▋| 283/291 [00:17<00:00, 16.05it/s]Loading weights:  98%|█████████▊| 285/291 [00:17<00:00, 11.38it/s]Loading weights: 100%|█████████▉| 290/291 [00:17<00:00, 17.23it/s]Loading weights: 100%|██████████| 291/291 [00:17<00:00, 16.26it/s]
+[loss:ft] Q01 (Computer Networks) loss=0.6815  target_tokens=321
+[loss:ft] Q02 (Computer Networks) loss=1.0719  target_tokens=243
+[loss:ft] Q03 (Computer Networks) loss=0.8998  target_tokens=259
+[loss:ft] Q04 (Computer Networks) loss=0.9690  target_tokens=253
+[loss:ft] Q05 (Computer Networks) loss=0.9330  target_tokens=287
+[loss:ft] Q06 (Cybersecurity    ) loss=0.7787  target_tokens=367
+[loss:ft] Q07 (Cybersecurity    ) loss=1.3516  target_tokens=319
+[loss:ft] Q08 (Cybersecurity    ) loss=0.9389  target_tokens=313
+[loss:ft] Q09 (Operating Systems) loss=0.9632  target_tokens=364
+[loss:ft] Q10 (Operating Systems) loss=0.8341  target_tokens=299
+[loss:ft] Q11 (Operating Systems) loss=1.1877  target_tokens=341
+[loss:ft] Q12 (Operating Systems) loss=1.0119  target_tokens=409
+[loss:ft] Q13 (C++              ) loss=1.2658  target_tokens=308
+[loss:ft] Q14 (C++              ) loss=1.1557  target_tokens=399
+[loss:ft] Q15 (C++              ) loss=1.2305  target_tokens=430
+[loss:ft] Q16 (C++              ) loss=1.2516  target_tokens=432
+[loss:ft] Q17 (Java             ) loss=1.2898  target_tokens=352
+[loss:ft] Q18 (Java             ) loss=1.5374  target_tokens=355
+[loss:ft] Q19 (Java             ) loss=1.3088  target_tokens=411
+[loss:ft] Q20 (Java             ) loss=1.2763  target_tokens=393
+[loss:ft] Q21 (Python           ) loss=1.2129  target_tokens=435
+[loss:ft] Q22 (Python           ) loss=1.2138  target_tokens=478
+[loss:ft] Q23 (Python           ) loss=1.3590  target_tokens=441
+[loss:ft] Q24 (Python           ) loss=1.2602  target_tokens=431
+[gen:ft] Q01  1. מודל ה-OIS הוא תיאורטי ומתייחס לכל היבטי התקשורת (חומרה, פרוטוקולים וכו'). 2. מודלי ה-T...
+[gen:ft] Q02  1. הקשר בין שני צדדים אינו נוצר מיד עם שליחת מנת SYN ראשונה. 2. כדי למנוע מצב של התחלת שיד...
+[gen:ft] Q03  1. ביטי מארח: $32-26 = 6$. 2. $2^6 - 2 = 64$ מארחים (מספר זוגי). 3. לכן יש 63 מארחים בכל ר...
+[gen:ft] Q04  1. ARP (Address Resolution Protocol) משמש לגישור בין כתובות IP פיזיות (MAC). 2. כאשר מנה י...
+[gen:ft] Q05  1. הצפנת הנתונים מקשה על האקרים להבין את תוכן התקשורת. 2. שימוש בפרוטוקולים מאובטחים כמו I...
+[gen:ft] Q06  1. בהצפנה סימטרי יש צורך בשיתוף מפתח בין המשדר למקלט, מה שמגביר את הסיכון אם הוא נחשף. 2. ...
+[gen:ft] Q07  1. SQL Injection היא טכניקת התקפה שמטרתה לחדור למסדי נתונים על ידי הזרקת פקודות SQL זדוניו...
+[gen:ft] Q08  1. Confidentiality (סודיות) - מניעת חשיפת מידע רגיש לאנשים שאינם מורשים. 2. Integrity (שלמ...
+[gen:ft] Q09  1. Process הוא ישות שמכילה את כל המידע על התהליך, כולל זיכרון משלו. Thread הוא חלק מתוך Pr...
+[gen:ft] Q10  1. ארבעת הכללים הם: החזקה ומשותף; אי-פריעה; הקצאה והחזקה; התקדמות. 2. אם אחד מהתנאים הללו ...
+[gen:ft] Q11  1. Context Switch מתייחס להחלפת תהליך אחד בתהליך אחר על ידי המערכת. 2. התהליך כולל שמירת מ...
+[gen:ft] Q12  1. Paging מתייחס לחלוקת הזיכרונות לדפים בגודל קבוע, בעוד Segmentation מתייחסת לחלוקה לפי ק...
+[gen:ft] Q13  1. Pointer הוא משתנה שמכיל כתובת של ערך בזיכרון, בעוד Reference מתייחס לאובייקט ישירות. 2....
+[gen:ft] Q14  1. Virtual functions מאפשרות לאובייקטים להחליט על התגובה שלהם בזמן הריצה בהתאם לסוג המשתנה...
+[gen:ft] Q15  1. Zliagth היא מצב שבו אובייקטים שהוקצו ב-Heap לא משוחררים על ידי המשתמש לפני שהם יוצאים מ...
+[gen:ft] Q16  1. RAII מאפשר ניהול אוטומטי של משאבים על ידי הקצאתם בזמן ההגדרה ושחרורם עם יציאה מהסקופ. 2...
+[gen:ft] Q17  1. JVM היא שכבת תוכנה המגשרת בין קוד Java לבין המעבד. 2. Bytecode הוא אוניברסלי ונגיש לכל ...
+[gen:ft] Q18  1. ממשקים מגדירים סט של מתודות ללא מימוש, בעוד מחלקות מופשטות יכולות להכיל מימוש חלקי. 2. ...
+[gen:ft] Q19  1. Garbage Collector משחרר זיכרון לא בשימוש על ידי זיהוי אובייקטי שאינם נגישים יותר. 2. הו...
+[gen:ft] Q20  1. Immutability מבטיחה שהמידע לא ישתנה לאחר יצירת האובייקט, מה שמסייע בשמירה על יציבות הנת...
+[gen:ft] Q21  1. Mutable types כמו lists יכולים לשנות את תוכנם לאחר יצירתם, בעוד Immutable types כמו tup...
+[gen:ft] Q22  1. GIL הוא מנגנון ניהול סנכרוניזציה שמטרתו למנוע התנגשויות בין תהליכים שונים בזמן ריצה של ...
+[gen:ft] Q23  1. Decorators מאפשרים להוסיף לוגיקה נוספת לפני או אחרי קריאה לפונקציות. 2. הם מספקים דרך נ...
+[gen:ft] Q24  1. Generators מאפשרים לייצר איברים ברשימות בזמן ריצה מבלי להקצות זיכרונות מראש. 2. שימוש ב...
+[mem] fine-tuned model released
+[csv] wrote blind_evaluation.csv  (blind, for human grading)
+[csv] wrote answer_key.csv  (secret answer key — open only after grading)
+
+========================================================================================
+  CATEGORICAL MASKED TEACHER-FORCING LOSS  (loss over target only)
+========================================================================================
+Domain                 N    Base Loss      FT Loss   Delta (B-F)    Base PPL      FT PPL
+----------------------------------------------------------------------------------------
+Computer Networks      5       0.9511       0.9111       +0.0400        2.59        2.49
+Cybersecurity          3       0.9612       1.0231       -0.0619        2.61        2.78
+Operating Systems      4       0.9416       0.9993       -0.0577        2.56        2.72
+C++                    4       1.1552       1.2259       -0.0707        3.17        3.41
+Java                   4       1.2760       1.3531       -0.0771        3.58        3.87
+Python                 4       1.1508       1.2615       -0.1107        3.16        3.53
+----------------------------------------------------------------------------------------
+OVERALL (all 24)      24       1.0722       1.1243       -0.0521        2.92        3.08
+========================================================================================
+
+Delta > 0  => fine-tuned model assigns higher likelihood to the gold target (better).
+
+[csv] wrote loss_results.csv
+[json] wrote eval_raw_results.json
+
+[done]
