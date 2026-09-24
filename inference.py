@@ -21,7 +21,7 @@ ADAPTER_DIR = "out/dictalm2-tutor-qlora-v4/adapter"
 
 # MUST match train.py exactly.
 PREAMBLE = (
-    "אתה מתרגל אקדמי מומחה בתחומי רשתות מחשבים, אבטחת סייבר ומערכות הפעלה. "
+    "אתה מתרגל אקדמי מומחה בתחומי רשתות מחשבים, אבטחת סייבר, מערכות הפעלה, ושפות תכנות C++, Java וPython. "
     "ענה בעברית בלבד. תחילה הסבר את ההיגיון שלב אחר שלב, ולאחר מכן כתוב שורה "
     "שמתחילה ב'תשובה סופית:' ובה תשובה קצרה ותמציתית."
 )
@@ -90,7 +90,8 @@ def answer(model, tok, question: str) -> str:
         **GEN_KWARGS,
     )
     return tok.decode(out[0][enc["input_ids"].shape[1]:], skip_special_tokens=True).strip()
-
+    # generated_text = tok.decode(out[0][enc["input_ids"].shape[1]:], skip_special_tokens=True).strip()
+    # return f"שלב אחר שלב:\n{generated_text}"
 
 def main():
     ap = argparse.ArgumentParser()
@@ -104,6 +105,7 @@ def main():
         return
 
     if args.question:
+        #print(f"\nשאלה: {args.question}\n")
         print(answer(model, tok, args.question))
         return
 
@@ -116,6 +118,7 @@ def main():
             break
         if not q:
             break
+        #print(f"\nשאלה: {q}")
         print("\n" + answer(model, tok, q) + "\n" + "-" * 60)
 
 
