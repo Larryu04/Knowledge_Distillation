@@ -21,6 +21,7 @@ import json
 import os
 import random
 import re
+import sys
 import zipfile
 from collections import Counter
 
@@ -46,15 +47,24 @@ from transformers import (
 # Config
 # --------------------------------------------------------------------------------------
 MODEL_ID = "dicta-il/dictalm2.0-instruct"
-DATA_PATH = "merged_6_courses_new.json"   # schema: course_name/domain/instruction/rationale/output
-OUTPUT_DIR = "out/dictalm2-tutor-qlora-v6"   # v6: trains on merged_6_courses_new.json, domain read
-                                              # straight from the JSON (no keyword classifier)
+DATA_PATH = "merged_12_courses.json"   # schema: course_name/domain/instruction/rationale/output.
+                                        # Expanded 2026-09-27 from merged_6_courses_new.json (6
+                                        # courses, 7,200 rows) to 12 courses / 14,400 rows -- see
+                                        # project_memory.md. Nothing below reads a hardcoded course
+                                        # list; by_domain/domain_weights/macro_domain_loss are all
+                                        # built dynamically from each row's "domain" key, so the new
+                                        # domains flow through the stratified split, oversampler and
+                                        # early-stopping metric automatically.
+OUTPUT_DIR = "out/dictalm2-tutor-qlora-v7"   # v7: 12 courses (merged_12_courses.json). MUST differ
+                                              # from v6's dir -- RESUME_FROM_LAST would otherwise pick
+                                              # up v6's finished checkpoint-856 (same micro-batch 2)
 
 SEED = 42
-MAX_SEQ_LEN = 832           # merged_6_courses_new real token max = 822 (p50 565, p99 707), so nothing
-                            # is dropped. Bounds the worst-case micro-batch at PER_DEVICE_BATCH x 832
-                            # tokens. Don't go lower: 640 would drop ~5% of rows, the long
-                            # rich-rationale ones that match the eval style.
+MAX_SEQ_LEN = 872           # merged_12_courses real token max = 866 (p50 610, p99 742), so nothing
+                            # is dropped (832 dropped 7 rows). Bounds the worst-case micro-batch at
+                            # PER_DEVICE_BATCH x 872 tokens (~6.5 GB, well under the VRAM cap; the
+                            # preflight verifies it). Don't go lower: 640 would drop the long
+                            # rich-rationale rows that match the eval style.
 VAL_FRACTION = 0.05
 MIN_VAL_PER_DOMAIN = 20     # floor so a small eval slice (e.g. Cybersecurity) doesn't make
                             # its per-domain loss -- and therefore early stopping -- noisy
@@ -62,7 +72,8 @@ MIN_VAL_PER_DOMAIN = 20     # floor so a small eval slice (e.g. Cybersecurity) d
 # Hebrew tutor preamble — prepended to every user turn, IDENTICALLY in train.py and
 # inference.py. It conditions the model into the "explain then conclude" behaviour.
 PREAMBLE = (
-    "אתה מתרגל אקדמי מומחה בתחומי רשתות מחשבים, אבטחת סייבר, מערכות הפעלה, ושפות תכנות C++, Java וPython. "
+    "אתה מתרגל אקדמי מומחה בתחומי רשתות מחשבים, אבטחת סייבר, מערכות הפעלה, שפות תכנות C++, Java וPython, "
+    "מבני נתונים, אלגוריתמים, ארגון המחשב, בסיסי נתונים, אוטומטים ושפות פורמליות, ושיטות בפיתוח תוכנה. "
     "ענה בעברית בלבד. תחילה הסבר את ההיגיון שלב אחר שלב, ולאחר מכן כתוב שורה "
     "שמתחילה ב'תשובה סופית:' ובה תשובה קצרה ותמציתית."
 )
@@ -461,6 +472,9 @@ def make_compute_metrics(val_domains):
 # Train
 # --------------------------------------------------------------------------------------
 def main():
+    # Hebrew prints crash with UnicodeEncodeError when stdout is redirected to a log file on
+    # Windows (falls back to cp1252).
+    sys.stdout.reconfigure(encoding="utf-8")
     configure_cuda_safety()
     seed_everything(SEED)
     os.makedirs(OUTPUT_DIR, exist_ok=True)
@@ -468,6 +482,11 @@ def main():
     tok = build_tokenizer()
     train_ds, val_ds, train_domains, val_domains = load_dataset(tok)
     domain_weights = build_domain_sample_weights(train_domains)
+    # merged_12_courses is exactly balanced (1200/domain) -> all weights 1.0. Sampling with
+    # replacement then only adds noise (~37% of rows unseen per epoch), so use a plain shuffle.
+    use_weighted_sampler = not torch.all(domain_weights == domain_weights[0]).item()
+    if not use_weighted_sampler:
+        print("[sampler] domains balanced -> plain shuffled sampler (no oversampling)")
     model = build_model()
 
     # PAD the model config too (used by generate / some internals).
@@ -539,7 +558,7 @@ def main():
         processing_class=tok,        # transformers 5.x: replaces the old `tokenizer=` arg
         compute_metrics=make_compute_metrics(val_domains),
         preprocess_logits_for_metrics=preprocess_logits_for_metrics,
-        domain_sample_weights=domain_weights,
+        domain_sample_weights=domain_weights if use_weighted_sampler else None,
         # patience raised 3 -> 5: macro_domain_loss is a noisier composite metric (6
         # domain means, some off eval slices as small as MIN_VAL_PER_DOMAIN=20 rows) than
         # a single pooled eval_loss, and the v4-balanced run tripped patience=3 on what

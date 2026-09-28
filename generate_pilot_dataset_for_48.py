@@ -47,10 +47,10 @@ from openai import OpenAI
 # Config
 # ------------------------------------------------------------------------------------------
 GOLD_PATH = "hebrew_cs_eval_dataset_24.json"
-DEFAULT_OUTPUT = "hebrew_cs_pilot_dataset_24.json"
+DEFAULT_OUTPUT = "hebrew_cs_pilot_dataset_48.json"
 MODEL = "gpt-4o-mini"
 N_PER_DOMAIN = 4
-MAX_RETRIES = 3
+MAX_RETRIES = 6
 SLEEP_BETWEEN_CALLS = 1.0  # seconds, be gentle on rate limits
 
 # ------------------------------------------------------------------------------------------
@@ -67,59 +67,143 @@ DOMAIN_TOPICS = {
     "Computer Networks": {
         "course_name": "מבוא לתקשורת נתונים",
         "topics": [
-            "השוו בין מודל השכבות OSI למודל TCP/IP וכיצד ממופות השכבות זו לזו",
-            "השוו בין תווכי תקשורת בשכבה הפיזית - נחושת, אלחוטי ואופטי - יתרונות וחסרונות של כל אחד",
-            "מהו ההבדל בין ניתוב מבוסס וקטור-מרחק (Distance-Vector) לניתוב מבוסס מצב-קישור (Link-State) בשכבת הרשת",
-            "מהם ההבדלים העיקריים בין פרוטוקול TCP לפרוטוקול UDP בשכבת התעבורה, ומתי כדאי להעדיף כל אחד",
+            "מודל השכבות OSI ו-TCP/IP",
+            "פרוטוקול TCP ותהליך ה-handshake התלת-שלבי",
+            "ניתוב (routing) בשכבת הרשת",
+            "כתובות IP ומיסוך רשת (subnetting)",
         ],
     },
     "Operating Systems": {
         "course_name": "עקרונות מערכות הפעלה",
         "topics": [
-            "מהו ה-PCB (Process Control Block) ומהם מצבי התהליך האפשריים (New, Ready, Running, Waiting, Terminated) והמעברים ביניהם",
-            "השוו בין אלגוריתמי התזמון FIFO ו-Round-Robin, כולל דוגמה מספרית לחישוב זמן המתנה ממוצע",
-            "כיצד פועל מנגנון הדפדוף (Paging) בניהול זיכרון וירטואלי, ומהו תפקיד ה-TLB בהאצת תרגום כתובות",
-            "מהו מבוי סתום (Deadlock), מהם ארבעת תנאי Coffman הנדרשים להתרחשותו, והמחישו זאת באמצעות בעיית הפילוסופים הסועדים",
+            "תזמון תהליכים (process scheduling)",
+            "ניהול זיכרון וזיכרון וירטואלי",
+            "תהליכים, תהליכונים (threads) וסנכרון",
+            "מנעולים, סמפורים ומצבי deadlock",
         ],
     },
     "Cybersecurity": {
         "course_name": "מבוא לסייבר",
         "topics": [
-            "מהם הסוגים העיקריים של תוכנות זדוניות (Malware) - וירוס, תולעת, סוס טרויאני וכופרה - וכיצד מנתחים אותן",
-            "מהו תהליך ניתוח סיכונים (Risk Analysis) במערכת תוכנה, ומהם השלבים המרכזיים בזיהוי נכסים, איומים ופגיעויות",
-            "מהו ההבדל בין אימות זהות (Authentication) להרשאה (Authorization) בניהול משתמשים, וכיצד אימות רב-שלבי (MFA) משפר את האבטחה",
-            "מהם האתגרים הייחודיים באבטחת מוצרי IoT בהשוואה למחשבים רגילים",
+            "עקרונות הצפנה סימטרית ואסימטרית",
+            "התקפות רשת נפוצות (כגון DoS, MITM)",
+            "עקרונות אבטחת מידע: CIA triad",
+            "בדיקות חוסן וסוגי פגיעויות בסיסיות",
         ],
     },
     "C++": {
         "course_name": "מבוא למדעי המחשב",
         "topics": [
-            "כיצד מנתחים סיבוכיות זמן ריצה (Runtime Analysis) של אלגוריתם עם לולאות מקוננות ב-++C, והציגו דוגמה",
-            "כיצד פועלת פונקציה רקורסיבית ב-++C, ומהם תפקידי תנאי העצירה ומחסנית הקריאות, המחישו באמצעות חישוב עצרת (factorial)",
-            "מהו ההבדל בין מצביע (Pointer) רגיל לבין הקצאה דינאמית של זיכרון באמצעות new ו-delete ב-++C",
-            "מהו ההבדל בין מערך סטטי למחרוזת (String) ב-++C מבחינת ייצוג בזיכרון וגודל קבוע",
+            "משתנים, טיפוסי נתונים ואופרטורים בסיסיים ב-C++",
+            "מבני בקרה: תנאים ולולאות",
+            "פונקציות והעברת פרמטרים",
+            "מערכים (arrays) ומחרוזות בסיסיות",
         ],
-        "forbidden": ["virtual function", "פונקציה וירטואלית", "vtable", "smart pointer",
-                      "מצביע חכם", "unique_ptr", "shared_ptr", "template", "תבנית גנרית"],
+        "forbidden": [
+            "virtual function", "פונקציה וירטואלית",
+            "smart pointer", "מצביע חכם",
+            "template", "תבנית גנרית",
+        ],
     },
     "Java": {
         "course_name": "תכנות מונחה עצמים בשפת Java",
         "topics": [
-            "כיצד מיושם כימוס (Encapsulation) ב-Java באמצעות הרשאות גישה public ,private ו-protected",
-            "כיצד פועלת הורשה (Inheritance) ב-Java, וכיצד דריסת מתודה (Method Overriding) עם super מאפשרת התנהגות ייחודית למחלקה יורשת",
-            "מהו ההבדל בין העמסת מתודות (Overloading) לבין דריסת מתודות (Overriding) ב-Java",
-            "מהו ההבדל בין הרכבה (Composition) להורשה (Inheritance) ב-Java, ומתי יש להעדיף כל אחת (has-a לעומת is-a)",
+            "מחלקות ואובייקטים בסיסיים ב-Java",
+            "הורשה ופולימורפיזם",
+            "ממשקים (interfaces) ומחלקות אבסטרקטיות",
+            "עקרון ההכמסה (encapsulation) ומאפיינים",
         ],
-        "forbidden": ["exception", "חריגה", "try", "catch", "collections framework",
-                      "arraylist", "hashmap", "thread", "תהליכון", "synchronized"],
+        "forbidden": [
+            "exception", "חריגה", "try/catch",
+            "collections", "אוסף (collection)",
+            "thread", "תהליכון", "multithreading",
+        ],
     },
     "Python": {
         "course_name": "תכנות מתקדם בשפת פייתון",
         "topics": [
-            "כיצד פעולות וקטוריות (Vectorized Operations) ב-Numpy משפרות ביצועים לעומת לולאת for רגילה על רשימה",
-            "כיצד מסננים ומצרפים (Filtering and Aggregation) נתונים במסגרת DataFrame של Pandas, כולל שימוש ב-groupby",
-            "מהו ה-dataclass בפייתון, וכיצד הוא פשוט יותר ממחלקה רגילה בהגדרת מחלקות המחזיקות בעיקר נתונים",
-            "מהי ארכיטקטורת צד-שרת/צד-לקוח (Client-Server) במסגרת Flask, וכיצד מנוע התבניות Jinja2 מרנדר HTML דינאמי",
+            "מבני נתונים מובנים: רשימות, טאפלים ומילונים",
+            "פונקציות, ארגומנטים ו-scope",
+            "עבודה עם קבצים וטיפול בחריגות (exceptions)",
+            "יסודות תכנות מונחה עצמים בפייתון",
+        ],
+    },
+    "Data Structures": {
+        "course_name": "מבני נתונים",
+        "topics": [
+            "ניתוח סיבוכיות זמן וזיכרון (Big-O)",
+            "מחסניות (stacks) ותורים (queues)",
+            "רשימות מקושרות (linked lists)",
+            "עצי חיפוש בינאריים (BST) ועצי AVL",
+        ],
+        "forbidden": [
+            "dijkstra", "אלגוריתם דייקסטרה",
+            "dynamic programming", "תכנות דינמי",
+            "minimum spanning tree", "עץ פורש מינימלי",
+        ],
+    },
+    "Algorithms": {
+        "course_name": "אלגוריתמים",
+        "topics": [
+            "אלגוריתמים חמדניים (greedy algorithms)",
+            "עקרון החלק-ופתור (divide and conquer)",
+            "תכנות דינמי (dynamic programming)",
+            "אלגוריתמי מעבר גרפים: BFS ו-DFS",
+        ],
+    },
+    "Computer Architecture": {
+        "course_name": "ארגון המחשב ושפת סף",
+        "topics": [
+            "ייצוג בינארי, משלים לשני ותקן IEEE754",
+            "מחזור אחזור-פענוח-ביצוע (fetch-decode-execute)",
+            "פקודות שפת סף בסיסיות: העברה וחשבון",
+            "מצבור (stack), קריאות פרוצדורה ומסגרת מחסנית",
+        ],
+        "forbidden": [
+            "pipelining", "צנרור",
+            "cache memory hierarchy", "היררכיית מטמון",
+            "out-of-order execution", "multi-core", "ריבוי ליבות",
+        ],
+    },
+    "Databases": {
+        "course_name": "בסיסי נתונים",
+        "topics": [
+            "המודל הרלציוני ואלגברה רלציונית",
+            "שפת SQL: DDL ו-DML בסיסיים",
+            "תרשימי ER ותכנון סכמה",
+            "נורמליזציה: 1NF עד BCNF",
+        ],
+        "forbidden": [
+            "distributed database", "מסד נתונים מבוזר",
+            "sharding", "hadoop", "spark",
+        ],
+    },
+    "Automata Theory": {
+        "course_name": "אוטומטים ושפות פורמליות",
+        "topics": [
+            "שפות רגולריות וביטויים רגולריים",
+            "אוטומט סופי דטרמיניסטי ואי-דטרמיניסטי (DFSM/NDFSM)",
+            "דקדוקים חופשי-הקשר (context-free grammars)",
+            "אוטומט מחסנית (pushdown automaton) ושפות CFL",
+        ],
+        "forbidden": [
+            "turing machine", "מכונת טיורינג",
+            "halting problem", "בעיית העצירה",
+            "np-complete", "np-שלם",
+        ],
+    },
+    "Software Engineering": {
+        "course_name": "שיטות בפיתוח תוכנה",
+        "topics": [
+            "מסמך דרישות ותקן IEEE לתיעוד דרישות",
+            "דרישות פונקציונליות ולא-פונקציונליות",
+            "תרשימי UML: use case ותרשימי רצף",
+            "מחזור חיי פיתוח תוכנה (SDLC) וסקירת מתודולוגיות",
+        ],
+        "forbidden": [
+            "scrum", "agile sprint",
+            "unit testing", "בדיקות יחידה",
+            "ci/cd",
         ],
     },
 }
@@ -337,6 +421,7 @@ def main():
     system_prompt = build_system_prompt(exemplars)
 
     results = []
+    failed = []
     total = len(DOMAIN_TOPICS) * args.n_per_domain
     done = 0
 
@@ -348,17 +433,27 @@ def main():
         for topic in topics[: args.n_per_domain]:
             done += 1
             print(f"  [{done}/{total}] {topic[:70]}...")
-            example = generate_one(
-                client, system_prompt, domain, course_name, topic, forbidden,
-                args.model, args.temperature,
-            )
+            try:
+                example = generate_one(
+                    client, system_prompt, domain, course_name, topic, forbidden,
+                    args.model, args.temperature,
+                )
+            except RuntimeError as e:
+                print(f"    [skip] {e}")
+                failed.append({"domain": domain, "topic": topic})
+                continue
             results.append(example)
+            # Checkpoint after every accepted item so a later failure doesn't lose earlier work.
+            with open(args.output, "w", encoding="utf-8") as f:
+                json.dump(results, f, ensure_ascii=False, indent=2)
             time.sleep(SLEEP_BETWEEN_CALLS)
 
-    with open(args.output, "w", encoding="utf-8") as f:
-        json.dump(results, f, ensure_ascii=False, indent=2)
-
     print(f"\n[done] wrote {len(results)} examples to {args.output}")
+    if failed:
+        print(f"[warn] {len(failed)} item(s) never passed validation after {MAX_RETRIES} retries "
+              f"and were skipped (final count {len(results)} < target {total}):")
+        for f_ in failed:
+            print(f"    - {f_['domain']}: {f_['topic']}")
 
 
 if __name__ == "__main__":

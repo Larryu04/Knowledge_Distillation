@@ -1,0 +1,1949 @@
+[run] course=Databases (בסיסי נתונים)  target=1200  resuming_from=20  output=raw_courses_data/databases_data.json
+[21/1200] topic='ניהול טרנזקציות ותכונות ACID'
+[22/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+[23/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+[24/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+[25/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+[26/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+[27/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+[28/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+[29/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+[30/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+[31/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[32/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+[33/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+[34/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[35/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+[36/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+[37/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+[38/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+[39/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[40/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[41/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+[42/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+[43/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[44/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+[45/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 2/4] ["too similar (ratio=0.73) to an already-accepted instruction: 'באילו אופנים ניתן להשוות את סוגי מסדי הנתונים של NoSQL (מפתח-ערך, מסמכים, גרפים)'"]
+    [content-retry 3/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [checkpoint] 45 total examples saved to raw_courses_data/databases_data.json (accepted this run: 25, skipped: 0)
+[46/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[47/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+[48/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+[49/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+[50/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+[51/1200] topic='ניהול טרנזקציות ותכונות ACID'
+[52/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+[53/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+    [content-retry 1/4] ["keys must be exactly {'output', 'course_name', 'domain', 'rationale', 'instruction'}, got {'course_name', 'domain', ' בקטע הקוד שיביא רק את Employees)). 5. בעיות שעלולות להתעורר אם לא נבצע נרמול עלולות לכלול חוסר עקביות במידע, התפוצצות נתונים, וקושי בשמירה על הנתונים בעדכון עתידי, מכיוון שכל שינוי יצריך עדכון במספר שורות בטבלה הראשית במקום בשורות בודדות בטבלה מקושרת בצורה תקינה. 6. לדוגמה, אם נרצה לשנות את שם המנהל, נצטרך לשדרגו בכל מקום בו מופיע ולא רק בטבלה הנפרדת, דבר שגורם לבעיות של עקביות ותחזוקה קשה יותר של הנתונים במערכת. 7. הנרמול מבצע לא רק סידור של הנתונים, אלא גם משפר את יעילות השיפוט והשאילתות המאוחסנות במערכות נתונים גדולות, ומסייע לשמור על הקשרים הרלציוניים הנדרשים בין טבלאות שונות. 8. חשוב לזכור כי נרמול לא מצליח לפתור את כל בעיות הנתונים, אך הוא מהווה בסיס חשוב בתהליך עיצוב מסדי נתונים בצורה נכונה ואפקטיבית לעסקים. 9. לאחר הנרמול יש להבין שייתכנו גם שינויים מבניים בטבלאות שיכולים להיווצר בעת התוספות של עובדים חדשים או שינויים במחלקות, שיכולים להוביל לניהול טוב יותר של המידע במערכת. 10. במערכת ריאלית, נרמול הוא תהליך מתמשך שיש לשוב ולבחון אותו לאור שינויים עתידיים במבנה הארגוני או בצרכים עסקיים משתנים, מה שמחייב תגובה מהירה תוך שמירה על הדינמיקה בין טבלאות הנתונים השונות במערכת. 11. בתהליך זה יש להשתמש בשפה רלציונית להבנת הקשרים ולוודא כי כל השדות עומדים בסכמת הנורמליזציה הנדרשת, עד להשגת צורת נורמלית שלישית (3NF) או BCNF במידת הצורך, על מנת למנוע חזרות מיותרות ולעודד אחידות במידע שנשמר. 12. תהליך הנרמול בונה את מסד הנתונים כך שהוא יתמוך בעסק בצורה אופטימלית תוך שמירה על הנתונים ועדכניותם. 13. מסד נתונים מנורמל נחשב ליעיל יותר, מה שמבצע אופטימיזציה בשאילתות ובשאילתות עתידיות. 14. נרמול נכון תורם גם להורדת עלויות האחסון ושיפור ביצועים, מה שמאפשר טיפול טוב יותר בנתונים הגדולים המתקבלים בעסק. 15. לבסוף, יש לזכור כי נרמול נתונים הוא תהליך יציב, שצריך להתבצע תמיד עם התמקדות בשיפור התהליכים ובצמצום האי-סדרים במידע. 16. בעסק, נרמול נכון בבסיסי נתונים יכול להיות המפתח לניהול איכותי וממוקד של מידע שמועבר בין מחלקות שונות תוך שמירה על עקביות ודיוק הנתונים.', 'rationale', 'instruction'}"]
+[54/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+[55/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+    [content-retry 1/4] ["too similar (ratio=0.76) to an already-accepted instruction: 'מהי הטעות הנפוצה של סטודנטים בהבנת ארגון קבצים ובלוקים בדיסק, וכיצד זה משפיע על '"]
+[56/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+[57/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[58/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+[59/1200] topic='ניהול טרנזקציות ותכונות ACID'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[60/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+[61/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[62/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+[63/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+[64/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[65/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[66/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+[67/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+[68/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+[69/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+[70/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [checkpoint] 70 total examples saved to raw_courses_data/databases_data.json (accepted this run: 50, skipped: 0)
+[71/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+[72/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+[73/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+[74/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+[75/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+[76/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+[77/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[78/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[79/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[80/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[81/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.94) to an already-accepted instruction: 'מהן פקודות DDL מהותיות בשפת SQL, וכיצד הן משפיעות על מבנה מסד הנתונים?'"]
+    [content-retry 2/4] ["too similar (ratio=0.76) to an already-accepted instruction: 'מהן פקודות DDL מהותיות בשפת SQL, וכיצד הן משפיעות על מבנה מסד הנתונים?'"]
+[82/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+[83/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+[84/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[85/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+[86/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+[87/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+    [content-retry 1/4] ["keys must be exactly {'output', 'course_name', 'domain', 'rationale', 'instruction'}, got {'domain', 'course_name', 'rationale', 'instruction'}"]
+[88/1200] topic='ניהול טרנזקציות ותכונות ACID'
+[89/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+[90/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+[91/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 2/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[92/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+[93/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[94/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+[95/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+    [content-retry 1/4] ["too similar (ratio=0.73) to an already-accepted instruction: 'השווה בין המודל היררכי למודל הרשתי של נתונים, והסבר אילו יתרונות וחסרונות קיימים'"]
+    [checkpoint] 95 total examples saved to raw_courses_data/databases_data.json (accepted this run: 75, skipped: 0)
+[96/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+[97/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+[98/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[99/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+[100/1200] topic='ניהול טרנזקציות ותכונות ACID'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[101/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+[102/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+[103/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+[104/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+    [content-retry 1/4] ["keys must be exactly {'output', 'course_name', 'domain', 'rationale', 'instruction'}, got {'domain', 'course_name', 'rationale', 'instruction'}"]
+[105/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+[106/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+[107/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[108/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[109/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+[110/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+[111/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+[112/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[113/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+[114/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[115/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+[116/1200] topic='ניהול טרנזקציות ותכונות ACID'
+[117/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+[118/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[119/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+[120/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [checkpoint] 120 total examples saved to raw_courses_data/databases_data.json (accepted this run: 100, skipped: 0)
+[121/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+[122/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+[123/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[124/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+[125/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+[126/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+[127/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+[128/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[129/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+[130/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[131/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+[132/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+[133/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+[134/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+[135/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+[136/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[137/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+    [content-retry 1/4] ["too similar (ratio=0.77) to an already-accepted instruction: 'מה הטעות הנפוצה של סטודנטים בהבנת מודל הנתונים ההיררכי, וכיצד ניתן לתקן את ההבנה'"]
+    [content-retry 2/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[138/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+[139/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+[140/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+[141/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 2/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[142/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+[143/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+[144/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+[145/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+    [checkpoint] 145 total examples saved to raw_courses_data/databases_data.json (accepted this run: 125, skipped: 0)
+[146/1200] topic='ניהול טרנזקציות ותכונות ACID'
+[147/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+[148/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+[149/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[150/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+[151/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+[152/1200] topic='ניהול טרנזקציות ותכונות ACID'
+[153/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[154/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+[155/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+[156/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+[157/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+[158/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+[159/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+[160/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+[161/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+[162/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+[163/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+[164/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+[165/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[166/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+[167/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.73) to an already-accepted instruction: 'השווה בין גישת נעילות (Locking) לבין פרוטוקול 2PL (Two-Phase Locking) בבקרת בו-ז'"]
+    [content-retry 2/4] ["too similar (ratio=0.96) to an already-accepted instruction: 'השווה בין גישת נעילות (Locking) לבין פרוטוקול 2PL (Two-Phase Locking) בבקרת בו-ז'"]
+[168/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+[169/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+[170/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+    [checkpoint] 170 total examples saved to raw_courses_data/databases_data.json (accepted this run: 150, skipped: 0)
+[171/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+[172/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[173/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[174/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[175/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+[176/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[177/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+[178/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+[179/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+[180/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+[181/1200] topic='ניהול טרנזקציות ותכונות ACID'
+[182/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[183/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+    [content-retry 1/4] ["too similar (ratio=0.73) to an already-accepted instruction: 'השווה בין מסדי נתונים מסוג Document לבין מסדי נתונים מסוג Key-Value, והסבר את הי'"]
+    [content-retry 2/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[184/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[185/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+[186/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[187/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+[188/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[189/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+[190/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+[191/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[192/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+[193/1200] topic='ניהול טרנזקציות ותכונות ACID'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[194/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+[195/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+    [checkpoint] 195 total examples saved to raw_courses_data/databases_data.json (accepted this run: 175, skipped: 0)
+[196/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+[197/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+[198/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[199/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+[200/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+[201/1200] topic='ניהול טרנזקציות ותכונות ACID'
+[202/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[203/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+[204/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+[205/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 2/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[206/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+[207/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+[208/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[209/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.76) to an already-accepted instruction: 'מהי הטעות הנפוצה שביצוע בהבנת עקרון CAP במודלים של מסדי נתונים NoSQL, ואילו השלכ'"]
+[210/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", 'too similar (ratio=0.73) to an already-accepted instruction: "הסבירו את המושג \'מבוי סתום בטרנזקציות\' בעזרת אנלוגיה מהעולם האמיתי, והציגו כיצד "']
+    [content-retry 2/4] ["keys must be exactly {'output', 'course_name', 'domain', 'rationale', 'instruction'}, got {'domain', 'course_name', 'rationale', 'instruction'}"]
+    [content-retry 3/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[211/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+[212/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+[213/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+[214/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+[215/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+[216/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+[217/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+[218/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+[219/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+[220/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+    [checkpoint] 220 total examples saved to raw_courses_data/databases_data.json (accepted this run: 200, skipped: 0)
+[221/1200] topic='ניהול טרנזקציות ותכונות ACID'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[222/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+[223/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+[224/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+[225/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+[226/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[227/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+[228/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+[229/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+    [content-retry 1/4] ['too similar (ratio=0.80) to an already-accepted instruction: "הסבירו את המושג \'מבוי סתום בטרנזקציות\' בעזרת אנלוגיה מהעולם האמיתי, והציגו כיצד "']
+    [content-retry 2/4] ['too similar (ratio=0.85) to an already-accepted instruction: "הסבירו את המושג \'מבוי סתום בטרנזקציות\' בעזרת אנלוגיה מהעולם האמיתי, והציגו כיצד "']
+    [content-retry 3/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", 'too similar (ratio=0.75) to an already-accepted instruction: "הסבירו את המושג \'מבוי סתום בטרנזקציות\' בעזרת אנלוגיה מהעולם האמיתי, והציגו כיצד "']
+[230/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[231/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+[232/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+[233/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[234/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+[235/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+[236/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+[237/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+[238/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[239/1200] topic='ניהול טרנזקציות ותכונות ACID'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[240/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+[241/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+[242/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+    [content-retry 1/4] ['rationale must have 3-5 numbered points, found 6']
+    [content-retry 2/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[243/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+[244/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.87) to an already-accepted instruction: 'השווה בין מסדי נתונים מסוג Document לבין מסדי נתונים מסוג Key-Value, והסבר את הי'"]
+    [content-retry 2/4] ["too similar (ratio=0.83) to an already-accepted instruction: 'השווה בין מסדי נתונים מסוג Document לבין מסדי נתונים מסוג Key-Value, והסבר את הי'"]
+    [content-retry 3/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 4/4] ["too similar (ratio=0.89) to an already-accepted instruction: 'השווה בין מסדי נתונים מסוג Document לבין מסדי נתונים מסוג Key-Value, והסבר את הי'"]
+    [skip] gave up on this item after 4 content retries — moving on. (skipped so far: 1)
+[245/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+[246/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+    [checkpoint] 245 total examples saved to raw_courses_data/databases_data.json (accepted this run: 225, skipped: 1)
+[247/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+[248/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[249/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[250/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+[251/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[252/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[253/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+[254/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[255/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+[256/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+[257/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+[258/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.75) to an already-accepted instruction: 'מהם העקרונות המרכזיים של אופטימיזציה של שאילתות, וכיצד הם משפיעים על ביצועי מסד '"]
+[259/1200] topic='ניהול טרנזקציות ותכונות ACID'
+[260/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+[261/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+[262/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+[263/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[264/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+[265/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+[266/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+    [content-retry 1/4] ["too similar (ratio=0.74) to an already-accepted instruction: 'כיצד ניתן להבין את המושג תלויות פונקציונליות (Functional Dependencies) באמצעות א'"]
+    [content-retry 2/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[267/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+[268/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[269/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+[270/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+[271/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+    [checkpoint] 270 total examples saved to raw_courses_data/databases_data.json (accepted this run: 250, skipped: 1)
+[272/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+[273/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[274/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[275/1200] topic='ניהול טרנזקציות ותכונות ACID'
+[276/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+[277/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+[278/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+[279/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[280/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+[281/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+[282/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+[283/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+[284/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+[285/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+[286/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+[287/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+[288/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+[289/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+[290/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[291/1200] topic='ניהול טרנזקציות ותכונות ACID'
+[292/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 2/4] ["too similar (ratio=0.72) to an already-accepted instruction: 'כיצד ניתן להבין את עקרונות מודל CAP של מסדי נתונים מסוג NoSQL באמצעות אנלוגיה לע'"]
+    [content-retry 3/4] ["too similar (ratio=0.73) to an already-accepted instruction: 'באילו דרכים ניתן להסביר את עקרון CAP במודל מסדי נתונים NoSQL באמצעות אנלוגיה מעו'"]
+    [content-retry 4/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [skip] gave up on this item after 4 content retries — moving on. (skipped so far: 2)
+[293/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 2/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[294/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+[295/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+[296/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+[297/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [checkpoint] 295 total examples saved to raw_courses_data/databases_data.json (accepted this run: 275, skipped: 2)
+[298/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+[299/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+[300/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+[301/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+[302/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+[303/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+[304/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+[305/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+[306/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+    [content-retry 1/4] ["too similar (ratio=0.74) to an already-accepted instruction: 'השווה בין השימוש באופרטור Selection לבין האופרטור Projection באלגברה רלציונית, ו'"]
+[307/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+[308/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+[309/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+[310/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[311/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+[312/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[313/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+[314/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+[315/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+[316/1200] topic='ניהול טרנזקציות ותכונות ACID'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 2/4] ["too similar (ratio=0.78) to an already-accepted instruction: 'מהי אחת מהטעויות הנפוצות של סטודנטים בנוגע לתכונת Atomicity בניהול טרנזקציות, ומ'"]
+[317/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+[318/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+[319/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+[320/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[321/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[322/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+    [content-retry 1/4] ["too similar (ratio=0.86) to an already-accepted instruction: 'מהם המאפיינים המרכזיים שמבדילים בין מסדי נתונים NoSQL מסוג מפתח-ערך, מסמכים וגרפ'"]
+    [checkpoint] 320 total examples saved to raw_courses_data/databases_data.json (accepted this run: 300, skipped: 2)
+[323/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[324/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+[325/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[326/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+    [content-retry 1/4] ["too similar (ratio=0.80) to an already-accepted instruction: 'השוו בין אופרטור ה-Join לאופרטור ה-Projection באלגברה רלציונית, והסבירו את ההשלכ'"]
+    [content-retry 2/4] ["too similar (ratio=0.89) to an already-accepted instruction: 'השוו בין אופרטור ה-Join לאופרטור ה-Projection באלגברה רלציונית, והסבירו את ההשלכ'"]
+    [content-retry 3/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.94) to an already-accepted instruction: 'השוו בין אופרטור ה-Join לאופרטור ה-Projection באלגברה רלציונית, והסבירו את ההשלכ'"]
+[327/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[328/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[329/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[330/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+[331/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[332/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+[333/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+[334/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+[335/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+[336/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+[337/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+[338/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+    [content-retry 1/4] ["too similar (ratio=0.84) to an already-accepted instruction: 'השווה בין מסדי נתונים מסוג Document לבין מסדי נתונים מסוג Key-Value, והסבר את הי'"]
+[339/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 2/4] ["too similar (ratio=0.91) to an already-accepted instruction: 'תאר מקרה שימוש שבו מתרחשת בעיית מבוי סתום (Deadlock) בין שתי טרנזקציות במסד נתונ'"]
+    [content-retry 3/4] ["too similar (ratio=0.75) to an already-accepted instruction: 'תאר מקרה שימוש שבו מתרחשת בעיית מבוי סתום (Deadlock) בין שתי טרנזקציות במסד נתונ'"]
+[340/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[341/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+[342/1200] topic='ניהול טרנזקציות ותכונות ACID'
+[343/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[344/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+[345/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+[346/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+[347/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+    [checkpoint] 345 total examples saved to raw_courses_data/databases_data.json (accepted this run: 325, skipped: 2)
+[348/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[349/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+[350/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[351/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+[352/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+[353/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[354/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+[355/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+[356/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[357/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+    [content-retry 1/4] ["too similar (ratio=0.74) to an already-accepted instruction: 'צור דוגמה למעקב צעד-אחר-צעד אחר תהליך אופטימיזציה של שאילתת SELECT במסד נתונים, '"]
+    [content-retry 2/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[358/1200] topic='ניהול טרנזקציות ותכונות ACID'
+[359/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+[360/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+[361/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+[362/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[363/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[364/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+[365/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+[366/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+[367/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+[368/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[369/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+[370/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+[371/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+[372/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+    [checkpoint] 370 total examples saved to raw_courses_data/databases_data.json (accepted this run: 350, skipped: 2)
+[373/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[374/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+[375/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[376/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[377/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+[378/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 2/4] ["too similar (ratio=0.79) to an already-accepted instruction: 'השווה בין מסדי נתונים מסוג Document לבין מסדי נתונים מסוג Key-Value, והסבר את הי'"]
+    [content-retry 3/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[379/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.77) to an already-accepted instruction: 'מהם העקרונות המרכזיים של פרוטוקול 2PL (Two-Phase Locking) בבקרת בו-זמניות, וכיצד'"]
+[380/1200] topic='ניהול טרנזקציות ותכונות ACID'
+[381/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+    [content-retry 1/4] ["too similar (ratio=0.73) to an already-accepted instruction: 'מהם עקרונות מודל CAP במסדי נתונים מסוג NoSQL, וכיצד הם משפיעים על הבחירות שעושים'"]
+    [content-retry 2/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[382/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[383/1200] topic='ניהול טרנזקציות ותכונות ACID'
+    [content-retry 1/4] ["too similar (ratio=0.76) to an already-accepted instruction: 'מהן תכונות ACID של ניהול טרנזקציות, וכיצד כל אחת מהן תורמת לשמירה על עקביות הנתו'"]
+[384/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[385/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+[386/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+[387/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+[388/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[389/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+[390/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+[391/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+[392/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+    [content-retry 1/4] ['output looks like a copy of the first rationale point, not a synthesis']
+    [content-retry 2/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[393/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+[394/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+[395/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.79) to an already-accepted instruction: 'מהם העקרונות המנחים בארגון קבצים ובלוקים בדיסק לצורך אכסון יעיל של נתונים, וכיצד'"]
+    [content-retry 2/4] ["too similar (ratio=0.83) to an already-accepted instruction: 'מהם העקרונות המרכזיים של אכסון נתונים בדיסק, וכיצד משפיעה הבחירה בארגון קבצים וב'"]
+    [content-retry 3/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 4/4] ["too similar (ratio=0.73) to an already-accepted instruction: 'מהי הטעות הנפוצה של סטודנטים בהבנת ארגון קבצים ובלוקים בדיסק, וכיצד זה משפיע על '"]
+    [skip] gave up on this item after 4 content retries — moving on. (skipped so far: 3)
+[396/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[397/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+[398/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+    [checkpoint] 395 total examples saved to raw_courses_data/databases_data.json (accepted this run: 375, skipped: 3)
+[399/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+[400/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+[401/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+[402/1200] topic='ניהול טרנזקציות ותכונות ACID'
+[403/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+[404/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+[405/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+[406/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+    [content-retry 1/4] ["too similar (ratio=0.73) to an already-accepted instruction: 'מהו תפקידו של המפתח הראשי (Primary Key) בטבלה רלציונית, וכיצד הוא משפיע על השימו'"]
+[407/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+[408/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+[409/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[410/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+[411/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[412/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 2/4] ["too similar (ratio=0.75) to an already-accepted instruction: 'השווה בין גישת אופטימיזציה באמצעות אינדקסים לבין גישת אופטימיזציה באמצעות חצאים '"]
+    [content-retry 3/4] ["too similar (ratio=0.73) to an already-accepted instruction: 'השווה בין גישת אופטימיזציה על בסיס חוקים (Rule-Based Optimization) לבין גישת אופ'"]
+[413/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+[414/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[415/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+[416/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+[417/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+[418/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+[419/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+[420/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+[421/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+    [content-retry 1/4] ["too similar (ratio=0.79) to an already-accepted instruction: 'הסבירו את עיקרון CAP במסדי נתונים מסוג NoSQL, ודונו בהשלכות של כל אחת מהתכונות: '"]
+    [content-retry 2/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.74) to an already-accepted instruction: 'כיצד ניתן להבין את עקרונות מודל CAP של מסדי נתונים מסוג NoSQL באמצעות אנלוגיה לע'"]
+    [content-retry 3/4] ["too similar (ratio=0.80) to an already-accepted instruction: 'הסבר כיצד ניתן להבין את עקרונות מסדי נתונים מסוג NoSQL באמצעות אנלוגיה לעולם המז'"]
+    [content-retry 4/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [skip] gave up on this item after 4 content retries — moving on. (skipped so far: 4)
+[422/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+[423/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+[424/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+    [content-retry 1/4] ["too similar (ratio=0.76) to an already-accepted instruction: 'מהי טעות נפוצה שסטודנטים עושים כאשר הם מנסים להשתמש בפקודת UPDATE בשפת SQL, וכיצ'"]
+    [content-retry 2/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 3/4] ["too similar (ratio=0.72) to an already-accepted instruction: 'מהי טעות נפוצה שסטודנטים עושים בעת נרמול טבלאות ל-3NF, וכיצד ניתן לתקן אותה?'"]
+    [checkpoint] 420 total examples saved to raw_courses_data/databases_data.json (accepted this run: 400, skipped: 4)
+[425/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+[426/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+[427/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+    [content-retry 1/4] ["too similar (ratio=0.73) to an already-accepted instruction: 'מהי הטעות הנפוצה ביותר שסטודנטים עושים בהבנת מבוי סתום בטרנזקציות, וכיצד ניתן לה'"]
+[428/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[429/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[430/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+[431/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[432/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+[433/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+[434/1200] topic='ניהול טרנזקציות ותכונות ACID'
+[435/1200] topic='ניהול טרנזקציות ותכונות ACID'
+[436/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[437/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+    [content-retry 1/4] ["too similar (ratio=0.74) to an already-accepted instruction: 'השווה בין מבנה הנתונים של אינדקסים מבוססי B-Tree לבין מבני אינדקסים מבוססי Hash,'"]
+    [content-retry 2/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.74) to an already-accepted instruction: 'השוו בין אינדקסים מבוססי B-tree לאינדקסים מבוססי Hash, והסבירו באילו מצבים כל אח'"]
+[438/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+[439/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[440/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+[441/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+[442/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+[443/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+[444/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 2/4] ["too similar (ratio=0.75) to an already-accepted instruction: 'כיצד ניתן להבין את עקרונות מודל CAP של מסדי נתונים מסוג NoSQL באמצעות אנלוגיה לע'"]
+    [content-retry 3/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.80) to an already-accepted instruction: 'כיצד ניתן להבין את עקרונות מודל CAP של מסדי נתונים מסוג NoSQL באמצעות אנלוגיה לע'"]
+    [content-retry 4/4] ["too similar (ratio=0.76) to an already-accepted instruction: 'כיצד ניתן להבין את עקרונות מודל CAP של מסדי נתונים מסוג NoSQL באמצעות אנלוגיה לע'"]
+    [skip] gave up on this item after 4 content retries — moving on. (skipped so far: 5)
+[445/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.74) to an already-accepted instruction: 'מהם העקרונות המרכזיים של אופטימיזציה של שאילתות, וכיצד הם משפיעים על ביצועי מסד '"]
+[446/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+[447/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+    [content-retry 1/4] ['too similar (ratio=0.72) to an already-accepted instruction: "הסבירו את המושג \'מבוי סתום\' בתחום הטרנזקציות על ידי שימוש באנלוגיה מחיי היומיום,"']
+[448/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+[449/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+[450/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [checkpoint] 445 total examples saved to raw_courses_data/databases_data.json (accepted this run: 425, skipped: 5)
+[451/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+[452/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[453/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[454/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[455/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[456/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[457/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+[458/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+[459/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+    [content-retry 1/4] ["too similar (ratio=0.75) to an already-accepted instruction: 'כיצד ניתן להבין את סוגי מסדי נתונים NoSQL, כגון מפתח-ערך, מסמכים וגרפים, באמצעות'"]
+    [content-retry 2/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[460/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+[461/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+[462/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[463/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+[464/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[465/1200] topic='ניהול טרנזקציות ותכונות ACID'
+[466/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+[467/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+[468/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.81) to an already-accepted instruction: 'השוו בין המודל ההיררכי למודל הרשתי במסדי נתונים, תוך הדגשת היתרונות והחסרונות של'"]
+[469/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[470/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+[471/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+[472/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+[473/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+[474/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+[475/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+    [checkpoint] 470 total examples saved to raw_courses_data/databases_data.json (accepted this run: 450, skipped: 5)
+[476/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+[477/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+[478/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+[479/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[480/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+[481/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+[482/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+[483/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[484/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[485/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[486/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+[487/1200] topic='ניהול טרנזקציות ותכונות ACID'
+    [content-retry 1/4] ["too similar (ratio=0.75) to an already-accepted instruction: 'מהי טעות נפוצה שהסטודנטים עושים בהבנת תלויות פונקציונליות בטבלאות רלציוניות, וכי'"]
+[488/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+[489/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+[490/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.72) to an already-accepted instruction: 'מהי טעות נפוצה שמבצעים סטודנטים בעת אופטימיזציה של שאילתות SQL, וכיצד ניתן להבין'"]
+[491/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+[492/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+[493/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+[494/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+[495/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+    [content-retry 1/4] ["too similar (ratio=0.79) to an already-accepted instruction: 'השוו בין אופרטור ה-Join לאופרטור ה-Projection באלגברה רלציונית, והסבירו את ההשלכ'"]
+    [content-retry 2/4] ["too similar (ratio=0.78) to an already-accepted instruction: 'השוו בין אופרטור ה-Join לאופרטור ה-Projection באלגברה רלציונית, והסבירו את ההשלכ'"]
+[496/1200] topic='ניהול טרנזקציות ותכונות ACID'
+[497/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+[498/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+[499/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+[500/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+    [checkpoint] 495 total examples saved to raw_courses_data/databases_data.json (accepted this run: 475, skipped: 5)
+[501/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+[502/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+    [content-retry 1/4] ["too similar (ratio=0.77) to an already-accepted instruction: 'מהי הטעות הנפוצה ביותר שסטודנטים עושים בהבנת מבוי סתום בטרנזקציות, וכיצד ניתן לה'"]
+[503/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+[504/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+[505/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.77) to an already-accepted instruction: 'הסבירו את ההבדלים בין המודלים היררכי, רשתי ורלציוני של נתונים, תוך שימוש באנלוגי'"]
+    [content-retry 2/4] ["too similar (ratio=0.87) to an already-accepted instruction: 'הסבירו את ההבדלים בין המודלים היררכי, רשתי ורלציוני של נתונים, תוך שימוש באנלוגי'"]
+    [content-retry 3/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 4/4] ["too similar (ratio=0.81) to an already-accepted instruction: 'הסבר את ההבדלים בין המודלים ההיררכי, הרשתי והרלציוני של נתונים באמצעות אנלוגיה ל'"]
+    [skip] gave up on this item after 4 content retries — moving on. (skipped so far: 6)
+[506/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+[507/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+[508/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+    [content-retry 1/4] ["mentions out-of-scope term for this course: 'sharding'"]
+[509/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+[510/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+[511/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+[512/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+[513/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[514/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+    [content-retry 1/4] ["too similar (ratio=0.77) to an already-accepted instruction: 'השווה בין גישת סריאליזביליות מבוססת תור (Queue-Based Serializability) לבין גישת '"]
+    [content-retry 2/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", 'output looks like a copy of the first rationale point, not a synthesis', "too similar (ratio=0.77) to an already-accepted instruction: 'השווה בין גישת סריאליזביליות מבוססת תור (Queue-Based Serializability) לבין גישת '"]
+    [content-retry 3/4] ["too similar (ratio=0.72) to an already-accepted instruction: 'השווה בין גישת סריאליזביליות מבוססת תור (Queue-Based Serializability) לבין גישת '"]
+    [content-retry 4/4] ["too similar (ratio=0.80) to an already-accepted instruction: 'השווה בין גישת סריאליזביליות מבוססת תור (Queue-Based Serializability) לבין גישת '"]
+    [skip] gave up on this item after 4 content retries — moving on. (skipped so far: 7)
+[515/1200] topic='ניהול טרנזקציות ותכונות ACID'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 2/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[516/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[517/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+[518/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[519/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 2/4] ["too similar (ratio=0.78) to an already-accepted instruction: 'מהם העקרונות המרכזיים של פרוטוקול 2PL (Two-Phase Locking) בבקרת בו-זמניות, וכיצד'"]
+[520/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+[521/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+[522/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+[523/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[524/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+[525/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[526/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[527/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+    [content-retry 1/4] ["too similar (ratio=0.73) to an already-accepted instruction: 'הסבירו מקרה שימוש שבו לוגים (Logging) מסייעים בשחזור נתונים לאחר כשל במערכת ניהו'"]
+    [checkpoint] 520 total examples saved to raw_courses_data/databases_data.json (accepted this run: 500, skipped: 7)
+[528/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+[529/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+[530/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[531/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[532/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+[533/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+[534/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+[535/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+[536/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[537/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[538/1200] topic='ניהול טרנזקציות ותכונות ACID'
+[539/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+[540/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+[541/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+[542/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+[543/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+[544/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+[545/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+[546/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[547/1200] topic='ניהול טרנזקציות ותכונות ACID'
+[548/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[549/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+[550/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[551/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+[552/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+    [content-retry 1/4] ["too similar (ratio=0.76) to an already-accepted instruction: 'השווה בין השימוש במפתח ראשי (Primary Key) לבין המפתח הזר (Foreign Key) במודל הרל'"]
+    [content-retry 2/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.72) to an already-accepted instruction: 'השווה בין השימוש במפתח ראשי (Primary Key) לבין המפתח הזר (Foreign Key) במודל הרל'"]
+    [checkpoint] 545 total examples saved to raw_courses_data/databases_data.json (accepted this run: 525, skipped: 7)
+[553/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+[554/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+[555/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+    [content-retry 1/4] ['too similar (ratio=0.73) to an already-accepted instruction: "כיצד ניתן להסביר את פעולת האופרטור \'Join\' באלגברה רלציונית באמצעות אנלוגיה מהעול"']
+[556/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 2/4] ["too similar (ratio=0.83) to an already-accepted instruction: 'השווה בין מסדי נתונים מסוג Document לבין מסדי נתונים מסוג Key-Value, והסבר את הי'"]
+[557/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+[558/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+[559/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[560/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+[561/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[562/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+[563/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+    [content-retry 1/4] ["too similar (ratio=0.79) to an already-accepted instruction: 'מהן תלויות פונקציונליות וכיצד הן משפיעות על תהליך הנירמול במערכות בסיסי נתונים?'"]
+[564/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.76) to an already-accepted instruction: 'הסבירו את ההבדלים בין מסדי נתונים מסוג מפתח-ערך, מסמכים וגרפים באמצעות אנלוגיות '"]
+    [content-retry 2/4] ["keys must be exactly {'output', 'course_name', 'domain', 'rationale', 'instruction'}, got {'domain', 'course_name', 'rationale', 'instruction'}"]
+    [content-retry 3/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[565/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+[566/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+[567/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[568/1200] topic='ניהול טרנזקציות ותכונות ACID'
+[569/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+[570/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+[571/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+[572/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.72) to an already-accepted instruction: 'הסבירו את תהליך הנרמול במסדי נתונים באמצעות אנלוגיה למערכת ניהול מלאי בחנות, וכי'"]
+[573/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[574/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+[575/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[576/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+[577/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+    [content-retry 1/4] ['too similar (ratio=0.76) to an already-accepted instruction: "הסבירו את המושג \'מבוי סתום בטרנזקציות\' בעזרת אנלוגיה מהעולם האמיתי, והציגו כיצד "']
+    [content-retry 2/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 3/4] ['too similar (ratio=1.00) to an already-accepted instruction: "הסבירו את המושג \'מבוי סתום\' בטרנזקציות באמצעות אנלוגיה מחיי היומיום, ודונו כיצד "']
+    [content-retry 4/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [skip] gave up on this item after 4 content retries — moving on. (skipped so far: 8)
+[578/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+    [checkpoint] 570 total examples saved to raw_courses_data/databases_data.json (accepted this run: 550, skipped: 8)
+[579/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+[580/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[581/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+[582/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+[583/1200] topic='ניהול טרנזקציות ותכונות ACID'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[584/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+[585/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+    [content-retry 1/4] ["too similar (ratio=0.84) to an already-accepted instruction: 'השוו בין מודל הנתונים ההיררכי למודל הנתונים הרלציוני, והסבירו כיצד כל מודל פותר '"]
+    [content-retry 2/4] ["too similar (ratio=0.76) to an already-accepted instruction: 'השוו בין המודל ההיררכי למודל הרשתי במסדי נתונים, תוך הדגשת היתרונות והחסרונות של'"]
+[586/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+[587/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+[588/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+[589/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+[590/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+[591/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+[592/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+[593/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+[594/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+[595/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+[596/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+[597/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+[598/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+[599/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+[600/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+[601/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+    [content-retry 1/4] ["too similar (ratio=0.76) to an already-accepted instruction: 'מהי שגיאה נפוצה שסטודנטים עושים כשמדובר בניתוח סריאליזביליות של טרנזקציות מקבילו'"]
+[602/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+    [content-retry 1/4] ["too similar (ratio=0.78) to an already-accepted instruction: 'מהי הטעות הנפוצה שביצוע בהבנת עקרון CAP במודלים של מסדי נתונים NoSQL, ואילו השלכ'"]
+    [content-retry 2/4] ["mentions out-of-scope term for this course: 'מסד נתונים מבוזר'", "too similar (ratio=0.75) to an already-accepted instruction: 'מה הטעות הנפוצה של סטודנטים בהבנת מודל הנתונים ההיררכי, וכיצד ניתן לתקן את ההבנה'"]
+[603/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+    [content-retry 1/4] ["keys must be exactly {'output', 'course_name', 'domain', 'rationale', 'instruction'}, got {'domain', 'course_name', 'rationale', 'instruction'}"]
+    [checkpoint] 595 total examples saved to raw_courses_data/databases_data.json (accepted this run: 575, skipped: 8)
+[604/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", 'too similar (ratio=0.75) to an already-accepted instruction: "הסבירו את המושג \'מבוי סתום בטרנזקציות\' בעזרת אנלוגיה מהעולם האמיתי, והציגו כיצד "']
+    [content-retry 2/4] ['too similar (ratio=0.80) to an already-accepted instruction: "הסבירו את המושג \'מבוי סתום בטרנזקציות\' בעזרת אנלוגיה מהעולם האמיתי, והציגו כיצד "']
+    [content-retry 3/4] ['output looks like a copy of the first rationale point, not a synthesis']
+    [content-retry 4/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [skip] gave up on this item after 4 content retries — moving on. (skipped so far: 9)
+[605/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[606/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+    [content-retry 1/4] ['output looks like a copy of the first rationale point, not a synthesis']
+[607/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+[608/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[609/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+[610/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 2/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[611/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+[612/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+[613/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+[614/1200] topic='ניהול טרנזקציות ותכונות ACID'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[615/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+[616/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[617/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+[618/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[619/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+    [content-retry 1/4] ["keys must be exactly {'output', 'course_name', 'domain', 'rationale', 'instruction'}, got {'output', 'course_name', 'domain', 'rationale', 'instruction', 'age:45);`. 5. בסוף התהליך, יש לוודא שהערך נשמר בהצלחה במסד על ידי קריאה מתקבלת, לדוגמה, `db.get('}"]
+[620/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+[621/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+[622/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+[623/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 2/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", 'output looks like a copy of the first rationale point, not a synthesis', 'too similar (ratio=0.82) to an already-accepted instruction: "הסבירו את המושג \'מבוי סתום בטרנזקציות\' בעזרת אנלוגיה מהעולם האמיתי, תוך הצגת מצב"']
+    [content-retry 3/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 4/4] ['output looks like a copy of the first rationale point, not a synthesis', 'too similar (ratio=0.73) to an already-accepted instruction: "הסבירו את המושג \'מבוי סתום בטרנזקציות\' בעזרת אנלוגיה מהעולם האמיתי, והציגו כיצד "']
+    [skip] gave up on this item after 4 content retries — moving on. (skipped so far: 10)
+[624/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[625/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+[626/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+[627/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.75) to an already-accepted instruction: 'מהי הטעות הנפוצה שסטודנטים עושים בהבנת ההבדלים בין המודלים ההיררכי, הרשתי והרלצי'"]
+[628/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+[629/1200] topic='ניהול טרנזקציות ותכונות ACID'
+[630/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+    [checkpoint] 620 total examples saved to raw_courses_data/databases_data.json (accepted this run: 600, skipped: 10)
+[631/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+[632/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+[633/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.74) to an already-accepted instruction: 'הסבירו את ההבדלים בין מודל הנתונים ההיררכי, המודל הרשתי והמודל הרלציוני באמצעות '"]
+    [content-retry 2/4] ["keys must be exactly {'output', 'course_name', 'domain', 'rationale', 'instruction'}, got {'Author', ' सेक्स ในआंमितंवितं', '13', '14', '4', '24', 'जीएन्यूइन', '15', '3', '1', '5', 'ट्रांसपोर्टेशन', 'rationale', '2', '19', 'Genre', 'फ़िल्म फ़ोटोग्राफ़र', '21', '22', '10', '12', '36', 'course_name', '17', 'Books', '8', '20', '2005', '7', 'Science', '11', '27', 'instruction', 'output', '9', '6', '39', '29', '18', 'इक्विपमेंट', '32', 'Non-Fiction', 'संपत्ति', 'domain', '28', '31'}"]
+    [content-retry 3/4] ["too similar (ratio=0.75) to an already-accepted instruction: 'הסבר את ההבדלים בין המודלים ההיררכי, הרשתי והרלציוני של נתונים באמצעות אנלוגיה ל'"]
+    [content-retry 4/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [skip] gave up on this item after 4 content retries — moving on. (skipped so far: 11)
+[634/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+    [content-retry 1/4] ['too similar (ratio=0.84) to an already-accepted instruction: "תאר מקרה שימוש שבו יש צורך ליצור טבלת \'מוצרים\' במסד נתונים עבור מערכת ניהול חנות"']
+[635/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[636/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+[637/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+[638/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+[639/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[640/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[641/1200] topic='ניהול טרנזקציות ותכונות ACID'
+[642/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+[643/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 2/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[644/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+    [content-retry 1/4] ["too similar (ratio=0.76) to an already-accepted instruction: 'מהי טעות נפוצה שהסטודנטים עושים בהבנת תלויות פונקציונליות בטבלאות רלציוניות, וכי'"]
+[645/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[646/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+[647/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[648/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+[649/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+[650/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 2/4] ["too similar (ratio=0.90) to an already-accepted instruction: 'הסבר כיצד ניתן להבין את עקרונות מסדי נתונים מסוג NoSQL באמצעות אנלוגיה לעולם המז'"]
+    [content-retry 3/4] ["too similar (ratio=0.76) to an already-accepted instruction: 'כיצד ניתן להבין את עקרונות מודל CAP של מסדי נתונים מסוג NoSQL באמצעות אנלוגיה לע'"]
+    [content-retry 4/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.75) to an already-accepted instruction: 'באילו דרכים ניתן להסביר את עקרון CAP במודל מסדי נתונים NoSQL באמצעות אנלוגיה מעו'"]
+    [skip] gave up on this item after 4 content retries — moving on. (skipped so far: 12)
+[651/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 2/4] ["too similar (ratio=0.75) to an already-accepted instruction: 'השווה בין מבנה הנתונים של אינדקסים מבוססי B-Tree לבין מבני אינדקסים מבוססי Hash,'"]
+    [content-retry 3/4] ["too similar (ratio=0.76) to an already-accepted instruction: 'השווה בין מבנה הנתונים של אינדקסים מבוססי B-Tree לבין מבני אינדקסים מבוססי Hash,'"]
+[652/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.77) to an already-accepted instruction: 'הסבירו כיצד ניתן להבין את פעולתם של אופרטורי Selection ו-Projection באלגברה רלצי'"]
+    [content-retry 2/4] ["too similar (ratio=0.81) to an already-accepted instruction: 'הסבירו כיצד ניתן להבין את פעולתם של אופרטורי Selection ו-Projection באלגברה רלצי'"]
+[653/1200] topic='ניהול טרנזקציות ותכונות ACID'
+[654/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[655/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+[656/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+[657/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+    [checkpoint] 645 total examples saved to raw_courses_data/databases_data.json (accepted this run: 625, skipped: 12)
+[658/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+[659/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+    [content-retry 1/4] ["too similar (ratio=0.84) to an already-accepted instruction: 'איך אפשר להסביר את חשיבות הארגון של קבצים ובלוקים בדיסק באמצעות אנלוגיה מעולם המ'"]
+    [content-retry 2/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[660/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.79) to an already-accepted instruction: 'כיצד ניתן להבין את עקרונות מודל CAP של מסדי נתונים מסוג NoSQL באמצעות אנלוגיה לע'"]
+    [content-retry 2/4] ["too similar (ratio=0.74) to an already-accepted instruction: 'כיצד ניתן להבין את עקרונות מודל CAP של מסדי נתונים מסוג NoSQL באמצעות אנלוגיה לע'"]
+    [content-retry 3/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.73) to an already-accepted instruction: 'כיצד ניתן להבין את עקרונות מודל CAP של מסדי נתונים מסוג NoSQL באמצעות אנלוגיה לע'"]
+    [content-retry 4/4] ["too similar (ratio=0.72) to an already-accepted instruction: 'כיצד ניתן להבין את עקרונות מודל CAP של מסדי נתונים מסוג NoSQL באמצעות אנלוגיה לע'"]
+    [skip] gave up on this item after 4 content retries — moving on. (skipped so far: 13)
+[661/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+[662/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+[663/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+[664/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+    [content-retry 1/4] ['output looks like a copy of the first rationale point, not a synthesis']
+    [content-retry 2/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[665/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[666/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 2/4] ["too similar (ratio=0.91) to an already-accepted instruction: 'השווה בין גישת נעילות (Locking) לבין פרוטוקול 2PL (Two-Phase Locking) בבקרת בו-ז'"]
+[667/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[668/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+[669/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+[670/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+[671/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+[672/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+    [content-retry 1/4] ["too similar (ratio=0.92) to an already-accepted instruction: 'השווה בין מסדי נתונים מסוג Document לבין מסדי נתונים מסוג Key-Value, והסבר את הי'"]
+    [content-retry 2/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[673/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+[674/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+    [content-retry 1/4] ["too similar (ratio=0.82) to an already-accepted instruction: 'השווה בין השימוש במפתח ראשי (Primary Key) לבין המפתח הזר (Foreign Key) במודל הרל'"]
+[675/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+[676/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+[677/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+    [content-retry 1/4] ["too similar (ratio=0.73) to an already-accepted instruction: 'כיצד תלויות פונקציונליות משפיעות על תהליך הנרמול של מסדי נתונים, ומהם הקריטריוני'"]
+[678/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[679/1200] topic='ניהול טרנזקציות ותכונות ACID'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[680/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+[681/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[682/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+[683/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [checkpoint] 670 total examples saved to raw_courses_data/databases_data.json (accepted this run: 650, skipped: 13)
+[684/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+[685/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+[686/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+[687/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[688/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+[689/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.75) to an already-accepted instruction: 'הסבירו את ההבדלים בין מסדי נתונים מסוג מפתח-ערך, מסמכים וגרפים באמצעות אנלוגיות '"]
+    [content-retry 2/4] ["too similar (ratio=0.78) to an already-accepted instruction: 'הסבירו את ההבדלים בין מסדי נתונים מסוג מפתח-ערך, מסמכים וגרפים באמצעות אנלוגיות '"]
+    [content-retry 3/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.80) to an already-accepted instruction: 'הסבירו את ההבדלים בין מסדי נתונים מסוג מפתח-ערך, מסמכים וגרפים באמצעות אנלוגיות '"]
+    [content-retry 4/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [skip] gave up on this item after 4 content retries — moving on. (skipped so far: 14)
+[690/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+[691/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+    [content-retry 1/4] ["keys must be exactly {'output', 'course_name', 'domain', 'rationale', 'instruction'}, got {'last_login', 'rationale', '. 4. ההשלכות של הבחירה בין השניים נוגעות לגמישות מול מהירות: Document מציע גמישות במבנה הנתונים אך עלול להיות פחות מהיר בשאילתות פשוטות, בעוד Key-Value מציע ביצועים גבוהים אך מצריך תכנון מוקפד של מבנה הנתונים. 5. בעת בחירת סוג המסד יש לקחת בחשבון את הצורך בשכפול מידע וגודלו של המידע, שכן מסדי Document מתאימים יותר למידע שיש בו הרבה שדות משתנים, ואילו Key-Value מתאימים למידע עם מבנה פשוט וברור יותר. 6. בסופו של דבר, הבחירה תלויה בצרכים הספציפיים של האפליקציה והצפיות לביצועים ואחסון הנתונים שלה. 7. יש צורך להבין את היתרונות והחסרונות של כל אחת מהגישות כדי לבצע החלטות מושכלות על בסיס המודלים הנתונים המוצעים לצרכים שונים של הניהול והביצועים של המידע. 8. זאת מתוך הבנה של תנאי העבודה ומורכבות המידע הנדרש, שהופך את הבחירה בין השניים לחשובה מאוד בשלב התכנון של מערכת הנתונים. 9. הבנת ההבדלים בתפקוד משלבת את הידע התיאורטי עם ההבנה המעשית והיישומית של מסדי הנתונים. 10. לדוגמה, אם יש צורך במערכת לניהול קטלוג של ספרים, מסד נתונים מסוג Document יהיה הגיוני יותר, בעוד שצרכים של מערכת לניהול סשנים צריכים להיות מנוהלים במודל Key-Value כדי להבטיח ביצועים גבוהים יותר. 11. כך מתאפשר למפתחים ולמנהלי מערכת להעריך את הפוטנציאל הטמון בכל אחד מהמסדים ולנצל את יתרונותיהם בצורה אופטימלית. 12. בנוסף, הבחירה יכולה להשפיע גם על התחזוקה העתידית של המידע והיכולת להרחיב את המערכת עם הזמן, שכן המורכבות של המידע עשויה להשתנות לאורך זמן. 13. לכן חיוני להבין את השפעות הבחירה על מדדים כמו ביצועים, גמישות ועבודת צוות, כך שהמפתחים יוכלו לקבל החלטות מושכלות שיביאו לתוצאה מיטבית בהתאם לצרכים המשתנים של הארגון או הפרויקט. 14. דוגמאות לשימושים שונים יכולים להמחיש את הצורך בבחירה נכונה ולהציג את היתרונות של כל מודל בהקשרים ריאליים. 15. כך תהליך ההשוואה מקנה ידע עשיר ומעמיק יותר על ההבנה של מסדי הנתונים בעולם האמיתי, ומספק לתלמידים כלים לניתוח והבנה עצמאית של מידע רלוונטי. 16. השקפת עולמם של תלמידים על טכנולוגיות חדשות אחראית להכנתם לעתיד מקצועי מעניין ומגוון, בו תהליכי השוואה מעשיים יכולים להוות יתרון אסטרטגי. 17. בנוסף, יש צורך להדגיש גם את ההשפעות על אבטחת המידע, שכן כל מודל מצריך גישה שונה לניהול נתונים רגישים, مما يعد عنصر حيوي لتحليل الفرق بين هذه النماذج المختلفة. 18. מכאן, ההשוואה בין שני הדגמים היא מרכיב מרכזי להכשרת תלמידים לא רק כאנליטיקנים אלא גם כמובילים טכנולוגיים בעסקים ובמערכות ציבוריות בפרט. 19. בהקשר רחב יותר, תהליך זה יכול להצביע גם על מגמות בתחום העסקים והטכנולוגיה, ולספק ידע חשוב על ההשפעות של בחירות טכנולוגיות על הצלחה עסקית. 20. בסופו של דבר, מדובר בנושאים שמחייבים הבנה מעמיקה של המודלים המתפתחים בעולם המידע והבנת ההשפעה של הבחירות שנעשות בזמן אמת על תהליכים לפיתוח עסקי. 21. כך נמצא כי ההשוואה בין Document ל-Key-Value מהווה דוגמה מצוינת להבנת הבעיות והיתרונות של מסדי נתונים בעידן המודרני. 22. תהליך ההשוואה עצמו הוא כלי למידה עשיר המעשיר את הידע של הסטודנטים ומשפר את מיומנויותיהם טכנולוגית ואנליטית כאחד. 23. במערכת הלימודים, הדבר עשוי להוביל להרחבת בסיס הידע ולהבנה משתנה וגמישה של טכנולוגיות שנמצאות במרכז הפיתוח המודרני ובקרבה לעתיד. 24. זהו תהליך חשוב להבטחת ידע עדכני ומעמיק במקצוע, תוך שימת דגש על ביסוס ידע זה על דוגמאות אמיתיות ובסיסיות מתחום הידע הנלמד. 25. מעבר לכל, החינוך על מודלים אלו יכול להוות בסיס מצוין להתקדמות טכנולוגית משמעותית בעולם המידע. 26. כך, קיימת חשיבות רבה בהשוואה ותהליך ההשוואה בין שני המודלים לייעול העבודה והבנת המורכבות של ניהול מידע בעידן המודרני, כבסיס להצלחה בעשייה מקצועית.', 'course_name', 'domain', 'active', 'instruction'}"]
+    [content-retry 2/4] ["too similar (ratio=1.00) to an already-accepted instruction: 'השווה בין מסדי נתונים מסוג Document לבין מסדי נתונים מסוג Key-Value, והסבר את הי'"]
+    [content-retry 3/4] ["too similar (ratio=0.74) to an already-accepted instruction: 'השווה בין מסדי נתונים מסוג Graph לבין מסדי נתונים מסוג Document, והסביר כיצד כל '"]
+[692/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[693/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+[694/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+[695/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+[696/1200] topic='ניהול טרנזקציות ותכונות ACID'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[697/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+[698/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+[699/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[700/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+[701/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[702/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+[703/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+[704/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+[705/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+[706/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+[707/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+[708/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+[709/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [checkpoint] 695 total examples saved to raw_courses_data/databases_data.json (accepted this run: 675, skipped: 14)
+[710/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.90) to an already-accepted instruction: 'הסבירו את ההבדלים בין המודלים היררכי, רשתי ורלציוני של נתונים, תוך שימוש באנלוגי'"]
+    [content-retry 2/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[711/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+[712/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+[713/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[714/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+[715/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+[716/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+    [content-retry 1/4] ['rationale must have 3-5 numbered points, found 7']
+[717/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+[718/1200] topic='ניהול טרנזקציות ותכונות ACID'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[719/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+[720/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+[721/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+[722/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+[723/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+    [content-retry 1/4] ["too similar (ratio=0.77) to an already-accepted instruction: 'מהן פקודות DDL מהותיות בשפת SQL, וכיצד הן משפיעות על מבנה מסד הנתונים?'"]
+[724/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+[725/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+[726/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+[727/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+[728/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[729/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+[730/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+[731/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+[732/1200] topic='ניהול טרנזקציות ותכונות ACID'
+[733/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+[734/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+    [checkpoint] 720 total examples saved to raw_courses_data/databases_data.json (accepted this run: 700, skipped: 14)
+[735/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+[736/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.84) to an already-accepted instruction: 'מהי טעות נפוצה שהסטודנטים עושים בהבנת תלויות פונקציונליות בטבלאות רלציוניות, וכי'"]
+[737/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+[738/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+    [content-retry 1/4] ["too similar (ratio=0.76) to an already-accepted instruction: 'מהם העקרונות המרכזיים שעומדים בבסיס אופטימיזציה של שאילתות במסדי נתונים, וכיצד נ'"]
+[739/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+[740/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+[741/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[742/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[743/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 2/4] ["too similar (ratio=0.96) to an already-accepted instruction: 'השווה בין גישת נעילות (Locking) לבין פרוטוקול 2PL (Two-Phase Locking) בבקרת בו-ז'"]
+    [content-retry 3/4] ["too similar (ratio=0.76) to an already-accepted instruction: 'השווה בין גישת נעילות (Locking) לבין פרוטוקול 2PL (Two-Phase Locking) בבקרת בו-ז'"]
+    [content-retry 4/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.76) to an already-accepted instruction: 'השווה בין גישת נעילות (Locking) לבין פרוטוקול 2PL (Two-Phase Locking) בבקרת בו-ז'"]
+    [skip] gave up on this item after 4 content retries — moving on. (skipped so far: 15)
+[744/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+    [content-retry 1/4] ["too similar (ratio=0.73) to an already-accepted instruction: 'מהי תלויות פונקציונליות (Functional Dependencies) וכיצד הן משפיעות על עיצוב הטבל'"]
+[745/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+    [content-retry 1/4] ["too similar (ratio=0.76) to an already-accepted instruction: 'השווה בין גישת תכנון מסד נתונים באמצעות דיאגרמת ER לבין גישת תכנון באמצעות מודל '"]
+[746/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+[747/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+[748/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+[749/1200] topic='ניהול טרנזקציות ותכונות ACID'
+    [content-retry 1/4] ["too similar (ratio=0.73) to an already-accepted instruction: 'השווה בין גישת Locking לבין גישת Timestamping בניהול טרנזקציות, והסבר את היתרונו'"]
+    [content-retry 2/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 3/4] ["too similar (ratio=0.73) to an already-accepted instruction: 'השווה בין גישת ניהול הטרנזקציות של אופטימיזם לבין גישת הניהול של נעילה (Locking)'"]
+    [content-retry 4/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.75) to an already-accepted instruction: 'השווה בין גישת ניהול הטרנזקציות של אופטימיזם לבין גישת הניהול של נעילה (Locking)'"]
+    [skip] gave up on this item after 4 content retries — moving on. (skipped so far: 16)
+[750/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+[751/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+[752/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+[753/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[754/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+[755/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+[756/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+[757/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+[758/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[759/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+[760/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+[761/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+    [checkpoint] 745 total examples saved to raw_courses_data/databases_data.json (accepted this run: 725, skipped: 16)
+[762/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[763/1200] topic='ניהול טרנזקציות ותכונות ACID'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", 'too similar (ratio=0.72) to an already-accepted instruction: "הסבירו את המושג \'תכונות ACID\' בניהול טרנזקציות באמצעות אנלוגיה מחיי היומיום, ותא"']
+    [content-retry 2/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", 'too similar (ratio=0.78) to an already-accepted instruction: "הסבירו את המושג \'תכונות ACID\' בניהול טרנזקציות באמצעות אנלוגיה מחיי היומיום, ותא"']
+    [content-retry 3/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.72) to an already-accepted instruction: 'כיצד ניתן להסביר את תכונות ACID בניהול טרנזקציות בעזרת אנלוגיה לעבודה בחנות ממתק'"]
+    [content-retry 4/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [skip] gave up on this item after 4 content retries — moving on. (skipped so far: 17)
+[764/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+[765/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+    [content-retry 1/4] ["too similar (ratio=0.79) to an already-accepted instruction: 'מהם ההבדלים המרכזיים בין מודל הנתונים ההיררכי למודל הנתונים הרלציוני, ואילו יתרו'"]
+    [content-retry 2/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.78) to an already-accepted instruction: 'מהם ההבדלים המרכזיים בין מודל הנתונים ההיררכי למודל הנתונים הרלציוני, ואילו יתרו'"]
+    [content-retry 3/4] ["too similar (ratio=0.78) to an already-accepted instruction: 'מהם ההבדלים המרכזיים בין מודל הנתונים ההיררכי למודל הנתונים הרלציוני, ואילו יתרו'"]
+    [content-retry 4/4] ["too similar (ratio=0.76) to an already-accepted instruction: 'תאר מקרה שימוש שבו נדרש לבחור בין מודל נתונים היררכי לבין מודל נתונים רלציוני, ו'"]
+    [skip] gave up on this item after 4 content retries — moving on. (skipped so far: 18)
+[766/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[767/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+[768/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.76) to an already-accepted instruction: 'איך ניתן להסביר את מושג האופטימיזציה של שאילתות באמצעות אנלוגיה לעולם האמיתי? תן'"]
+[769/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[770/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[771/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[772/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+[773/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[774/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+[775/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+[776/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+    [content-retry 1/4] ["too similar (ratio=0.77) to an already-accepted instruction: 'מהי טעות נפוצה שסטודנטים עושים כאשר הם משערים על אופן האכסון של נתונים בדיסק, וכ'"]
+[777/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+    [content-retry 1/4] ["too similar (ratio=0.85) to an already-accepted instruction: 'מה ההבדל בין הפקודות SQL SELECT ו-INSERT, וכיצד כל אחת משפיעה על נתוני הטבלה במס'"]
+[778/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.77) to an already-accepted instruction: 'השווה בין צורת הנורמל הראשונה (1NF) לצורת הנורמל השנייה (2NF) במונחים של עקרונות'"]
+    [content-retry 2/4] ["too similar (ratio=0.78) to an already-accepted instruction: 'השווה בין צורת הנורמל הראשונה (1NF) לצורת הנורמל השנייה (2NF) במונחים של עקרונות'"]
+[779/1200] topic='ניהול טרנזקציות ותכונות ACID'
+[780/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+[781/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[782/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[783/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[784/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[785/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+[786/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+[787/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+[788/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+    [checkpoint] 770 total examples saved to raw_courses_data/databases_data.json (accepted this run: 750, skipped: 18)
+[789/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+[790/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+[791/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+    [content-retry 1/4] ['output looks like a copy of the first rationale point, not a synthesis']
+    [content-retry 2/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 3/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[792/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+[793/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+[794/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[795/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+[796/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+[797/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+[798/1200] topic='ניהול טרנזקציות ותכונות ACID'
+[799/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+[800/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+[801/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+    [content-retry 1/4] ["too similar (ratio=0.73) to an already-accepted instruction: 'עקוב צעד-אחר-צעד אחרי תהליך יצירת טבלה חדשה במסד נתונים רלציוני בעזרת פקודת SQL,'"]
+    [content-retry 2/4] ['output too short / not synthesized']
+[802/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 2/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.81) to an already-accepted instruction: 'השתמש באנלוגיה מהעולם האמיתי כדי להסביר מהו נרמול במסדי נתונים ומדוע הוא חשוב, ת'"]
+[803/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+[804/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+[805/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+[806/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+[807/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+[808/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+[809/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+[810/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+[811/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+[812/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[813/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+    [checkpoint] 795 total examples saved to raw_courses_data/databases_data.json (accepted this run: 775, skipped: 18)
+[814/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+[815/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+[816/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[817/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+[818/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[819/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+[820/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[821/1200] topic='ניהול טרנזקציות ותכונות ACID'
+[822/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+[823/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+[824/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+[825/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+[826/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+[827/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+[828/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+[829/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+[830/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+[831/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+    [content-retry 1/4] ["too similar (ratio=0.73) to an already-accepted instruction: 'מהי טעות נפוצה שסטודנטים עושים בנוגע ליישום צורת הנורמל הראשונה (1NF), וכיצד היא'"]
+    [content-retry 2/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.75) to an already-accepted instruction: 'מהי טעות נפוצה שסטודנטים עושים כאשר הם משערים על אופן האכסון של נתונים בדיסק, וכ'"]
+[832/1200] topic='ניהול טרנזקציות ותכונות ACID'
+[833/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+    [content-retry 1/4] ["too similar (ratio=0.84) to an already-accepted instruction: 'מהי טעות נפוצה שסטודנטים עושים כאשר הם מנסים להשתמש בפקודת UPDATE בשפת SQL, וכיצ'"]
+    [content-retry 2/4] ["too similar (ratio=0.78) to an already-accepted instruction: 'מהי טעות נפוצה שסטודנטים עושים כאשר הם מנסים להשתמש בפקודת UPDATE בשפת SQL, וכיצ'"]
+    [content-retry 3/4] ["too similar (ratio=0.83) to an already-accepted instruction: 'מהי טעות נפוצה שסטודנטים עושים כאשר הם מנסים להשתמש בפקודת UPDATE בשפת SQL, וכיצ'"]
+    [content-retry 4/4] ["too similar (ratio=0.87) to an already-accepted instruction: 'מהי טעות נפוצה שסטודנטים עושים כאשר הם מנסים להשתמש בפקודת UPDATE בשפת SQL, וכיצ'"]
+    [skip] gave up on this item after 4 content retries — moving on. (skipped so far: 19)
+[834/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+[835/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", 'output looks like a copy of the first rationale point, not a synthesis', "too similar (ratio=0.82) to an already-accepted instruction: 'השווה בין גישת סריאליזביליות מבוססת תור (Queue-Based Serializability) לבין גישת '"]
+[836/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+[837/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+[838/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+[839/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+    [content-retry 1/4] ["too similar (ratio=0.72) to an already-accepted instruction: 'מהם העקרונות המרכזיים של אופטימיזציה של שאילתות, וכיצד הם משפיעים על ביצועי מסד '"]
+    [content-retry 2/4] ["too similar (ratio=0.74) to an already-accepted instruction: 'מהי טעות נפוצה שעושים סטודנטים כשמדובר באופטימיזציה של שאילתות SQL, ומה ההשלכות '"]
+    [checkpoint] 820 total examples saved to raw_courses_data/databases_data.json (accepted this run: 800, skipped: 19)
+[840/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+    [content-retry 1/4] ["too similar (ratio=0.81) to an already-accepted instruction: 'מהם העקרונות הבסיסיים של ארגון קבצים ובלוקים בדיסק וכיצד הם משפיעים על האיכויות '"]
+    [content-retry 2/4] ["too similar (ratio=0.77) to an already-accepted instruction: 'מהם העקרונות הבסיסיים של ארגון קבצים ובלוקים בדיסק וכיצד הם משפיעים על האיכויות '"]
+[841/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[842/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+[843/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+[844/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+[845/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 2/4] ["too similar (ratio=0.77) to an already-accepted instruction: 'מהם ההבדלים המרכזיים בין מודל הנתונים ההיררכי למודל הנתונים הרלציוני, ואילו יתרו'"]
+    [content-retry 3/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 4/4] ["keys must be exactly {'output', 'course_name', 'domain', 'rationale', 'instruction'}, got {'course_name', 'instruction', 'domain', 'rationale', 'output', 'error'}"]
+    [skip] gave up on this item after 4 content retries — moving on. (skipped so far: 20)
+[846/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+[847/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+[848/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+[849/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.75) to an already-accepted instruction: 'מהם העקרונות הבסיסיים של אופטימיזציה של שאילתות במסדי נתונים, ואילו גורמים יש לק'"]
+    [content-retry 2/4] ["too similar (ratio=0.77) to an already-accepted instruction: 'מהם העקרונות המרכזיים של אופטימיזציה של שאילתות במסדי נתונים רלציוניים, ואילו אס'"]
+    [content-retry 3/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[850/1200] topic='ניהול טרנזקציות ותכונות ACID'
+[851/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+[852/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 2/4] ["too similar (ratio=0.93) to an already-accepted instruction: 'כיצד ניתן להבין את פקודות DDL בשפת SQL באמצעות אנלוגיה לעיצוב בית, ומהן ההשלכות '"]
+    [content-retry 3/4] ["too similar (ratio=0.82) to an already-accepted instruction: 'כיצד ניתן להבין את פקודות DDL בשפת SQL באמצעות אנלוגיה לעיצוב בית, ומהן ההשלכות '"]
+    [content-retry 4/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [skip] gave up on this item after 4 content retries — moving on. (skipped so far: 21)
+[853/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+[854/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+[855/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+[856/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.74) to an already-accepted instruction: 'השווה בין גישת נעילות (Locking) לבין פרוטוקול 2PL (Two-Phase Locking) בבקרת בו-ז'"]
+[857/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[858/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+[859/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+[860/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[861/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+[862/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+[863/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+[864/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[865/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+    [content-retry 1/4] ["too similar (ratio=0.72) to an already-accepted instruction: 'מהי משמעותה של דיאגרמת ER (Entity-Relationship) בתהליך תכנון מסד נתונים, וכיצד נ'"]
+[866/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+    [checkpoint] 845 total examples saved to raw_courses_data/databases_data.json (accepted this run: 825, skipped: 21)
+[867/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+[868/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.82) to an already-accepted instruction: 'מהי טעות נפוצה בקרב סטודנטים בנוגע לשימוש בפרוטוקול 2PL (Two-Phase Locking) בבקר'"]
+    [content-retry 2/4] ["too similar (ratio=0.75) to an already-accepted instruction: 'מהי טעות נפוצה בקרב סטודנטים בנוגע לשימוש בפרוטוקול 2PL (Two-Phase Locking) בבקר'"]
+    [content-retry 3/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[869/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+[870/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+[871/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+[872/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+[873/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+[874/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+[875/1200] topic='ניהול טרנזקציות ותכונות ACID'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[876/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+[877/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+[878/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+[879/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+[880/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+[881/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+[882/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+[883/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[884/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[885/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[886/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+[887/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+[888/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 2/4] ["too similar (ratio=0.74) to an already-accepted instruction: 'מהן תלויות פונקציונליות, כיצד הן נבדלות זו מזו, ואילו השלכות יש להן על תהליך העי'"]
+    [content-retry 3/4] ["too similar (ratio=0.82) to an already-accepted instruction: 'מהי תלויות פונקציונליות במסדי נתונים וכיצד היא משפיעה על עיצוב הסכימה?'"]
+[889/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 2/4] ["too similar (ratio=0.80) to an already-accepted instruction: 'מהי סריאליזביליות (Serializability) בטרנזקציות מקבילות, ואילו אנלוגיות מהעולם הא'"]
+    [content-retry 3/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.73) to an already-accepted instruction: 'הסבירו את מושג הסריאליזביליות (Serializability) בניתוח בטיחות של טרנזקציות מקביל'"]
+    [content-retry 4/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.72) to an already-accepted instruction: 'הסבירו את מושג הסריאליזביליות (Serializability) בניתוח בטיחות של טרנזקציות מקביל'"]
+    [skip] gave up on this item after 4 content retries — moving on. (skipped so far: 22)
+[890/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+[891/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+[892/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+    [checkpoint] 870 total examples saved to raw_courses_data/databases_data.json (accepted this run: 850, skipped: 22)
+[893/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+[894/1200] topic='ניהול טרנזקציות ותכונות ACID'
+[895/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+[896/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+[897/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.88) to an already-accepted instruction: 'השווה בין השימוש באינדקסים פשוטים לעומת אינדקסים מבוססי עץ B+ במערכת ניהול מסדי '"]
+[898/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+[899/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+[900/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[901/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+    [content-retry 1/4] ["too similar (ratio=0.74) to an already-accepted instruction: 'השווה בין נרמול בצורה הראשונה (1NF) לנרמול בצורה השנייה (2NF) והצג את היתרונות ש'"]
+[902/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+[903/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+[904/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+[905/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+[906/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+[907/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[908/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+    [content-retry 1/4] ["too similar (ratio=0.75) to an already-accepted instruction: 'מהם ההבדלים המרכזיים בין סוגי מסדי נתונים NoSQL: מפתח-ערך, מסמכים וגרפים? הסבירו'"]
+    [content-retry 2/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[909/1200] topic='ניהול טרנזקציות ותכונות ACID'
+[910/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+[911/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+    [content-retry 1/4] ["too similar (ratio=0.94) to an already-accepted instruction: 'מהם המרכיבים המרכזיים של דיאגרמת ER וכיצד הם משתלבים בתכנון מסד נתונים?'"]
+[912/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+[913/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[914/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+[915/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[916/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+[917/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+    [content-retry 1/4] ['output looks like a copy of the first rationale point, not a synthesis']
+    [checkpoint] 895 total examples saved to raw_courses_data/databases_data.json (accepted this run: 875, skipped: 22)
+[918/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[919/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[920/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+[921/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 2/4] ["too similar (ratio=0.97) to an already-accepted instruction: 'השווה בין גישת נעילות (Locking) לבין פרוטוקול 2PL (Two-Phase Locking) בבקרת בו-ז'"]
+[922/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+[923/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+[924/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+[925/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+[926/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+[927/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+[928/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+[929/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+[930/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 2/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[931/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+[932/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+[933/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+[934/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 2/4] ["too similar (ratio=0.72) to an already-accepted instruction: 'מהי משמעות הלוגים (Logging) בשחזור לאחר כשל (Recovery) במסדי נתונים, וכיצד מתבצע'"]
+[935/1200] topic='ניהול טרנזקציות ותכונות ACID'
+    [content-retry 1/4] ["too similar (ratio=0.79) to an already-accepted instruction: 'מהן תכונות ACID של ניהול טרנזקציות, וכיצד כל אחת מהן תורמת לשמירה על עקביות הנתו'"]
+    [content-retry 2/4] ["too similar (ratio=0.83) to an already-accepted instruction: 'מהן תכונות ACID של ניהול טרנזקציות, וכיצד כל אחת מהן תורמת לשמירה על עקביות הנתו'"]
+    [content-retry 3/4] ["too similar (ratio=0.74) to an already-accepted instruction: 'מהם ההיבטים המרכזיים של תכונת האטומיות (Atomicity) בניהול טרנזקציות וכיצד היא מש'"]
+[936/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+[937/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[938/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+    [content-retry 1/4] ['too similar (ratio=0.76) to an already-accepted instruction: "כיצד ניתן להסביר את פעולת האופרטור \'Join\' באלגברה רלציונית באמצעות אנלוגיה מהעול"']
+    [content-retry 2/4] ["too similar (ratio=0.76) to an already-accepted instruction: 'הסבירו את עקרון האופרטור Selection באלגברה רלציונית בעזרת אנלוגיה מעולם האוכל, ו'"]
+[939/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+[940/1200] topic='ניהול טרנזקציות ותכונות ACID'
+[941/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 2/4] ["too similar (ratio=0.85) to an already-accepted instruction: 'מהו תפקידם של לוגים (Logging) בשחזור נתונים לאחר כשל, וכיצד הם מסייעים בהבטחת של'"]
+    [content-retry 3/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[942/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+    [checkpoint] 920 total examples saved to raw_courses_data/databases_data.json (accepted this run: 900, skipped: 22)
+[943/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+[944/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[945/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[946/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+[947/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+[948/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[949/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+[950/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[951/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[952/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+[953/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+[954/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+[955/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+[956/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+[957/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 2/4] ["too similar (ratio=0.85) to an already-accepted instruction: 'מהם העקרונות הבסיסיים של מבנה עץ B+ וכיצד הוא תורם לאחזור מהיר של נתונים במסד נת'"]
+    [content-retry 3/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[958/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+[959/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+[960/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+    [content-retry 1/4] ["too similar (ratio=0.76) to an already-accepted instruction: 'מהו מבוי סתום (Deadlock) בטרנזקציות, וכיצד ניתן לזהות אותו במערכת ניהול מסדי נתו'"]
+[961/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+[962/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+    [content-retry 1/4] ["too similar (ratio=0.74) to an already-accepted instruction: 'מהו העיקרון של מודל CAP ובמה הוא משפיע על עיצוב מסדי נתונים מסוג NoSQL?'"]
+    [content-retry 2/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 3/4] ["too similar (ratio=0.73) to an already-accepted instruction: 'מהי הטעות הנפוצה בהבנת עקרון CAP במודלים של מסדי נתונים NoSQL, וכיצד היא עשויה ל'"]
+    [content-retry 4/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.79) to an already-accepted instruction: 'מהם עקרונות מודל CAP במסדי נתונים מסוג NoSQL, וכיצד הם משפיעים על הבחירות שעושים'"]
+    [skip] gave up on this item after 4 content retries — moving on. (skipped so far: 23)
+[963/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+[964/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+[965/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.74) to an already-accepted instruction: 'מהם שלושת סוגי מסדי הנתונים NoSQL העיקריים וכיצד כל אחד מהם מאחסן מידע?'"]
+[966/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+[967/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+    [content-retry 1/4] ["too similar (ratio=0.77) to an already-accepted instruction: 'השווה בין שימוש בפקודת CREATE TABLE עם קשירת PRIMARY KEY לבין שימוש בפקודת CREAT'"]
+[968/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+    [checkpoint] 945 total examples saved to raw_courses_data/databases_data.json (accepted this run: 925, skipped: 23)
+[969/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[970/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+[971/1200] topic='ניהול טרנזקציות ותכונות ACID'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 2/4] ["too similar (ratio=0.73) to an already-accepted instruction: 'השווה בין גישת ניהול הטרנזקציות של אופטימיזם לבין גישת הניהול של נעילה (Locking)'"]
+    [content-retry 3/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.83) to an already-accepted instruction: 'השווה בין גישת ניהול הטרנזקציות של אופטימיזם לבין גישת הניהול של נעילה (Locking)'"]
+[972/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+    [content-retry 1/4] ["too similar (ratio=0.75) to an already-accepted instruction: 'השווה בין השימוש במפתח ראשי (Primary Key) לבין המפתח הזר (Foreign Key) במודל הרל'"]
+    [content-retry 2/4] ["too similar (ratio=0.75) to an already-accepted instruction: 'השוו בין המפתח הראשי (Primary Key) למפתח זר (Foreign Key) בטבלאות רלציוניות, והס'"]
+[973/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+[974/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+[975/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[976/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[977/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+[978/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+[979/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+[980/1200] topic='ניהול טרנזקציות ותכונות ACID'
+[981/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+[982/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 2/4] ["too similar (ratio=0.73) to an already-accepted instruction: 'השווה בין גישת הלוגים (Logging) לגישת שחזור מצב (Checkpointing) בשחזור נתונים לא'"]
+    [content-retry 3/4] ["too similar (ratio=0.75) to an already-accepted instruction: 'השווה בין גישת הלוגים (Logging) לגישת שחזור מצב (Checkpointing) בשחזור נתונים לא'"]
+    [content-retry 4/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [skip] gave up on this item after 4 content retries — moving on. (skipped so far: 24)
+[983/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+[984/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+[985/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+[986/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+[987/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+[988/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[989/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+[990/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[991/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+[992/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+[993/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+    [content-retry 1/4] ['rationale must have 3-5 numbered points, found 7', 'output looks like a copy of the first rationale point, not a synthesis']
+[994/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 2/4] ["too similar (ratio=0.77) to an already-accepted instruction: 'השווה בין גישת הלוגים (Logging) לגישת שחזור מצב (Checkpointing) בשחזור נתונים לא'"]
+    [content-retry 3/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.84) to an already-accepted instruction: 'השווה בין גישת הלוגים (Logging) לגישת שחזור מצב (Checkpointing) בשחזור נתונים לא'"]
+    [content-retry 4/4] ["too similar (ratio=0.89) to an already-accepted instruction: 'השווה בין גישת הלוגים (Logging) לגישת שחזור מצב (Checkpointing) בשחזור נתונים לא'"]
+    [skip] gave up on this item after 4 content retries — moving on. (skipped so far: 25)
+[995/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+    [checkpoint] 970 total examples saved to raw_courses_data/databases_data.json (accepted this run: 950, skipped: 25)
+[996/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+    [content-retry 1/4] ["too similar (ratio=0.81) to an already-accepted instruction: 'מהי טעות נפוצה שעושים סטודנטים כשמדובר באופטימיזציה של שאילתות SQL, ומה ההשלכות '"]
+[997/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+[998/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+    [content-retry 1/4] ["too similar (ratio=0.79) to an already-accepted instruction: 'מהם עקרונות מודל CAP במסדי נתונים מסוג NoSQL, וכיצד הם משפיעים על הבחירות שעושים'"]
+[999/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+[1000/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+[1001/1200] topic='ניהול טרנזקציות ותכונות ACID'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 2/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[1002/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+[1003/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+[1004/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+[1005/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[1006/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+[1007/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+[1008/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+[1009/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[1010/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+[1011/1200] topic='ניהול טרנזקציות ותכונות ACID'
+[1012/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[1013/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+[1014/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+[1015/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 2/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[1016/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+[1017/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+[1018/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[1019/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+[1020/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [checkpoint] 995 total examples saved to raw_courses_data/databases_data.json (accepted this run: 975, skipped: 25)
+[1021/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+[1022/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+[1023/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+[1024/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+[1025/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+[1026/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+[1027/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+[1028/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+    [content-retry 1/4] ["too similar (ratio=0.76) to an already-accepted instruction: 'השוו בין אופרטור ה-Join לאופרטור ה-Projection באלגברה רלציונית, והסבירו את ההשלכ'"]
+    [content-retry 2/4] ["too similar (ratio=0.80) to an already-accepted instruction: 'השוו בין אופרטור ה-Join לאופרטור ה-Projection באלגברה רלציונית, והסבירו את ההשלכ'"]
+    [content-retry 3/4] ["too similar (ratio=0.81) to an already-accepted instruction: 'השוו בין אופרטור ה-Join לאופרטור ה-Projection באלגברה רלציונית, והסבירו את ההשלכ'"]
+    [content-retry 4/4] ["too similar (ratio=0.76) to an already-accepted instruction: 'השווה בין השימוש באופרטור Selection לבין האופרטור Projection באלגברה רלציונית, ו'"]
+    [skip] gave up on this item after 4 content retries — moving on. (skipped so far: 26)
+[1029/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+[1030/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+[1031/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+[1032/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[1033/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[1034/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+[1035/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+[1036/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+[1037/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[1038/1200] topic='ניהול טרנזקציות ותכונות ACID'
+[1039/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+[1040/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+[1041/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+[1042/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+    [content-retry 1/4] ["too similar (ratio=0.73) to an already-accepted instruction: 'השווה בין גישת נעילות (Locking) לבין פרוטוקול 2PL (Two-Phase Locking) בבקרת בו-ז'"]
+    [content-retry 2/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.88) to an already-accepted instruction: 'השווה בין גישת נעילות (Locking) לבין פרוטוקול 2PL (Two-Phase Locking) בבקרת בו-ז'"]
+    [content-retry 3/4] ["too similar (ratio=0.86) to an already-accepted instruction: 'השווה בין גישת נעילות (Locking) לבין פרוטוקול 2PL (Two-Phase Locking) בבקרת בו-ז'"]
+    [content-retry 4/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.98) to an already-accepted instruction: 'השווה בין גישת נעילות (Locking) לבין פרוטוקול 2PL (Two-Phase Locking) בבקרת בו-ז'"]
+    [skip] gave up on this item after 4 content retries — moving on. (skipped so far: 27)
+[1043/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+[1044/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+[1045/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+[1046/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+    [content-retry 1/4] ["too similar (ratio=0.75) to an already-accepted instruction: 'מהי טעות נפוצה בתכנון דיאגרמת ER, שקשורה למיפוי בין ישויות לתכונות שלהן, וכיצד נ'"]
+[1047/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+    [checkpoint] 1020 total examples saved to raw_courses_data/databases_data.json (accepted this run: 1000, skipped: 27)
+[1048/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+[1049/1200] topic='ניהול טרנזקציות ותכונות ACID'
+[1050/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+[1051/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+[1052/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 2/4] ["too similar (ratio=0.80) to an already-accepted instruction: 'השוו בין גישת ה-Optimistic Concurrency Control לגישת ה-Pessimistic Concurrency C'"]
+[1053/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+[1054/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+[1055/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+[1056/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+[1057/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+[1058/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[1059/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+    [content-retry 1/4] ['too similar (ratio=0.77) to an already-accepted instruction: "השוו בין הפקודות DDL \'CREATE TABLE\' ו-\'ALTER TABLE\' בשפת SQL, והסבירו באילו מצבי"']
+    [content-retry 2/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[1060/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+[1061/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+[1062/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[1063/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.80) to an already-accepted instruction: 'מהו תפקידם של המפתחות הראשיים והזרים במודל הרלציוני, וכיצד הם תורמים לשמירה על ש'"]
+[1064/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+[1065/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+[1066/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.75) to an already-accepted instruction: 'מהי טעות נפוצה שהסטודנטים עושים כאשר הם מיישמים את פרוטוקול 2PL (Two-Phase Locki'"]
+    [content-retry 2/4] ["too similar (ratio=0.72) to an already-accepted instruction: 'מהי טעות נפוצה שהסטודנטים עושים כאשר הם מיישמים את פרוטוקול 2PL (Two-Phase Locki'"]
+    [content-retry 3/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 4/4] ["too similar (ratio=0.82) to an already-accepted instruction: 'מהי טעות נפוצה בקרב סטודנטים בנוגע לשימוש בפרוטוקול 2PL (Two-Phase Locking) בבקר'"]
+    [skip] gave up on this item after 4 content retries — moving on. (skipped so far: 28)
+[1067/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+[1068/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+    [content-retry 1/4] ["too similar (ratio=0.89) to an already-accepted instruction: 'איך ניתן להסביר את מושג האופטימיזציה של שאילתות באמצעות אנלוגיה לעולם האמיתי? תן'"]
+[1069/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 2/4] ["too similar (ratio=0.77) to an already-accepted instruction: 'מהי הטעות הנפוצה ביותר שסטודנטים עושים בהבנת מבוי סתום בטרנזקציות, וכיצד ניתן לה'"]
+[1070/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+[1071/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+[1072/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+[1073/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+    [checkpoint] 1045 total examples saved to raw_courses_data/databases_data.json (accepted this run: 1025, skipped: 28)
+[1074/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[1075/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+[1076/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[1077/1200] topic='ניהול טרנזקציות ותכונות ACID'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[1078/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[1079/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+[1080/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[1081/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+[1082/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[1083/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[1084/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 2/4] ["too similar (ratio=0.73) to an already-accepted instruction: 'השווה בין שתי גישות לסריאליזביליות של טרנזקציות מקבילות: גישת Two-Phase Locking '"]
+    [content-retry 3/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 4/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.73) to an already-accepted instruction: 'השווה בין גישת סריאליזביליות מבוססת תור (Queue-Based Serializability) לבין גישת '"]
+    [skip] gave up on this item after 4 content retries — moving on. (skipped so far: 29)
+[1085/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[1086/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+[1087/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+    [content-retry 1/4] ["too similar (ratio=0.76) to an already-accepted instruction: 'כיצד ניתן להסביר את עקרון הלוגים (Logging) ושחזור לאחר כשל (Recovery) באמצעות אנ'"]
+    [content-retry 2/4] ["too similar (ratio=0.74) to an already-accepted instruction: 'הסבירו את חשיבות הלוגים (Logging) ושחזור לאחר כשל (Recovery) במסדי נתונים, באמצע'"]
+[1088/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+[1089/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+[1090/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+[1091/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+[1092/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[1093/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 2/4] ['output looks like a copy of the first rationale point, not a synthesis']
+[1094/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+[1095/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+[1096/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[1097/1200] topic='ניהול טרנזקציות ותכונות ACID'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[1098/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+    [content-retry 1/4] ["keys must be exactly {'output', 'course_name', 'domain', 'rationale', 'instruction'}, got {'Deadlock Prevention שכוללת חוקים שמונעים מצב של התנגשות מלכתחילה, לדוגמה, על ידי הקצאת משאבים מראש. 4. גישה נוספת היא ', 'output', 'course_name', 'domain', 'rationale', 'instruction'}"]
+[1099/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [checkpoint] 1070 total examples saved to raw_courses_data/databases_data.json (accepted this run: 1050, skipped: 29)
+[1100/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+[1101/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+[1102/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+    [content-retry 1/4] ["too similar (ratio=0.78) to an already-accepted instruction: 'צור דיאגרמת ER עבור מערכת ניהול ספרים, ותאר צעד-אחר-צעד את תהליך התכנון, כולל קב'"]
+[1103/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+[1104/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+[1105/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 2/4] ["keys must be exactly {'output', 'course_name', 'domain', 'rationale', 'instruction'}, got {'domain', 'course_name', 'rationale', 'instruction'}"]
+    [content-retry 3/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.78) to an already-accepted instruction: 'השווה בין מסדי נתונים מסוג Document לבין מסדי נתונים מסוג Key-Value, והסבר את הי'"]
+    [content-retry 4/4] ["too similar (ratio=0.80) to an already-accepted instruction: 'השווה בין מסדי נתונים מסוג Graph לבין מסדי נתונים מסוג Document, והסביר כיצד כל '"]
+    [skip] gave up on this item after 4 content retries — moving on. (skipped so far: 30)
+[1106/1200] topic='ניהול טרנזקציות ותכונות ACID'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.78) to an already-accepted instruction: 'מהי טעות נפוצה שנעשית כשסטודנטים מיישמים את תכונת האטומיות (Atomicity) של טרנזקצ'"]
+[1107/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+[1108/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+[1109/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+[1110/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+[1111/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+[1112/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+[1113/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+[1114/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+[1115/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[1116/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+    [content-retry 1/4] ["too similar (ratio=0.72) to an already-accepted instruction: 'מהי הטעות הנפוצה ביותר שסטודנטים עושים בהבנת מבוי סתום בטרנזקציות, וכיצד ניתן לה'"]
+    [content-retry 2/4] ["too similar (ratio=0.80) to an already-accepted instruction: 'מהי טעות נפוצה שנעשית במהלך הנרמול של טבלאות, במיוחד בצורת הנורמלית השנייה (2NF)'"]
+[1117/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[1118/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[1119/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+[1120/1200] topic='ניהול טרנזקציות ותכונות ACID'
+[1121/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+[1122/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+[1123/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", 'output too short / not synthesized']
+    [content-retry 2/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[1124/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[1125/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+    [checkpoint] 1095 total examples saved to raw_courses_data/databases_data.json (accepted this run: 1075, skipped: 30)
+[1126/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+    [content-retry 1/4] ["too similar (ratio=0.94) to an already-accepted instruction: 'כיצד ניתן להבין את פקודות DDL בשפת SQL באמצעות אנלוגיה לעיצוב בית, ומהן ההשלכות '"]
+    [content-retry 2/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.83) to an already-accepted instruction: 'כיצד ניתן להבין את פקודות DDL בשפת SQL באמצעות אנלוגיה לעיצוב בית, ומהן ההשלכות '"]
+    [content-retry 3/4] ["too similar (ratio=0.82) to an already-accepted instruction: 'כיצד ניתן להבין את פקודות DDL בשפת SQL באמצעות אנלוגיה לעיצוב בית, ומהן ההשלכות '"]
+[1127/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 3/4] ["too similar (ratio=0.74) to an already-accepted instruction: 'מהו מבוי סתום (Deadlock) בטרנזקציות, וכיצד ניתן לזהות אותו במערכת ניהול מסדי נתו'"]
+    [content-retry 4/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [skip] gave up on this item after 4 content retries — moving on. (skipped so far: 31)
+[1128/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 2/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[1129/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[1130/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+[1131/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+[1132/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[1133/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+[1134/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 2/4] ["too similar (ratio=0.74) to an already-accepted instruction: 'מהי הטעות הנפוצה שביצוע אופטימיזציה של שאילתות SQL באמצעות אינדקסים בלבד, וכיצד '"]
+    [content-retry 3/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[1135/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+[1136/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[1137/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.80) to an already-accepted instruction: 'מהי הטעות הנפוצה ביותר שסטודנטים עושים בהבנת מבוי סתום בטרנזקציות, וכיצד ניתן לה'"]
+[1138/1200] topic='ניהול טרנזקציות ותכונות ACID'
+[1139/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[1140/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+[1141/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+    [content-retry 1/4] ["too similar (ratio=0.81) to an already-accepted instruction: 'מהם העקרונות המרכזיים של אופטימיזציה של שאילתות, וכיצד הם משפיעים על ביצועי מסד '"]
+    [content-retry 2/4] ["too similar (ratio=0.77) to an already-accepted instruction: 'מהם הגורמים המרכזיים שמשפיעים על תהליך אופטימיזציה של שאילתות, וכיצד כל אחד מהם '"]
+    [content-retry 3/4] ['output looks like a copy of the first rationale point, not a synthesis', "too similar (ratio=0.83) to an already-accepted instruction: 'מהם העקרונות הבסיסיים של אופטימיזציה של שאילתות במסדי נתונים, ואילו גורמים יש לק'"]
+    [content-retry 4/4] ["too similar (ratio=0.75) to an already-accepted instruction: 'מהם העקרונות הבסיסיים של אופטימיזציה של שאילתות במסדי נתונים, ואילו גורמים יש לק'"]
+    [skip] gave up on this item after 4 content retries — moving on. (skipped so far: 32)
+[1142/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+[1143/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+[1144/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+[1145/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+[1146/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+[1147/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+[1148/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+[1149/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+[1150/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.82) to an already-accepted instruction: 'מהם העקרונות הבסיסיים של ארגון קבצים ובלוקים בדיסק וכיצד הם משפיעים על האיכויות '"]
+[1151/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[1152/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [checkpoint] 1120 total examples saved to raw_courses_data/databases_data.json (accepted this run: 1100, skipped: 32)
+[1153/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[1154/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+[1155/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+[1156/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.77) to an already-accepted instruction: 'מהי טעות נפוצה שהסטודנטים עושים כאשר הם מיישמים את פרוטוקול 2PL (Two-Phase Locki'"]
+[1157/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+[1158/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+[1159/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+[1160/1200] topic='ניהול טרנזקציות ותכונות ACID'
+[1161/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+[1162/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+[1163/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+    [content-retry 1/4] ["too similar (ratio=0.80) to an already-accepted instruction: 'מהם המאפיינים המרכזיים של מפתחות ראשיים (Primary Keys) ומפתחות זרים (Foreign Key'"]
+    [content-retry 2/4] ["too similar (ratio=0.76) to an already-accepted instruction: 'מהם המאפיינים המרכזיים של מפתחות ראשיים (Primary Keys) ומפתחות זרים (Foreign Key'"]
+[1164/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+[1165/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+[1166/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+[1167/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+[1168/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+[1169/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+[1170/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+[1171/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+[1172/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+[1173/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.81) to an already-accepted instruction: 'תאר מקרה שימוש שבו נדרש לבחור בין מודל נתונים היררכי לבין מודל נתונים רלציוני, ו'"]
+    [content-retry 2/4] ["too similar (ratio=0.73) to an already-accepted instruction: 'השווה בין המודל היררכי למודל הרשתי של נתונים, והסבר אילו יתרונות וחסרונות קיימים'"]
+    [content-retry 3/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 4/4] ["too similar (ratio=0.74) to an already-accepted instruction: 'השוו בין מודל הנתונים ההיררכי למודל הנתונים הרלציוני, והסבירו כיצד כל מודל פותר '"]
+    [skip] gave up on this item after 4 content retries — moving on. (skipped so far: 33)
+[1174/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+[1175/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[1176/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[1177/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+[1178/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.75) to an already-accepted instruction: 'השוו בין גישת ה-Optimistic Concurrency Control לגישת ה-Pessimistic Concurrency C'"]
+    [checkpoint] 1145 total examples saved to raw_courses_data/databases_data.json (accepted this run: 1125, skipped: 33)
+[1179/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[1180/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+[1181/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[1182/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+[1183/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+[1184/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+    [content-retry 1/4] ['too similar (ratio=0.73) to an already-accepted instruction: "כיצד ניתן להסביר את פעולת האופרטור \'Join\' באלגברה רלציונית באמצעות אנלוגיה מהעול"']
+    [content-retry 2/4] ['too similar (ratio=0.78) to an already-accepted instruction: "כיצד ניתן להסביר את פעולת האופרטור \'Join\' באלגברה רלציונית באמצעות אנלוגיה מהעול"']
+    [content-retry 3/4] ['too similar (ratio=0.79) to an already-accepted instruction: "כיצד ניתן להסביר את פעולת האופרטור \'Join\' באלגברה רלציונית באמצעות אנלוגיה מהעול"']
+    [content-retry 4/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [skip] gave up on this item after 4 content retries — moving on. (skipped so far: 34)
+[1185/1200] topic='ניהול טרנזקציות ותכונות ACID'
+[1186/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+[1187/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+[1188/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+    [content-retry 1/4] ["too similar (ratio=0.72) to an already-accepted instruction: 'כיצד ניתן לבנות דיאגרמת ER עבור מערכת ניהול مكتבים? פרט את הצעדים הנדרשים בתהליך'"]
+[1189/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+[1190/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 2/4] ["too similar (ratio=0.81) to an already-accepted instruction: 'הסבר כיצד ניתן להבין את מושג מבוי סתום בטרנזקציות (Transaction Deadlock) באמצעות'"]
+[1191/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+[1192/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+[1193/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+    [content-retry 1/4] ["too similar (ratio=0.81) to an already-accepted instruction: 'הסבירו כיצד מודל CAP משפיע על בחירת מסד נתונים מסוג NoSQL, כולל דוגמה מעשית וביצ'"]
+    [content-retry 2/4] ["keys must be exactly {'output', 'course_name', 'domain', 'rationale', 'instruction'}, got {'field', 'course_name', 'domain', 'rationale', 'instruction'}"]
+[1194/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+[1195/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+[1196/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[1197/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+[1198/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+[1199/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 2/4] ["too similar (ratio=0.76) to an already-accepted instruction: 'מהו נרמול במסדי נתונים, ומהן שלוש הצורות הנורמליות הראשונות (1NF, 2NF, 3NF)? הסב'"]
+[1200/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+    [content-retry 1/4] ["too similar (ratio=0.75) to an already-accepted instruction: 'מה הטעות הנפוצה של סטודנטים בהבנת מודל הנתונים ההיררכי, וכיצד ניתן לתקן את ההבנה'"]
+[1201/1200] topic='ניהול טרנזקציות ותכונות ACID'
+[1202/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+[1203/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+[1204/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+    [checkpoint] 1170 total examples saved to raw_courses_data/databases_data.json (accepted this run: 1150, skipped: 34)
+[1205/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[1206/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+    [content-retry 1/4] ["too similar (ratio=0.73) to an already-accepted instruction: 'מהו עקרון המפתח בתכנון דיאגרמת ER (Entity-Relationship) והכיצד משפיע הקשר בין יש'"]
+[1207/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 2/4] ["too similar (ratio=0.72) to an already-accepted instruction: 'תאר תרחיש קצה שבו שתי טרנזקציות מקבילות מנסות לגשת ולשנות את אותו הנתון במסד נתו'"]
+    [content-retry 3/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 4/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [skip] gave up on this item after 4 content retries — moving on. (skipped so far: 35)
+[1208/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+[1209/1200] topic='שפת שאילתות SQL - פקודות DML בסיסיות (SELECT, INSERT, UPDATE'
+[1210/1200] topic='מסדי נתונים מסוג NoSQL - עקרונות ומודל CAP'
+[1211/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+[1212/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[1213/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 2/4] ["too similar (ratio=0.74) to an already-accepted instruction: 'מהו תפקידם של המפתחות הראשיים והזרים במודל הרלציוני, וכיצד הם תורמים לשמירה על ש'"]
+[1214/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+[1215/1200] topic='נרמול (Normalization) וצורות נורמליות (1NF, 2NF, 3NF, BCNF)'
+[1216/1200] topic='תלויות פונקציונליות (Functional Dependencies)'
+[1217/1200] topic='סוגי מסדי NoSQL - מפתח-ערך, מסמכים וגרפים'
+    [content-retry 1/4] ["keys must be exactly {'output', 'course_name', 'domain', 'rationale', 'instruction'}, got {'course_name', 'id', 'instruction', 'domain', 'rationale', 'output'}"]
+    [content-retry 2/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.80) to an already-accepted instruction: 'השווה בין מסדי נתונים מסוג מפתח-ערך למסדי נתונים מסוג מסמכים, והסבר את היתרונות '"]
+    [content-retry 3/4] ["too similar (ratio=0.81) to an already-accepted instruction: 'השווה בין מסדי נתונים מסוג Graph לבין מסדי נתונים מסוג Document, והסביר כיצד כל '"]
+[1218/1200] topic='שפת שאילתות SQL - פקודות DDL בסיסיות'
+[1219/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+[1220/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[1221/1200] topic='תכנון מסד נתונים באמצעות דיאגרמת ER (Entity-Relationship)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[1222/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+[1223/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.73) to an already-accepted instruction: 'מהי הטעות הנפוצה שסטודנטים עושים כאשר הם משתמשים באינדקסים לשיפור ביצועי שאילתות'"]
+    [content-retry 2/4] ["too similar (ratio=0.82) to an already-accepted instruction: 'מהן הטעויות הנפוצות שסטודנטים עושים בהבנת מבנה העץ B+ וכיצד זה משפיע על ביצועי ה'"]
+[1224/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[1225/1200] topic='ניהול טרנזקציות ותכונות ACID'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[1226/1200] topic='אלגברה רלציונית - אופרטורים בסיסיים (Selection, Projection, '
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[1227/1200] topic='אכסון יעיל של נתונים - ארגון קבצים ובלוקים בדיסק'
+[1228/1200] topic='ניהול טרנזקציות ותכונות ACID'
+[1229/1200] topic='לוגים (Logging) ושחזור לאחר כשל (Recovery)'
+[1230/1200] topic='אינדקסים (Indexes) ומבני עץ B+ לאחזור מהיר'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.78) to an already-accepted instruction: 'הסבר את המושג אינדקסים במערכות מסדי נתונים באמצעות אנלוגיה מהעולם האמיתי, והדגם '"]
+    [checkpoint] 1195 total examples saved to raw_courses_data/databases_data.json (accepted this run: 1175, skipped: 35)
+[1231/1200] topic='בקרת בו-זמניות (Concurrency Control) - נעילות ופרוטוקול 2PL'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 2/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [content-retry 4/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+    [skip] gave up on this item after 4 content retries — moving on. (skipped so far: 36)
+[1232/1200] topic='מודלים של נתונים - היררכי, רשתי ורלציוני'
+[1233/1200] topic='ניתוח בטיחות של טרנזקציות מקבילות - סריאליזביליות (Serializa'
+[1234/1200] topic='מבוי סתום בטרנזקציות (Transaction Deadlock)'
+    [content-retry 1/4] ["keys must be exactly {'output', 'course_name', 'domain', 'rationale', 'instruction'}, got {'timeout', 'output', 'course_name', 'domain', 'rationale', 'instruction'}"]
+[1235/1200] topic='המודל הרלציוני - טבלאות, שורות ומפתחות (Primary Key / Foreig'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'"]
+[1236/1200] topic='אופטימיזציה של שאילתות (Query Optimization)'
+    [content-retry 1/4] ["rationale missing a concrete worked example / code / 'לדוגמה'", "too similar (ratio=0.79) to an already-accepted instruction: 'השווה בין שתי גישות לאופטימיזציה של שאילתות במסדי נתונים: שימוש בשיטת Cost-Based'"]
+    [checkpoint] 1200 total examples saved to raw_courses_data/databases_data.json (accepted this run: 1180, skipped: 36)
+
+[done] raw_courses_data/databases_data.json now has 1200 examples for Databases. (this run: accepted=1180, skipped=36)
