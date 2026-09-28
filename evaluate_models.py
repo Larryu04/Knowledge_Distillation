@@ -41,9 +41,12 @@ from transformers import (
 # Config — kept identical to train.py / inference.py where it matters for a fair comparison.
 # ------------------------------------------------------------------------------------------
 BASE_MODEL_ID = "dicta-il/dictalm2.0-instruct"
-ADAPTER_DIR = "out/dictalm2-tutor-qlora-v6/adapter"
-EVAL_PATH = "hebrew_cs_pilot_dataset_24.json"   # syllabus-aligned 24-item gold set, lowercase 5-key schema
-OUT_DIR = "eval_results_v6/"
+ADAPTER_DIR = "out/dictalm2-tutor-qlora-v7/adapter"
+EVAL_PATH = "hebrew_cs_pilot_dataset_48.json"   # syllabus-aligned 48-item gold set (12 domains x 4),
+                                                 # lowercase 5-key schema -- new official benchmark as
+                                                 # of the 2026-09-27 12-course expansion, superseding
+                                                 # the 24-item/6-domain set (see project_memory.md).
+OUT_DIR = "eval_results_v7/"
 
 SEED = 42
 MAX_SEQ_LEN = 1024
@@ -74,6 +77,12 @@ DOMAINS = [
     "C++",
     "Java",
     "Python",
+    "Data Structures",
+    "Algorithms",
+    "Computer Architecture",
+    "Databases",
+    "Automata Theory",
+    "Software Engineering",
 ]
 
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"

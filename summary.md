@@ -305,3 +305,161 @@ Read these before citing the headline number or comparing it with earlier runs.
 | `eval_results_v6/answer_key.csv` | A/B → model mapping |
 | `eval_results_v6/eval_raw_results.json` | Per-question losses and full generations from both models |
 | `out/dictalm2-tutor-qlora-v6/adapter` | Final adapter (best checkpoint, step 749) |
+
+---
+
+## 10. Result — v7 (12-course corpus)
+
+**Date:** 2026-09-28
+**Adapter:** `out/dictalm2-tutor-qlora-v7/adapter` (best checkpoint, step 1704 of 1710)
+**Base model:** `dicta-il/dictalm2.0-instruct` (4-bit NF4)
+**Training data:** `merged_12_courses.json` — 14,400 rows (1,200 per course × 12)
+**Eval set (official gold benchmark):** `hebrew_cs_pilot_dataset_48.json` — 48 items, 4 per domain × 12
+**Script:** `evaluate_models.py` · results in `eval_results_v7/`
+
+**Bottom line: the v7 adapter beats the base model in all 12 domains (overall Δ = +0.2974,
+loss 0.8292 → 0.5319, PPL 2.29 → 1.70) and on every one of the 48 items.** The six new
+domains, which no earlier adapter had seen, gain as much as the original six do.
+
+### 10.1 What changed relative to v6
+
+| | v6 | v7 |
+|---|---|---|
+| Training data | 7,200 rows, 6 courses | 14,400 rows, 12 courses (same generator / format) |
+| Sequence length | tok p50 565 / max 822 | tok p50 610 / p99 742 / max 866 |
+| `MAX_SEQ_LEN` | 832 | **872** (832 would have dropped 7 rows) |
+| Train sampler | weighted (inverse-sqrt domain frequency) | **plain shuffle** — corpus is exactly balanced (1,200/domain), all weights = 1.0, so sampling with replacement would only leave ~37% of rows unseen per epoch |
+| `PREAMBLE` | names 6 subject areas | names all 12 (identical in `train.py` / `inference.py` / `evaluate_models.py`) |
+| Steps | 856 (2 epochs) | 1,710 (2 epochs), eval/save every 213 |
+| LoRA / LR / epochs / batch | r=16, α=32, 1e-4, 2, eff. 16 (2 × 8) | unchanged |
+
+### 10.2 Masked teacher-forcing loss — v7 vs. base
+
+| Domain | N | Base Loss | FT Loss | Δ (Base−FT) | Base PPL | FT PPL |
+|---|--:|--:|--:|--:|--:|--:|
+| Algorithms *(new)* | 4 | 0.9465 | 0.6203 | **+0.3262** | 2.58 | 1.86 |
+| Operating Systems | 4 | 0.8443 | 0.5225 | **+0.3218** | 2.33 | 1.69 |
+| Databases *(new)* | 4 | 0.8309 | 0.5092 | **+0.3217** | 2.30 | 1.66 |
+| Automata Theory *(new)* | 4 | 0.8200 | 0.5031 | **+0.3169** | 2.27 | 1.65 |
+| Java | 4 | 0.8648 | 0.5527 | **+0.3122** | 2.37 | 1.74 |
+| Computer Architecture *(new)* | 4 | 0.9361 | 0.6344 | **+0.3016** | 2.55 | 1.89 |
+| Software Engineering *(new)* | 4 | 0.7599 | 0.4639 | **+0.2960** | 2.14 | 1.59 |
+| Python | 4 | 0.8294 | 0.5392 | **+0.2902** | 2.29 | 1.71 |
+| Computer Networks | 4 | 0.8026 | 0.5131 | **+0.2895** | 2.23 | 1.67 |
+| Data Structures *(new)* | 4 | 0.7557 | 0.4797 | **+0.2760** | 2.13 | 1.62 |
+| C++ | 4 | 0.7535 | 0.4897 | **+0.2638** | 2.12 | 1.63 |
+| Cybersecurity | 4 | 0.8069 | 0.5547 | **+0.2523** | 2.24 | 1.74 |
+| **OVERALL** | 48 | **0.8292** | **0.5319** | **+0.2974** | 2.29 | 1.70 |
+
+*Δ > 0 ⇒ the adapter assigns higher likelihood to the reference answer (better).*
+
+- Better on **48 / 48 items**; all domain deltas lie in a narrow band (+0.25 … +0.33).
+- New six domains: mean Δ +0.306; original six: mean Δ +0.288.
+- The two hardest domains for the base model (Algorithms 0.95, Computer Architecture 0.94)
+  are among the largest gains.
+
+### 10.3 Training run
+
+- **1,710 / 1,710 steps** (2 epochs); no early stopping; no crash. Worst-case preflight
+  (2 × 872 tokens): 6.37 GB peak allocated, 6.71 GB reserved, under the 10.2 GB cap.
+- Validation `macro_domain_loss` per eval (every 213 steps): 0.8224 → 0.8011 → 0.7876 →
+  0.7748 → 0.7767 → 0.7725 → 0.7707 → **0.7695** (step 1704, restored as the final adapter).
+  Gains flatten after ~step 850 (the second epoch adds only ~0.005), so more epochs are
+  unlikely to help much. Train loss 1.075 → 0.668.
+- Per-domain val loss at step 1704 ranges 0.721 (Java) … 0.838 (Algorithms).
+
+### 10.4 Scope and caveats
+
+- **v6's +0.150 (§9) and v7's +0.297 are not like-for-like.** The 48-item benchmark shares
+  **no** questions with the 24-item set, and base loss differs (0.829 vs. 0.853). The valid
+  adapter-vs-adapter comparison is §10.7 (both adapters on the same 48 items).
+- **Overlap check.** 0 / 48 exact instruction matches with the training corpus; max
+  within-domain token-Jaccard 0.667 (1 item > 0.6, 2 > 0.5). Excluding them: mean Δ +0.296
+  (> 0.6 removed) / +0.294 (> 0.5 removed) — the result does not depend on the overlap.
+- **In-distribution by design**, same as §9.5: the benchmark and corpus come from the same
+  syllabi and `gpt-4o-mini` pipeline family.
+- **Small N.** Four items per domain; the overall figure (N = 48) is the stable number.
+- **Loss ≠ answer quality.** `eval_results_v7/blind_evaluation.csv` has not been human-graded.
+- **Generation format.** 47 / 48 v7 answers follow the numbered-rationale → final-line
+  structure, but the final line starts `תשובה:`, **never** the trained `תשובה סופית:`
+  (0 / 48; v6 was also 0 / 24). One Operating Systems answer has no final line. No CJK or
+  Cyrillic characters in any generation. Spot-checks show occasional term typos
+  (e.g. "OIS" for OSI, "SYN-AK").
+
+### 10.5 Next steps
+
+1. Human-grade `eval_results_v7/blind_evaluation.csv` (48 rows).
+2. Decide on the `תשובה:` vs. `תשובה סופית:` prefix: either accept `תשובה:` (change
+   `FINAL_ANSWER_PREFIX` and any parser) or investigate why the trained prefix never appears.
+
+### 10.6 Output artifacts
+
+| File | Contents |
+|---|---|
+| `eval_results_v7/loss_results.csv` | Per-domain + overall loss and perplexity, base vs. v7 adapter |
+| `eval_results_v7/blind_evaluation.csv` | 48 rows, shuffled Answer_A/Answer_B, blank score columns |
+| `eval_results_v7/answer_key.csv` | A/B → model mapping |
+| `eval_results_v7/eval_raw_results.json` | Per-question losses and full generations from both models |
+| `out/dictalm2-tutor-qlora-v7/adapter` | Final adapter (best checkpoint, step 1704) |
+| `eval_results_v7/v6_vs_v7_loss_comparison.csv` | v6 vs. v7 side by side on the 48 items (§10.7), built by `compare_loss_results.py` |
+| `eval_results_v6_on48/` | v6 adapter scored on the 48-item benchmark (loss CSV, blind CSVs, raw JSON) |
+
+### 10.7 Direct comparison — v6 vs. v7 on the same 48-item benchmark
+
+**Date:** 2026-09-28 · v6 re-scored with
+`evaluate_models.py --adapter-dir out/dictalm2-tutor-qlora-v6/adapter --out-dir eval_results_v6_on48/`;
+merged by `compare_loss_results.py` → `eval_results_v7/v6_vs_v7_loss_comparison.csv`.
+Both runs score the same frozen base model; per-item base losses are identical (max diff 0.0),
+so this comparison is like-for-like.
+
+**Bottom line: v7 scaled to 12 domains without losing ground on the original 6. It beats v6
+on every one of the 48 items: +0.124 mean loss gain on the new domains and +0.044 on the
+original ones.** This is the baseline evidence for the 12-course expansion.
+
+| Domain | Group | Base | v6 | v7 | Δ v6 vs. base | Δ v7 vs. base | **Gain v7 over v6** |
+|---|---|--:|--:|--:|--:|--:|--:|
+| Computer Networks | original | 0.8026 | 0.5569 | 0.5131 | +0.2457 | +0.2895 | **+0.0438** |
+| Cybersecurity | original | 0.8069 | 0.6064 | 0.5547 | +0.2005 | +0.2523 | **+0.0517** |
+| Operating Systems | original | 0.8443 | 0.5656 | 0.5225 | +0.2787 | +0.3218 | **+0.0431** |
+| C++ | original | 0.7535 | 0.5186 | 0.4897 | +0.2350 | +0.2638 | **+0.0288** |
+| Java | original | 0.8648 | 0.5954 | 0.5527 | +0.2694 | +0.3122 | **+0.0427** |
+| Python | original | 0.8294 | 0.5942 | 0.5392 | +0.2352 | +0.2902 | **+0.0550** |
+| Data Structures | new | 0.7557 | 0.5705 | 0.4797 | +0.1852 | +0.2760 | **+0.0908** |
+| Algorithms | new | 0.9465 | 0.7596 | 0.6203 | +0.1869 | +0.3262 | **+0.1393** |
+| Computer Architecture | new | 0.9361 | 0.7377 | 0.6344 | +0.1984 | +0.3016 | **+0.1032** |
+| Databases | new | 0.8309 | 0.6273 | 0.5092 | +0.2036 | +0.3217 | **+0.1181** |
+| Automata Theory | new | 0.8200 | 0.7089 | 0.5031 | +0.1111 | +0.3169 | **+0.2057** |
+| Software Engineering | new | 0.7599 | 0.5493 | 0.4639 | +0.2106 | +0.2960 | **+0.0854** |
+| **Original 6 (mean)** | | 0.8169 | 0.5729 | 0.5286 | +0.2441 | +0.2883 | **+0.0442** |
+| **New 6 (mean)** | | 0.8415 | 0.6589 | 0.5351 | +0.1826 | +0.3064 | **+0.1238** |
+| **OVERALL (48)** | | 0.8292 | 0.6159 | 0.5319 | +0.2134 | +0.2974 | **+0.0840** |
+
+*Gain = v6 loss − v7 loss; > 0 ⇒ v7 assigns higher likelihood to the reference answer.*
+
+**New domains — the expansion worked.** v7's gain over v6 is ~3× larger on the new six
+(+0.124) than on the original six (+0.044), and the largest per-domain gains are all new
+domains: Automata Theory +0.206, Algorithms +0.139, Databases +0.118, Computer
+Architecture +0.103. v7 improves on v6 on 24 / 24 new-domain items.
+
+**Original domains — no catastrophic forgetting.** Halving the share of original-domain data
+(from 100% to 50% of the corpus) did not cost the original domains anything: v7 is better
+than v6 on all 6 of them and on 24 / 24 of their items. The original-6 mean loss went
+0.5729 → 0.5286.
+
+**Important nuance: v6 was *not* weak on the new domains.** Without ever training on them,
+v6 already beat the base model there by +0.183 (every one of the 24 new-domain items),
+i.e. about 60% of v7's +0.306. Most of v6's improvement is therefore domain-independent:
+learning the corpus's Hebrew tutor style and the numbered-rationale → final-answer format,
+which the teacher-forcing loss rewards on any domain. The new data adds real
+domain-specific gain on top of that — largest where v6 transferred worst (Automata Theory:
+v6 only +0.111, v7 +0.317) — but it should not be described as taking v6 from "can't answer"
+to "can answer".
+
+**Confounds to keep in mind.**
+- v7 trained for twice as many optimizer steps (1,710 vs. 856). Part of the +0.044 gain on
+  the original domains may come from more total training (cross-domain transfer and style
+  reinforcement), not only from the new data.
+- Same caveats as §10.4: N = 4 per domain, in-distribution benchmark, loss ≠ human-judged
+  answer quality (neither `eval_results_v6_on48/` nor `eval_results_v7/` blind CSV is graded).
+- Generation format is unchanged: v6 also ends 48 / 48 answers with `תשובה:`, never
+  `תשובה סופית:`; neither adapter shows CJK/Cyrillic drift.

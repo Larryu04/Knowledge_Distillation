@@ -17,11 +17,12 @@ from peft import PeftModel
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 
 BASE_MODEL_ID = "dicta-il/dictalm2.0-instruct"
-ADAPTER_DIR = "out/dictalm2-tutor-qlora-v4/adapter"
+ADAPTER_DIR = "out/dictalm2-tutor-qlora-v7/adapter"
 
 # MUST match train.py exactly.
 PREAMBLE = (
-    "אתה מתרגל אקדמי מומחה בתחומי רשתות מחשבים, אבטחת סייבר, מערכות הפעלה, ושפות תכנות C++, Java וPython. "
+    "אתה מתרגל אקדמי מומחה בתחומי רשתות מחשבים, אבטחת סייבר, מערכות הפעלה, שפות תכנות C++, Java וPython, "
+    "מבני נתונים, אלגוריתמים, ארגון המחשב, בסיסי נתונים, אוטומטים ושפות פורמליות, ושיטות בפיתוח תוכנה. "
     "ענה בעברית בלבד. תחילה הסבר את ההיגיון שלב אחר שלב, ולאחר מכן כתוב שורה "
     "שמתחילה ב'תשובה סופית:' ובה תשובה קצרה ותמציתית."
 )
