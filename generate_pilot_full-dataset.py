@@ -73,7 +73,7 @@ import openai
 # Config
 # ------------------------------------------------------------------------------------------
 GOLD_PATH = "hebrew_cs_eval_dataset_24.json"
-MODEL = "gpt-4o-mini"
+MODEL = "gpt-4o"
 
 # ------------------------------------------------------------------------------------------
 # Syllabus-constrained topics.
@@ -87,6 +87,11 @@ MODEL = "gpt-4o-mini"
 #     question wording.
 #   - "forbidden" (optional): terms that belong to a LATER/OTHER course and must never appear,
 #     because this course's syllabus explicitly does not cover them yet.
+#   - "style_note" (optional): an extra, domain-specific instruction injected into both the
+#     system and user prompts verbatim. Used for the three math-heavy courses (Discrete Math,
+#     Logic & Set Theory, Graph Theory) to steer GPT-4o toward verbal/conceptual explanations
+#     and away from heavy symbolic notation, long equations or full formal proofs, which the
+#     model tends to hallucinate/mangle at this generation volume.
 # ------------------------------------------------------------------------------------------
 DOMAIN_TOPICS = {
     "Computer Networks": {
@@ -363,6 +368,273 @@ DOMAIN_TOPICS = {
         "forbidden": ["קידוד", "כתיבת קוד", "programming code", "scrum", "agile sprint",
                       "בדיקות תוכנה", "unit testing", "ci/cd"],
     },
+    "Introduction to AI": {
+        "course_name": "מבוא לבינה מלאכותית",
+        "topics": [
+            "הקדמה לתחום הבינה המלאכותית ומהן הבעיות המרכזיות שהתחום עוסק בהן",
+            "עקרונות בסיסיים בשפת התכנות פייתון ליישום אלגוריתמי בינה מלאכותית",
+            "ייצוג בעיות באמצעות חיפוש במרחב מצבים",
+            "חיפוש עיוור (בלתי-מיודע) בבעיות בינה מלאכותית - BFS ו-DFS",
+            "חיפוש עם ידע (מיודע) ותפקידן של פונקציות היוריסטיקה",
+            "אלגוריתם החיפוש *A וקבילות (Admissibility) של פונקציית היוריסטיקה",
+            "חיפוש לוקלי (Local Search) - טיפוס גבעה (Hill Climbing)",
+            "חיפוש בתנאי יריבות - עצי משחק ואלגוריתם Minimax",
+            "גיזום Alpha-Beta במשחקי שני שחקנים",
+            "בעיות סיפוק אילוצים (Constraint Satisfaction Problems) והגדרתן",
+            "שיטות בסיסיות לפתרון בעיות סיפוק אילוצים",
+            "ייצוג ידע באמצעות לוגיקת פסוקים",
+            "הסקת ידע חדש באמצעות מערכות לוגיות",
+            "הנמקה בתנאים של אי-ודאות - יסודות הנמקה הסתברותית",
+            "בעיית ה-Multi-Armed Bandits ואיזון בין חקירה לניצול (Exploration vs. Exploitation)",
+            "תהליכי החלטה מרקוביים (MDPs) - הגדרה ומרכיבים עיקריים",
+            "עקרון קבלת ההחלטות בתהליך MDP",
+        ],
+        "forbidden": ["רשת נוירונים", "neural network", "רשת נוירונים מלאכותית",
+                      "deep learning", "למידה עמוקה", "gradient descent", "מורד הגרדיאנט",
+                      "supervised learning", "למידה מונחית נתונים", "backpropagation",
+                      "רגרסיה לינארית", "linear regression", "עץ החלטה", "decision tree",
+                      "cnn", "rnn", "רשת קונבולוציה"],
+    },
+    "AI-Based Software Development": {
+        "course_name": "פיתוח תוכנה מבוסס בינה מלאכותית",
+        "topics": [
+            "מבוא למערכת ההפעלה לינוקס וחשיבותה בפיתוח בעזרת בינה מלאכותית",
+            "פקודות לינוקס בסיסיות וניווט במערכת הקבצים",
+            "הגדרת סביבת פיתוח באובונטו",
+            "מבוא ל-Docker ולעקרון ה-Containerization",
+            "התקנת Docker ופקודות Docker בסיסיות",
+            "יצירה וניהול של מכולות (Containers) ב-Docker",
+            "ספריות פייתון מרכזיות לעבודה בבינה מלאכותית - NumPy, Pandas ו-Matplotlib",
+            "כתיבה והרצה של סקריפטים בעזרת פייתון לצורכי בינה מלאכותית",
+            "היכרות עם סוכני בינה מלאכותית (AI Agents) והיישומים האפשריים שלהם",
+            "הגדרה ושימוש בסביבת OpenAI Gym לאימון סוכנים",
+            "ביצוע שאילתות מול API של ChatGPT",
+            "בניית אפליקציות פשוטות באמצעות ChatGPT",
+            "הנדסת פרומפטים (Prompt Engineering) וטכניקות לעיצוב פרומפט יעיל",
+            "יצירה מועצמת על-ידי שליפה (RAG) - עקרונות והטמעה בפייתון",
+            "מודלים של שפה גדולה (LLM) - סקירה ועבודה עם מודלים פופולריים כמו GPT",
+            "הטמעת אלגוריתמים בסיסיים בלמידת חיזוק (Reinforcement Learning)",
+            "שילוב מודלים של בינה מלאכותית עם Docker ופריסתם בקונטיינרים",
+            "אופטימיזציה ופריסה (Deployment) של מודלי AI בסביבת ייצור",
+        ],
+    },
+    "Introduction to Machine Learning": {
+        "course_name": "מבוא ללמידת מכונה",
+        "topics": [
+            "הקדמה ומושגי יסוד בלמידת מכונה",
+            "עצי החלטה - שיטות אימון",
+            "עצי החלטה - גישות להתמודדות עם התאמת יתר (Overfitting)",
+            "שיטות מורכבות מבוססות עצים - יער אקראי (Random Forest)",
+            "שיטות Boosting לשיפור מודלים",
+            "רגרסיה לינארית ופונקציית המחיר (Cost Function)",
+            "מורד הגרדיאנט (Gradient Descent) כשיטת אופטימיזציה",
+            "שיטות רגולריזציה במודלים לינאריים",
+            "רגרסיה לוגיסטית לבעיות סיווג",
+            "מכונת וקטורים תומכים (SVM)",
+            "רגרסיה לא-לינארית ושיטות גרעין (Kernel Methods)",
+            "בעיית K השכנים הקרובים ביותר (K-Nearest Neighbors)",
+            "ניתוח אשכולות (Clustering) - השיטות ההיררכיות",
+            "אלגוריתם K-Means לניתוח אשכולות",
+            "אלגוריתם DBSCAN לניתוח אשכולות",
+            "שיטות להורדת ממדיות (Dimensionality Reduction)",
+            "אלגוריתמים לחיפוש וזיהוי אנומליות בנתונים",
+            "מבוא ללמידה עמוקה - מודל הפרספטרון ורשתות רב-שכבתיות",
+        ],
+        "forbidden": ["רשת קונבולוציה", "convolutional neural network", "cnn",
+                      "רשת נוירונים חוזרת", "recurrent neural network", "rnn",
+                      "transformer", "טרנספורמר", "generative adversarial network",
+                      "gan", "רשת יריבה גנרטיבית", "זיהוי עצמים", "object detection",
+                      "סגמנטציה בתמונות", "image segmentation", "yolo", "resnet",
+                      "transfer learning", "learning transfer"],
+    },
+    "Deep Learning": {
+        "course_name": "למידה עמוקה",
+        "topics": [
+            "סקירה חוזרת של מודל הפרספטרון ואימון רשתות רב-שכבתיות",
+            "חקירת שכבות חבויות (Hidden Layers) ותפקידן ברשת",
+            "פונקציות הפעלה (Activation Functions) והשוואה ביניהן",
+            "הכנת הנתונים לאימון רשת נוירונים",
+            "אתחול משקלות (Weight Initialization) ברשת עמוקה",
+            "שיטות רגולריזציה ונרמול משקלות ברשתות נוירונים עמוקות",
+            "ממוצע נע (Moving Average) ו-Learning Rate באימון רשתות",
+            "שיטות אופטימיזציה מתקדמות לאימון רשתות עמוקות",
+            "מבוא לקונבולוציות (Convolutions) ורשתות קונבולוציה",
+            "הרחבה על קונבולוציות - Pooling ו-Receptive Field",
+            "ארכיטקטורות קונבולוציה מוכרות - AlexNet, VGG, ResNet, Inception, MobileNet",
+            "למידת העברה (Transfer Learning) ולימוד ייצוג (Representation Learning)",
+            "נושאים מעשיים באימון רשתות עמוקות",
+            "רשתות Fully Convolutional ובעיית לוקליזציה",
+            "בעיית זיהוי עצמים - שיטות RCNN ו-YOLO",
+            "בעיית סגמנטציה של תמונות",
+            "רשתות Generative Adversarial (GAN) ויצירת דוגמאות מלאכותיות",
+            "עיבוד טקסטים ברשתות עמוקות - השיטות RNN ו-Transformers",
+        ],
+    },
+    "Computability and Complexity": {
+        "course_name": "חישוביות וסיבוכיות",
+        "topics": [
+            "מכונות טיורינג - הגדרה פורמלית ותפקוד",
+            "תזת Church-Turing ומשמעותה",
+            "שפות ניתנות לזיהוי (Recognizable) לעומת שפות ניתנות להכרעה (Decidable)",
+            "בעיית העצירה (Halting Problem) והוכחת אי-כריעותה",
+            "רדוקציות בין בעיות חישוביות",
+            "זיהוי בעיות לא-כריעות ולא-מזוהות באמצעות רדוקציות",
+            "משפט רייס (Rice's Theorem)",
+            "המחלקה P - בעיות פתירות בזמן פולינומי",
+            "המחלקה NP והגדרת אימות פתרון בזמן פולינומי",
+            "המחלקה NPC (NP-Complete) ומשמעותה",
+            "רדוקציות פולינומיאליות בין בעיות",
+            "דוגמאות לבעיות בסיסיות השייכות למחלקה NPC",
+        ],
+    },
+    "Introduction to Cryptography": {
+        "course_name": "יסודות תורת ההצפנה",
+        "topics": [
+            "הצפנה קלאסית ושיטות ניתוח הצפנה (Cryptanalysis)",
+            "תורת שנון (Shannon) ועקרון הסודיות המושלמת (Perfect Secrecy)",
+            "עקרונות ההצפנה הסימטרית ותפקיד המפתח המשותף",
+            "עקרונות ההצפנה הא-סימטרית (מפתח ציבורי-פרטי)",
+            "פונקציות גיבוב (Hash Functions) ותכונת העמידות בפני התנגשות",
+            "סכמות חתימה דיגיטלית ואימות מסמכים",
+            "פרוטוקול חילופי מפתחות Diffie-Hellman",
+            "ההבדל המושגי בין הצפנה סימטרית לא-סימטרית מבחינת יעילות ושימוש מעשי",
+        ],
+    },
+    "Information Systems Foundations": {
+        "course_name": "יסודות מערכות מידע",
+        "topics": [
+            "התפתחות טכנולוגיות המידע והשפעתן על הפרט, הארגון והחברה",
+            "מערכות מידע בארגון - הגדרות יסוד",
+            "תשתיות טכנולוגיות - מעבדים, אחסון ותקשורת נתונים",
+            "רשת מחשבים וריבוד התוכנה (Software Layering) בארגון",
+            "ממידע לידע - ניהול ידע ומודיעין עסקי (Business Intelligence)",
+            "אסטרטגיית ICT בארגון",
+            "מערכות מידע ארגוניות - סוגים ודרגים",
+            "מערכת ERP (Enterprise Resource Planning) - יתרונות וחסרונות",
+            "מערכת CRM (Customer Relationship Management) - יתרונות וחסרונות",
+            "מערכת SCM (Supply Chain Management) - יתרונות וחסרונות",
+            "ניהול חדשנות בארגון",
+            "טכנולוגיות מידע חדשניות - מיחשוב ענן ובלוקצ'ין",
+            "טכנולוגיות מציאות מדומה (VR), מציאות רבודה (AR) ומציאות מועצמת",
+            "בינה מלאכותית ומערכות נבונות בהקשר ארגוני",
+            "עיבוד שפה טבעית (NLP) ורובוטיקה (RPA) בהקשר עסקי",
+            "הטמעת מערכות מידע בארגון ותהליך השילוב שלהן",
+            "קשר אדם-מכונה (Human-Computer Interaction)",
+            "היבטים אתיים של השימוש בטכנולוגיות מידע",
+        ],
+    },
+    "Computational Biology Applications": {
+        "course_name": "יישומים בביולוגיה חישובית",
+        "topics": [
+            "מבוא לספריית Biopython ושימושיה בעיבוד מידע ביולוגי",
+            "קריאה וכתיבה של קבצי רצף בפורמט FASTA",
+            "קריאה וכתיבה של קבצי רצף בפורמט GenBank",
+            "התאמת תבניות ברצפים וחיפוש מוטיבים",
+            "מניפולציות בסיסיות על רצפים - שעתוק (Transcription)",
+            "מניפולציות בסיסיות על רצפים - תרגום (Translation) וקומפלמנטריות",
+            "ניתוח תכולת GC ברצף והמשמעות הביולוגית שלה",
+            "חישוב סטטיסטיקות בסיסיות על רצפים ביולוגיים",
+            "זיהוי תבניות חוזרות, מוטיבים ואתרי שחבור (Splice Sites)",
+            "תרגום קודונים והשוואה בין רצפי חלבונים",
+            "יישור זוגי (Pairwise Alignment) של רצפים לזיהוי מוטציות גנטיות",
+            "יישור מרובה של רצפים (Multiple Sequence Alignment)",
+            "בניית עצים פילוגנטיים ופרשנותם",
+            "שימוש ב-Entrez לשליפת נתונים ממסד הנתונים NCBI",
+            "הרצת BLAST מקומית ודרך Biopython",
+            "ניתוח תוצאות BLAST ואינטגרציה עם רצפים קיימים",
+            "עיבוד וניתוח קבצי יישור מרובה (MSA)",
+        ],
+    },
+    "Discrete Mathematics": {
+        "course_name": "מתמטיקה בדידה",
+        "topics": [
+            "עקרונות הלוגיקה הפסוקית - פסוקים, ערכי אמת וטבלאות אמת (הסבר מושגי)",
+            "חוקי דה-מורגן - הסבר מילולי של העיקרון ושימושיו",
+            "כמתים בתחשיב הפסוקים - הסבר מושגי של 'לכל' ו'קיים'",
+            "מבוא לתורת הקבוצות - שייכות, שוויון קבוצות ויחס ההכלה",
+            "פעולות בסיסיות על קבוצות - איחוד, חיתוך והפרש (הסבר מילולי עם דוגמאות)",
+            "הגדרות רקורסיביות - העיקרון המושגי של הגדרת עצם באמצעות עצמו",
+            "עקרון האינדוקציה המתמטית - הרעיון הלוגי מאחוריו",
+            "ההבדל בין אינדוקציה כללית לאינדוקציה שלמה - הסבר מושגי",
+            "נוסחאות נסיגה (Recurrence Relations) - מהי נוסחת נסיגה ומשמעותה האלגוריתמית",
+            "שיטות פתרון נוסחת נסיגה - עקרון ההצבה החוזרת ברמה מילולית",
+            "עקרונות ספירה בקומבינטוריקה - כלל הכפל וכלל הסכום",
+            "תמורות (Permutations) - העיקרון המושגי של סידור איברים בסדר",
+            "צירופים (Combinations) - העיקרון המושגי של בחירת תת-קבוצה ללא סדר",
+            "ההבדל המושגי בין תמורות, צירופים וחלופות",
+            "עקרון ההכלה וההדחה - הרעיון הלוגי מאחורי החישוב",
+            "עקרון שובך היונים (Pigeonhole Principle) - הסבר מושגי ושימושיו",
+        ],
+        "forbidden": ["גרף אוילר", "eulerian graph", "גרף המילטון", "hamiltonian graph",
+                      "צביעת גרפים", "graph coloring", "תחשיב היחסים", "predicate calculus",
+                      "עוצמות קבוצות אינסופיות", "cardinality of infinite sets",
+                      "שיטת הליכסון", "cantor diagonalization"],
+        "style_note": (
+            "קורס זה עתיר-מתמטיקה. הימנע לחלוטין מנוסחאות סימבוליות מורכבות, ביטויים "
+            "מתמטיים ארוכים, ומהוכחות פורמליות מלאות. התמקד בהסברים מילוליים, באינטואיציה "
+            "מושגית ובהיגיון אלגוריתמי. כל דוגמה מספרית חייבת להיות פשוטה וקצרה (מספרים "
+            "קטנים בלבד), ולא נגזרת סימבולית או הוכחה שורה-אחר-שורה."
+        ),
+    },
+    "Logic and Set Theory": {
+        "course_name": "לוגיקה ותורת הקבוצות",
+        "topics": [
+            "תחשיב הפסוקים - סינטקס וסמנטיקה ברמה מושגית",
+            "פעולות לוגיות וטבלאות אמת - הסבר מילולי ודוגמאות פשוטות",
+            "ערכי אמת של פסוקים, טאוטולוגיות ושקילויות לוגיות - הסבר מושגי",
+            "גרירה לוגית (Logical Entailment) - מהי ומתי היא מתקיימת, ברמה מילולית",
+            "מערכות הוכחה בלוגיקה - הרעיון הכללי של נאותות (Soundness) ושלמות (Completeness)",
+            "תחשיב היחסים (הפרדיקטים) - הגדרת השפה וכמתים ברמה מושגית",
+            "נוסחאות ופסוקים בשפת תחשיב היחסים - הסבר מילולי",
+            "מושג המבנה (המודל) המספק פסוק - הסבר אינטואיטיבי",
+            "טאוטולוגיות ושקילויות בתחשיב היחסים - הסבר מושגי",
+            "הגדרות בסיסיות בתורת הקבוצות - שייכות, הכלה ושוויון קבוצות",
+            "פעולות על קבוצות - איחוד, חיתוך והפרש, בהסבר מילולי עם דוגמאות",
+            "יחסים ופונקציות בין קבוצות - הגדרה מושגית",
+            "יחסי שקילות ומחלקות שקילות - הסבר אינטואיטיבי",
+            "יחסי סדר על קבוצות - הסבר מושגי",
+            "עוצמות קבוצות (Cardinality) - הרעיון של השוואת גדלים בין קבוצות אינסופיות",
+            "שיטת הליכסון של קנטור - הסבר אינטואיטיבי של הרעיון המרכזי",
+        ],
+        "forbidden": ["גרף אוילר", "eulerian graph", "גרף המילטון", "hamiltonian graph",
+                      "משפט הול", "hall's theorem", "משפט טוט", "tutte's theorem",
+                      "תורת רמזי", "ramsey theory", "משפט טוראן", "turán's theorem"],
+        "style_note": (
+            "קורס זה עתיר-מתמטיקה. הימנע לחלוטין מנוסחאות סימבוליות מורכבות, ביטויים "
+            "מתמטיים ארוכים, ומהוכחות פורמליות מלאות. התמקד בהסברים מילוליים, באינטואיציה "
+            "מושגית ובהיגיון לוגי. כל דוגמה חייבת להיות פשוטה וקצרה, בשפה טבעית ולא בסימון "
+            "פורמלי מלא."
+        ),
+    },
+    "Graph Theory": {
+        "course_name": "תורת הגרפים",
+        "topics": [
+            "מונחי יסוד בתורת הגרפים - קודקודים, קשתות ודרגה (הסבר מילולי)",
+            "מסלולים ומעגלים בגרף - הסבר מושגי",
+            "קשירות ודו-קשירות של גרף - הסבר אינטואיטיבי",
+            "עצים ועצים מסודרים - תכונות בסיסיות ברמה מושגית",
+            "גרפים דו-צדדיים (Bipartite Graphs) - הגדרה מילולית ודוגמאות",
+            "משפט הול (Hall) בגרפים דו-צדדיים - הרעיון האינטואיטיבי ומשמעותו לבעיות שידוך",
+            "משפט טוט (Tutte) - הסבר מושגי ברמה מילולית",
+            "גרפי אוילר - תנאי הקיום של מסלול או מעגל אוילר, הסבר אינטואיטיבי",
+            "גרפי המילטון - הבדל מושגי מגרפי אוילר, וקריטריונים מילוליים לקיומם",
+            "סדרות דה-ברויין - העיקרון הכללי ושימושיהן",
+            "משפט דיראק (Dirac) - הסבר מושגי של התנאי לקיום מעגל המילטוני",
+            "גרפים מישוריים (Planar Graphs) - הגדרה מושגית והמחשה",
+            "צביעת גרפים (Graph Coloring) - הרעיון האלגוריתמי מאחורי צביעה תקינה",
+            "עצים מתויגים ומשפט קיילי - הסבר מושגי כללי",
+            "עצים לא-מתויגים - הבדל מושגי מעצים מתויגים",
+            "תורת רמזי ומשפטי ארדוש - העיקרון הכללי ברמה אינטואיטיבית",
+            "משפט טוראן - הרעיון הכללי ומה הוא אומר על גרפים נטולי תת-גרף מסוים",
+            "שימושים של תורת הגרפים בתורת המספרים - ברמה מושגית",
+        ],
+        "style_note": (
+            "קורס זה עתיר-מתמטיקה. הימנע לחלוטין מנוסחאות סימבוליות מורכבות, ביטויים "
+            "מתמטיים ארוכים, ומהוכחות פורמליות מלאות של משפטים. התמקד בהסברים מילוליים, "
+            "באינטואיציה חזותית/מושגית ובהיגיון האלגוריתמי. אם יש צורך בדוגמה, תאר גרף קטן "
+            "במילים (למשל 'גרף עם ארבעה קודקודים המחוברים כך ש...') במקום ברישום פורמלי."
+        ),
+    },
 }
 
 REQUIRED_KEYS = {"course_name", "domain", "instruction", "rationale", "output"}
@@ -480,7 +752,7 @@ def load_style_exemplars(gold_path, n=3, seed=42):
     return exemplars
 
 
-def build_system_prompt(domain, course_name, forbidden, exemplars):
+def build_system_prompt(domain, course_name, forbidden, exemplars, style_note=None):
     exemplar_block = "\n\n".join(
         f"דוגמה לסגנון הנדרש {i+1} (רק לסגנון! הנושא עצמו לא רלוונטי לקורס הזה):\n"
         + json.dumps(ex, ensure_ascii=False, indent=2)
@@ -493,6 +765,10 @@ def build_system_prompt(domain, course_name, forbidden, exemplars):
             "\nזהו קורס מבוא, ואסור בהחלט להזכיר או להתבסס על הנושאים המתקדמים הבאים "
             "(הם נלמדים בקורסי המשך אחרים): " + ", ".join(forbidden) + "."
         )
+
+    style_note_block = ""
+    if style_note:
+        style_note_block = "\n\nהנחיה מיוחדת לקורס זה (חובה לציית לה בקפדנות): " + style_note
 
     return f"""אתה מומחה ליצירת חומרי לימוד אקדמיים בעברית בתחום מדעי המחשב, עבור מערך אימון (fine-tuning) \
 של מודל שפה בשם dictalm2.0-instruct המשמש כמתרגל וירטואלי לקורס "{course_name}" ({domain}) במכללה \
@@ -528,6 +804,7 @@ def build_system_prompt(domain, course_name, forbidden, exemplars):
 
 חשוב: אל תעתיק או תנסח מחדש את הדוגמאות המוצגות להלן - הן מובאות אך ורק להמחשת הסגנון (מבנה, עומק, \
 שימוש ב"לדוגמה", רמת הפירוט), הנושאים בהן אינם רלוונטיים לקורס הזה ואין לגעת בהם.
+{style_note_block}
 
 {exemplar_block}
 
@@ -536,13 +813,18 @@ def build_system_prompt(domain, course_name, forbidden, exemplars):
 יימסרו לך בהודעת המשתמש ויש להעתיק אותם כלשונם."""
 
 
-def build_user_prompt(domain, course_name, topic_hint, forbidden, angle, difficulty, recent_instructions):
+def build_user_prompt(domain, course_name, topic_hint, forbidden, angle, difficulty,
+                       recent_instructions, style_note=None):
     forbidden_line = ""
     if forbidden:
         forbidden_line = (
             "\nתזכורת: זהו קורס מבוא - אסור להזכיר את הנושאים המתקדמים הבאים: "
             + ", ".join(forbidden) + "."
         )
+
+    style_note_line = ""
+    if style_note:
+        style_note_line = "\nתזכורת חשובה לקורס זה: " + style_note
 
     recent_block = ""
     if recent_instructions:
@@ -561,6 +843,7 @@ def build_user_prompt(domain, course_name, topic_hint, forbidden, angle, difficu
         f"זווית מחייבת לשאלה: {angle}\n"
         f"רמת קושי מחייבת: {difficulty}"
         f"{forbidden_line}"
+        f"{style_note_line}"
         f"{recent_block}\n\n"
         "החזר אך ורק את אובייקט ה-JSON, בהתאם לכל כללי הסגנון, התוכן והגיוון שהוגדרו."
     )
@@ -663,14 +946,15 @@ def validate_example(obj, expected_domain, expected_course, forbidden, existing_
 # ------------------------------------------------------------------------------------------
 def generate_one(client, system_prompt, domain, course_name, topic_hint, forbidden,
                   existing_instructions, model, temperature,
-                  max_content_retries, max_api_retries, similarity_threshold):
+                  max_content_retries, max_api_retries, similarity_threshold, style_note=None):
     last_errors = []
     angle = random.choice(ANGLES)
     difficulty = random.choice(DIFFICULTIES)
 
     for attempt in range(1, max_content_retries + 1):
         user_prompt = build_user_prompt(
-            domain, course_name, topic_hint, forbidden, angle, difficulty, existing_instructions
+            domain, course_name, topic_hint, forbidden, angle, difficulty, existing_instructions,
+            style_note=style_note,
         )
         if last_errors:
             user_prompt += (
@@ -786,6 +1070,16 @@ def main():
                      help="Ignore any existing --output file and start this course from scratch "
                           "(overwrites the file once new data is produced).")
     ap.add_argument("--seed", type=int, default=None, help="Optional RNG seed for topic/angle shuffling.")
+    ap.add_argument("--max-consecutive-skips", type=int, default=40,
+                     help="Abort this run early if this many items IN A ROW are skipped (i.e. "
+                          "content-retries exhausted with zero accepts in between). This is a "
+                          "stall detector, not a total-skip budget — an occasional isolated skip "
+                          "in an otherwise healthy 1200-item run resets the counter and is fine. "
+                          "Back-to-back failures at this volume mean the topic pool + similarity "
+                          "guard is genuinely tapped out (e.g. a short syllabus like Cryptography "
+                          "at ~8 topics) and further retries would just burn API calls for nothing. "
+                          "Examples already accepted stay safely checkpointed either way; lower this "
+                          "for small-topic-count courses, raise it if you'd rather let a run grind on.")
     args = ap.parse_args()
 
     if not args.api_key:
@@ -798,11 +1092,12 @@ def main():
     course_name = cfg["course_name"]
     topics = cfg["topics"]
     forbidden = cfg.get("forbidden", [])
+    style_note = cfg.get("style_note")
     domain = args.course
 
     client = OpenAI(api_key=args.api_key)
     exemplars = load_style_exemplars(args.gold_path)
-    system_prompt = build_system_prompt(domain, course_name, forbidden, exemplars)
+    system_prompt = build_system_prompt(domain, course_name, forbidden, exemplars, style_note=style_note)
 
     results = [] if args.no_resume else load_existing(args.output, domain)
     existing_instructions = [r["instruction"] for r in results]
@@ -824,6 +1119,7 @@ def main():
 
     accepted = 0
     skipped = 0
+    consecutive_skips = 0
     remaining = args.num - start_count
 
     while accepted < remaining:
@@ -841,6 +1137,7 @@ def main():
                 client, system_prompt, domain, course_name, topic_hint, forbidden,
                 existing_instructions, args.model, args.temperature,
                 args.max_content_retries, args.max_api_retries, args.similarity_threshold,
+                style_note=style_note,
             )
         except FatalAPIError as e:
             print(f"\n[fatal] {e}")
@@ -851,12 +1148,23 @@ def main():
 
         if example is None:
             skipped += 1
+            consecutive_skips += 1
             print(f"    [skip] gave up on this item after {args.max_content_retries} content retries "
-                  f"— moving on. (skipped so far: {skipped})")
+                  f"— moving on. (skipped so far: {skipped}, consecutive: {consecutive_skips})")
+            if consecutive_skips >= args.max_consecutive_skips:
+                print(f"\n[abort] {consecutive_skips} items in a row were skipped with zero accepts "
+                      f"in between — the topic pool for {domain} appears exhausted at this volume "
+                      f"(or --similarity-threshold is too strict for what's left). Stopping this run "
+                      f"early. {len(results)} examples for {domain} are already safely saved in "
+                      f"{args.output}. Re-running the same command will resume from {len(results)} "
+                      f"and hit the same wall immediately — first either accept this course at its "
+                      f"current count, lower --similarity-threshold, or expand its topic list.")
+                break
         else:
             results.append(example)
             existing_instructions.append(example["instruction"])
             accepted += 1
+            consecutive_skips = 0
             atomic_write_json(args.output, results)
             if accepted % 25 == 0 or accepted == remaining:
                 print(f"    [checkpoint] {len(results)} total examples saved to {args.output} "

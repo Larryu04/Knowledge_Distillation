@@ -1,6 +1,6 @@
 """
-merge_datasets.py — merge the 12 per-course JSON files in raw_courses_data/ into a single
-flat training file, merged_12_courses.json.
+merge_datasets.py — merge the 23 per-course JSON files in raw_courses_data/ into a single
+flat training file, merged_all_courses.json.
 
 Each source file is a JSON list of objects with exactly 5 keys: course_name, domain,
 instruction, rationale, output (see project_memory.md §2 for the full schema contract).
@@ -11,7 +11,7 @@ loudly instead of silently producing a bad merged file.
 
 Usage:
     python merge_datasets.py
-    python merge_datasets.py --output merged_12_courses.json --min-per-domain 1200
+    python merge_datasets.py --output merged_all_courses.json --min-per-domain 1200
 """
 
 import argparse
@@ -21,7 +21,8 @@ from collections import Counter
 
 REQUIRED_KEYS = {"course_name", "domain", "instruction", "rationale", "output"}
 
-# (source file, expected domain) — the original 6 courses + the 6 added 2026-09-27.
+# (source file, expected domain) — the original 6 courses, the 6 added 2026-09-27, and the
+# 11 added 2026-09-30 (v8).
 SOURCES = [
     ("raw_courses_data/networks_data.json", "Computer Networks"),
     ("raw_courses_data/os_data.json", "Operating Systems"),
@@ -35,6 +36,17 @@ SOURCES = [
     ("raw_courses_data/databases_data.json", "Databases"),
     ("raw_courses_data/automata_theory_data.json", "Automata Theory"),
     ("raw_courses_data/software_engineering_data.json", "Software Engineering"),
+    ("raw_courses_data/discrete_math_data.json", "Discrete Mathematics"),
+    ("raw_courses_data/logic_set_theory_data.json", "Logic and Set Theory"),
+    ("raw_courses_data/graph_theory_data.json", "Graph Theory"),
+    ("raw_courses_data/computability_data.json", "Computability and Complexity"),
+    ("raw_courses_data/cryptography_data.json", "Introduction to Cryptography"),
+    ("raw_courses_data/intro_ai_data.json", "Introduction to AI"),
+    ("raw_courses_data/intro_ml_data.json", "Introduction to Machine Learning"),
+    ("raw_courses_data/deep_learning_data.json", "Deep Learning"),
+    ("raw_courses_data/ai_software_data.json", "AI-Based Software Development"),
+    ("raw_courses_data/info_systems_data.json", "Information Systems Foundations"),
+    ("raw_courses_data/comp_biology_data.json", "Computational Biology Applications"),
 ]
 
 
@@ -56,7 +68,7 @@ def load_and_check(path, expected_domain):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--output", default="merged_12_courses.json")
+    ap.add_argument("--output", default="merged_all_courses.json")
     ap.add_argument("--min-per-domain", type=int, default=None,
                      help="If set, fail if any domain has fewer rows than this "
                           "(e.g. 1200, to catch a generation run that fell short).")
