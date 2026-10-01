@@ -47,24 +47,28 @@ from transformers import (
 # Config
 # --------------------------------------------------------------------------------------
 MODEL_ID = "dicta-il/dictalm2.0-instruct"
-DATA_PATH = "merged_12_courses.json"   # schema: course_name/domain/instruction/rationale/output.
-                                        # Expanded 2026-09-27 from merged_6_courses_new.json (6
-                                        # courses, 7,200 rows) to 12 courses / 14,400 rows -- see
+DATA_PATH = "merged_all_courses.json"  # schema: course_name/domain/instruction/rationale/output.
+                                        # v8 (2026-09-30): 23 courses / 27,600 rows (the 12 v7
+                                        # courses + 11 new ones, see merge_datasets.py SOURCES).
+                                        # v7 used merged_12_courses.json (12 courses / 14,400 rows),
+                                        # expanded 2026-09-27 from merged_6_courses_new.json -- see
                                         # project_memory.md. Nothing below reads a hardcoded course
                                         # list; by_domain/domain_weights/macro_domain_loss are all
                                         # built dynamically from each row's "domain" key, so the new
                                         # domains flow through the stratified split, oversampler and
                                         # early-stopping metric automatically.
-OUTPUT_DIR = "out/dictalm2-tutor-qlora-v7"   # v7: 12 courses (merged_12_courses.json). MUST differ
-                                              # from v6's dir -- RESUME_FROM_LAST would otherwise pick
-                                              # up v6's finished checkpoint-856 (same micro-batch 2)
+OUTPUT_DIR = "out/dictalm2-tutor-qlora-v8"   # v8: 23 courses (merged_all_courses.json). MUST differ
+                                              # from v7's dir -- RESUME_FROM_LAST would otherwise pick
+                                              # up v7's finished checkpoint (same micro-batch 2)
 
 SEED = 42
-MAX_SEQ_LEN = 872           # merged_12_courses real token max = 866 (p50 610, p99 742), so nothing
-                            # is dropped (832 dropped 7 rows). Bounds the worst-case micro-batch at
-                            # PER_DEVICE_BATCH x 872 tokens (~6.5 GB, well under the VRAM cap; the
-                            # preflight verifies it). Don't go lower: 640 would drop the long
-                            # rich-rationale rows that match the eval style.
+MAX_SEQ_LEN = 960           # v8: the 23-subject preamble is ~88 tokens longer than v7's, so
+                            # merged_all_courses real token max = 1079 (p50 696, p99 821). 872 (v7's
+                            # cap) would drop 43 rows; 960 drops only 1 (an Intro to ML outlier).
+                            # Bounds the worst-case micro-batch at PER_DEVICE_BATCH x 960 tokens
+                            # (~7.2 GB, still under the VRAM cap; the preflight verifies it).
+                            # Don't go lower: it would drop the long rich-rationale rows that
+                            # match the eval style.
 VAL_FRACTION = 0.05
 MIN_VAL_PER_DOMAIN = 20     # floor so a small eval slice (e.g. Cybersecurity) doesn't make
                             # its per-domain loss -- and therefore early stopping -- noisy
@@ -73,7 +77,9 @@ MIN_VAL_PER_DOMAIN = 20     # floor so a small eval slice (e.g. Cybersecurity) d
 # inference.py. It conditions the model into the "explain then conclude" behaviour.
 PREAMBLE = (
     "אתה מתרגל אקדמי מומחה בתחומי רשתות מחשבים, אבטחת סייבר, מערכות הפעלה, שפות תכנות C++, Java וPython, "
-    "מבני נתונים, אלגוריתמים, ארגון המחשב, בסיסי נתונים, אוטומטים ושפות פורמליות, ושיטות בפיתוח תוכנה. "
+    "מבני נתונים, אלגוריתמים, ארגון המחשב, בסיסי נתונים, אוטומטים ושפות פורמליות, שיטות בפיתוח תוכנה, "
+    "מתמטיקה בדידה, לוגיקה ותורת הקבוצות, תורת הגרפים, חישוביות וסיבוכיות, קריפטוגרפיה, בינה מלאכותית, "
+    "למידת מכונה, למידה עמוקה, פיתוח תוכנה מבוסס בינה מלאכותית, מערכות מידע וביולוגיה חישובית. "
     "ענה בעברית בלבד. תחילה הסבר את ההיגיון שלב אחר שלב, ולאחר מכן כתוב שורה "
     "שמתחילה ב'תשובה סופית:' ובה תשובה קצרה ותמציתית."
 )
@@ -482,7 +488,7 @@ def main():
     tok = build_tokenizer()
     train_ds, val_ds, train_domains, val_domains = load_dataset(tok)
     domain_weights = build_domain_sample_weights(train_domains)
-    # merged_12_courses is exactly balanced (1200/domain) -> all weights 1.0. Sampling with
+    # merged_all_courses (like merged_12_courses) is exactly balanced (1200/domain) -> all weights 1.0. Sampling with
     # replacement then only adds noise (~37% of rows unseen per epoch), so use a plain shuffle.
     use_weighted_sampler = not torch.all(domain_weights == domain_weights[0]).item()
     if not use_weighted_sampler:

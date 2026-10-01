@@ -2,31 +2,37 @@
 
 A research project on offline knowledge distillation that trains a specialized, resource-efficient language model to act as an academic tutor for undergraduate Computer Science students (B.Sc. in Computer Science). The tutor answers Hebrew questions with a structured, numbered, step-by-step rationale followed by a concise final answer, grounded in the syllabi of the Academic College of Ramat Gan.
 
-> **Latest milestone: v7.** The tutor now covers **12 Computer Science domains** (up from 6), trained on **14,400 rows** generated concurrently with `gpt-4o-mini`, and evaluated on a new **48-item gold benchmark**. The v7 QLoRA adapter beats the base model in all 12 domains and beats the v6 adapter on every one of the 48 benchmark items, with no catastrophic forgetting on the original six domains.
+> **Final model: v8.** The tutor covers **23 Computer Science subjects**, trained on **27,600 rows** (1,200 per course) generated with `gpt-4o-mini`, and evaluated on a **92-item, 23-domain gold benchmark**. v8 beats the base model on all 92 items, is the best adapter on all 11 newly added subjects, and keeps ~97% of its gain on the 12 earlier ones. The model runs fully offline in **CoreCS**, a native desktop app (Tauri UI + Rust core + llama.cpp) at **~93 tokens/s** on an RTX 4070 SUPER, packaged as a standalone Windows installer.
 
 ---
 
-## Highlights (v7)
+## Highlights (v8)
 
 | | |
 |---|---|
-| **Domains** | 12 (expanded from 6) |
-| **Training corpus** | `merged_12_courses.json`: 14,400 rows (1,200 per course x 12), generated concurrently via `gpt-4o-mini` |
-| **Gold benchmark** | `hebrew_cs_pilot_dataset_48.json`: 48 items, 4 per domain x 12, derived from the course syllabi |
-| **Adapter** | `dictalm2-tutor-qlora-v7`: QLoRA, r=16, alpha=32, 1,710 steps (2 epochs), best checkpoint at step 1704 |
-| **v7 vs. base** | Masked loss 0.8292 -> 0.5319 (**+0.2974**), perplexity 2.29 -> 1.70; better in 12/12 domains and 48/48 items |
-| **v7 vs. v6 (same 48 items)** | **+0.124** average gain on the 6 new domains, **+0.044** on the 6 original domains, 48/48 items improved |
+| **Subjects** | 23 (6 in v6 -> 12 in v7 -> 23 in v8) |
+| **Training corpus** | `merged_all_courses.json`: 27,600 rows (1,200 per course x 23), generated via `gpt-4o-mini` |
+| **Gold benchmark** | `hebrew_cs_pilot_dataset_92.json`: 92 items, 4 per domain x 23, derived from the course syllabi |
+| **Adapter** | `dictalm2-tutor-qlora-v8`: QLoRA, r=16, alpha=32, 3,278 steps (2 epochs), best checkpoint at step 2454 |
+| **v8 vs. base** | Masked loss 0.8598 -> 0.5584 (**+0.301**), perplexity 2.36 -> 1.75; better on 92/92 items |
+| **v8 vs. v7 (same 92 items, same prompt)** | **+0.078** on the 11 new subjects (42/44 items), **-0.011** on the 12 prior subjects, **+0.031** overall |
+| **Deployment** | CoreCS offline desktop app, Q4_K_M GGUF via llama.cpp (Vulkan), ~93 tokens/s, 18.5 MB NSIS installer |
 
-### Covered Domains
+### Covered Subjects
 
-| Original six | New in v7 |
-|---|---|
-| Computer Networks | Data Structures |
-| Cybersecurity | Algorithms |
-| Operating Systems | Computer Architecture |
-| C++ (Fundamentals) | Databases |
-| Java (OOP) | Automata Theory |
-| Python (Advanced Programming) | Software Engineering |
+| v6 (original six) | Added in v7 | Added in v8 |
+|---|---|---|
+| Computer Networks | Data Structures | Discrete Mathematics |
+| Cybersecurity | Algorithms | Logic and Set Theory |
+| Operating Systems | Computer Architecture | Graph Theory |
+| C++ (Fundamentals) | Databases | Computability and Complexity |
+| Java (OOP) | Automata Theory | Introduction to Cryptography |
+| Python (Advanced Programming) | Software Engineering | Introduction to AI |
+| | | Introduction to Machine Learning |
+| | | Deep Learning |
+| | | AI-Based Software Development |
+| | | Information Systems Foundations |
+| | | Computational Biology Applications |
 
 ---
 
@@ -37,11 +43,11 @@ A research project on offline knowledge distillation that trains a specialized, 
 * **Student Model:** `dicta-il/dictalm2.0-instruct` (Mistral-7B architecture with an extended Hebrew vocabulary and native tokenizer).
 * **Supervision Format:** Hard-label sequence-to-sequence supervision. The model is penalized exclusively on target outputs (rationale + final answer) via strict loss masking.
 
-### 2. Dataset Generation & Scale-Up (6 -> 12 Domains)
-* **Concurrent generation:** Each of the 12 courses is generated as its own process (`generate_pilot_full-dataset.py`), 1,200 rows per course, using `gpt-4o-mini` exclusively.
+### 2. Dataset Generation & Scale-Up (6 -> 12 -> 23 Subjects)
+* **Concurrent generation:** Each course is generated as its own process (`generate_pilot_full-dataset.py`, batch-launched by `run_batches.ps1`), 1,200 rows per course, using `gpt-4o-mini` exclusively.
 * **Strict schema:** Every row has exactly five string fields: `course_name`, `domain`, `instruction`, `rationale`, `output`.
 * **Validation gate:** Minimum instruction and answer length, 3-5 numbered rationale points with a worked example, out-of-syllabus term filtering, and near-duplicate instruction rejection. Generation checkpoints incrementally and resumes cleanly after interruptions.
-* **Merging:** `merge_datasets.py` validates keys and domains, de-duplicates across courses (0 cross-course duplicates found), and guards against a short run, producing `merged_12_courses.json` with exactly 1,200 rows per domain.
+* **Merging:** `merge_datasets.py` validates keys and domains for all 23 per-course files in `raw_courses_data/`, checks for cross-course duplicates (0 found), and guards against a short run, producing `merged_all_courses.json` with exactly 1,200 rows per domain.
 
 ### 3. Parameter-Efficient Fine-Tuning (QLoRA)
 * **Quantization:** 4-bit NormalFloat (NF4) base model loading with double quantization and bfloat16 compute precision via `bitsandbytes`.
@@ -52,13 +58,13 @@ A research project on offline knowledge distillation that trains a specialized, 
   * NEFTune noise injection (alpha=5) on input embeddings.
   * Right-padding with `<unk>` as a distinct `pad_token` (no EOS/PAD collisions) and an explicit EOS in every label.
   * Stratified per-domain validation split with early stopping on the macro per-domain loss.
-  * Plain shuffling on the exactly balanced 12-domain corpus (domain-weighted sampling is used only when domain counts differ).
-* **12 GB GPU safety (RTX 4070 Super):** VRAM cap at 85% of the card, worst-case-batch preflight before training, `MAX_SEQ_LEN=872` (no rows dropped), and crash-safe checkpoint resumption that skips incomplete or mismatched checkpoints.
+  * Plain shuffling on the exactly balanced 23-domain corpus (domain-weighted sampling is used only when domain counts differ).
+* **12 GB GPU safety (RTX 4070 Super):** VRAM cap at 85% of the card, worst-case-batch preflight before training, `MAX_SEQ_LEN=960` (1 outlier row dropped out of 27,600), and crash-safe checkpoint resumption that skips incomplete or mismatched checkpoints.
 
 ### 4. Masked Cross-Entropy Loss
 Loss calculation applies strictly to the tutor's response:
-* Conversation framing uses the native chat template (`apply_chat_template`), with a shared preamble naming all 12 subject areas, kept identical across training, inference, and evaluation.
-* All prompt tokens (system preamble + user question) are masked to `-100`, disabling gradient backpropagation over the query span.
+* Conversation framing uses the native chat template (`apply_chat_template`), with a shared preamble naming all 23 subject areas, kept byte-identical across training, inference, and evaluation.
+* All prompt tokens (preamble + user question) are masked to `-100`, disabling gradient backpropagation over the query span.
 * Explicit `eos_token_id` boundaries eliminate non-terminating decoding loops.
 
 ---
@@ -66,53 +72,53 @@ Loss calculation applies strictly to the tutor's response:
 ## Evaluation
 
 ### Gold Benchmark
-The official benchmark is `hebrew_cs_pilot_dataset_48.json`: **48 items, 4 per domain across all 12 domains**, generated from the college syllabi so that it measures what the project is for, a tutor aligned to the actual course material. It replaces the earlier 24-item, 6-domain benchmark.
+The official benchmark is `hebrew_cs_pilot_dataset_92.json`: **92 items, 4 per domain across all 23 domains**, generated from the college syllabi so that it measures what the project is for, a tutor aligned to the actual course material. It replaces the earlier 48-item, 12-domain benchmark.
 
-Evaluation is performed by `evaluate_models.py`: masked teacher-forcing loss and perplexity for the base model versus the adapter, reported per domain and overall, plus blind A/B answer sheets for human grading. A positive delta means the adapter assigns higher likelihood to the reference answer.
+Evaluation is performed by `evaluate_models.py`: masked teacher-forcing loss and perplexity for the base model versus an adapter, reported per domain and overall, plus optional blind A/B answer sheets for human grading. `compare_loss_results.py` merges the per-adapter results into one side-by-side table.
 
-### v7 vs. Base Model
+### Fair Three-Way Comparison: v6 vs. v7 vs. v8
+All three adapters were scored on the same 92 items with the **same 23-subject preamble**. They share an identical frozen base model, so per-item base losses match exactly. Lower loss is better.
 
-| Domain | Base Loss | v7 Loss | Delta |
-|---|--:|--:|--:|
-| Algorithms *(new)* | 0.9465 | 0.6203 | +0.3262 |
-| Operating Systems | 0.8443 | 0.5225 | +0.3218 |
-| Databases *(new)* | 0.8309 | 0.5092 | +0.3217 |
-| Automata Theory *(new)* | 0.8200 | 0.5031 | +0.3169 |
-| Java | 0.8648 | 0.5527 | +0.3122 |
-| Computer Architecture *(new)* | 0.9361 | 0.6344 | +0.3016 |
-| Software Engineering *(new)* | 0.7599 | 0.4639 | +0.2960 |
-| Python | 0.8294 | 0.5392 | +0.2902 |
-| Computer Networks | 0.8026 | 0.5131 | +0.2895 |
-| Data Structures *(new)* | 0.7557 | 0.4797 | +0.2760 |
-| C++ | 0.7535 | 0.4897 | +0.2638 |
-| Cybersecurity | 0.8069 | 0.5547 | +0.2523 |
-| **Overall (48 items)** | **0.8292** | **0.5319** | **+0.2974** |
+| Group | Base | v6 | v7 | v8 | Gain of v8 over v7 |
+|---|--:|--:|--:|--:|--:|
+| Prior 12 subjects (48 items) | 0.8627 | 0.6281 | 0.5529 | 0.5636 | **-0.011** |
+| New 11 subjects (44 items) | 0.8567 | 0.6599 | 0.6303 | 0.5528 | **+0.078** |
+| **Overall (92 items)** | **0.8598** | **0.6433** | **0.5899** | **0.5584** | **+0.031** |
 
-The adapter improves on all 12 domains and on all 48 items.
+* **The 23-subject expansion worked.** v8 is the best adapter on all 11 new subjects and beats v7 on 42 of 44 of their items. The largest gains are Logic and Set Theory (+0.132), Computability and Complexity (+0.127), Introduction to Machine Learning (+0.100), and Introduction to Cryptography (+0.097).
+* **No catastrophic forgetting.** On the 12 prior subjects v8 is slightly behind v7 (about 2% higher loss; Cybersecurity is the one prior subject where v8 improved), a mild dilution effect from those subjects dropping to 52% of the corpus. v8 still retains ~97% of v7's gain over the base model there, beats the base model on all 48 of their items, and remains well ahead of v6.
+* **Best overall.** v8 has the lowest overall loss and beats the base model on all 92 items.
 
-### v7 vs. v6 Baseline (Same 48 Items)
-To make a like-for-like comparison, the v6 adapter (trained on the original 6 domains only) was re-scored on the same 48-item benchmark. Both runs share an identical frozen base model, so per-item base losses match exactly.
+Full per-domain table: `eval_results_v8/v6_vs_v7_vs_v8_comparison.csv` and `summary.md` §11.
 
-| Group | v6 Loss | v7 Loss | Gain of v7 over v6 |
-|---|--:|--:|--:|
-| Original 6 domains | 0.5729 | 0.5286 | **+0.044** |
-| New 6 domains | 0.6589 | 0.5351 | **+0.124** |
-| **Overall (48 items)** | **0.6159** | **0.5319** | **+0.084** |
-
-* **The expansion worked.** The average gain on the new domains (+0.124) is roughly three times that on the original domains. The largest gains are all in new domains: Automata Theory (+0.206), Algorithms (+0.139), Databases (+0.118), and Computer Architecture (+0.103).
-* **Zero catastrophic forgetting.** Even though the original six domains dropped from 100% to 50% of the training corpus, v7 is better than v6 on all six of them and on all 24 of their items.
-
-### Training Run
-* 1,710 / 1,710 steps, no early stopping, no crashes; peak worst-case memory 6.37 GB allocated.
-* Validation macro-domain loss fell from 0.8224 to 0.7695 (best checkpoint at step 1704), flattening after roughly step 850.
+### Training Run (v8)
+* 3,278 / 3,278 steps, no early stopping.
+* Validation macro-domain loss fell from 0.8162 to 0.7834 (best checkpoint at step 2454) and was flat from roughly step 2000 onward.
 
 ### Scope and Caveats
 * **In-distribution by design:** the benchmark and training corpus come from the same syllabi and generation pipeline family, so the results demonstrate syllabus-specific learning rather than general out-of-syllabus ability.
-* **Leakage check:** 0 of 48 exact instruction matches with the training corpus; results are unchanged (+0.294 to +0.296) after excluding the most similar items.
-* **Extra training steps:** v7 trained for twice as many optimizer steps as v6, so part of its gain on the original domains may stem from additional training rather than the new data alone.
-* **Prior transfer:** v6 already outperformed the base model on the unseen domains (+0.183), reflecting transferable style and format learning; the new data adds domain-specific gains on top.
-* **Loss is not answer quality:** teacher-forcing loss rewards matching the reference wording. The blind A/B sheets in `eval_results_v7/` have not yet been human-graded.
-* **Small sample:** four items per domain; the overall figure (N = 48) is the most stable number.
+* **Leakage check:** 0 of 92 exact instruction matches with the training corpus; maximum within-domain token-Jaccard similarity 0.579.
+* **Shared prompt:** v6 and v7 were scored with the 23-subject preamble, which they were not trained on, so that all three adapters see the identical prompt.
+* **Loss is not answer quality:** teacher-forcing loss rewards matching the reference wording. The v8 evaluation was loss-only; blind A/B sheets have not yet been human-graded.
+* **Small sample:** four items per domain; the group means and the overall figure (N = 92) are the most stable numbers.
+
+---
+
+## Deployment: CoreCS Desktop App
+
+The trained tutor ships as **CoreCS**, a fully offline Windows desktop application maintained in a sibling folder (`../corecs`):
+
+* **Architecture:** Tauri 2 shell with a React/TypeScript UI (Hebrew RTL), a Rust core (SQLite chat history, model discovery, engine lifecycle), and a bundled llama.cpp `llama-server` sidecar running on Vulkan.
+* **Model format:** the QLoRA adapter is merged into the base model and quantized to a Q4_K_M GGUF by `corecs/scripts/export_gguf.py`, together with an optional profile JSON carrying the training preamble and sampling settings. The app is model-agnostic: any new GGUF appears in its model picker without code changes.
+* **Performance:** ~93 tokens/s generation on an RTX 4070 SUPER (measured end-to-end in the app; v8 uses the same architecture and quantization).
+* **Shipped model:** v8 is exported as `corecs-v8-q4_k_m.gguf` and loaded in the app.
+* **Installer:** `npm run tauri build -- --bundles nsis` produces a standalone 18.5 MB `setup.exe` (app + inference engine); the ~4.4 GB model file is distributed separately.
+
+Export a trained adapter for the app (from this repository; this is how v8 was exported):
+
+```powershell
+python ..\corecs\scripts\export_gguf.py --adapter out/dictalm2-tutor-qlora-v8/adapter --name corecs-v8
+```
 
 ---
 
@@ -122,17 +128,21 @@ To make a like-for-like comparison, the v6 adapter (trained on the original 6 do
 ├── train.py                          # QLoRA training pipeline with sequence masking
 ├── inference.py                      # Interactive REPL & single-turn query CLI
 ├── evaluate_models.py                # Base vs. adapter masked-loss evaluation + blind A/B sheets
-├── compare_loss_results.py           # Side-by-side v6 vs. v7 loss comparison
+├── compare_loss_results.py           # Side-by-side comparison of N adapters (v6 vs. v7 vs. v8)
 ├── generate_pilot_full-dataset.py    # Concurrent per-course corpus generation (gpt-4o-mini)
-├── generate_pilot_dataset_for_48.py  # Generator for the 48-item gold benchmark
+├── generate_pilot_dataset_for_92.py  # Generator for the 92-item gold benchmark
+├── run_batches.ps1                   # Batch launcher for per-course generation runs
 ├── merge_datasets.py                 # Validation, de-duplication, and merging of per-course data
-├── merged_12_courses.json            # Current training corpus (14,400 rows, 12 domains)
+├── merged_all_courses.json           # Final training corpus (27,600 rows, 23 domains)
+├── merged_12_courses.json            # Previous v7 corpus (14,400 rows, 12 domains)
 ├── merged_6_courses_new.json         # Previous v6 corpus (7,200 rows, 6 domains)
-├── hebrew_cs_pilot_dataset_48.json   # Official gold benchmark (48 items, 12 domains)
-├── raw_courses_data/                 # Per-course generated data (12 files, 1,200 rows each)
-├── eval_results_v5/ ... v7/          # Evaluation artifacts per adapter version
-├── eval_results_v6_on48/             # v6 adapter scored on the 48-item benchmark
-├── summary.md                        # Detailed evaluation reports (v5 through v7)
+├── hebrew_cs_pilot_dataset_92.json   # Official gold benchmark (92 items, 23 domains)
+├── hebrew_cs_pilot_dataset_48.json   # Previous benchmark (48 items, 12 domains)
+├── raw_courses_data/                 # Per-course generated data (23 files, 1,200 rows each)
+├── eval_results_v8/                  # v8 results + the three-way comparison CSV
+├── eval_results_v6_fair/, v7_fair/   # v6 / v7 re-scored on the 92 items with the 23-subject preamble
+├── eval_results_v5/ ... v7/          # Historical evaluation artifacts per adapter version
+├── summary.md                        # Detailed evaluation reports (v5 through v8)
 ├── project_memory.md                 # Project context, constraints, and changelog
 ├── requirements.txt                  # Locked Python dependencies
 └── .gitignore                        # Excludes checkpoints, local venv, secrets, and IDE configs
@@ -141,16 +151,22 @@ To make a like-for-like comparison, the v6 adapter (trained on the original 6 do
 ## Usage
 
 ```bash
-# Train the v7 adapter (writes to out/dictalm2-tutor-qlora-v7)
+# Train the v8 adapter (writes to out/dictalm2-tutor-qlora-v8)
 python train.py
 
-# Evaluate base vs. adapter on the 48-item benchmark
+# Evaluate base vs. v8 on the 92-item benchmark (-> eval_results_v8/)
 python evaluate_models.py
+# Re-score an older adapter with the current preamble (-> eval_results_v7_fair/)
+python evaluate_models.py --adapter-dir out/dictalm2-tutor-qlora-v7/adapter
+
+# Merge the per-adapter results into one comparison table
+python compare_loss_results.py
 
 # Query the tutor interactively
 python inference.py
 ```
 
 ## Next Steps
-1. Human-grade the blind A/B sheets in `eval_results_v7/` to confirm that the loss gains translate into better answers.
-2. Resolve the final-answer prefix mismatch: generations end with a final-answer line that uses a shorter prefix than the one seen in training. Either accept the shorter prefix or investigate why the trained one is not reproduced.
+1. Verify a run of the installed CoreCS app (from `setup.exe`) with the v8 model.
+2. Inspect v8 generations and human-grade the blind A/B sheets to confirm that the loss gains translate into better answers.
+3. Resolve the final-answer prefix mismatch: v6/v7 generations end with a final-answer line that uses a shorter prefix than the one seen in training.

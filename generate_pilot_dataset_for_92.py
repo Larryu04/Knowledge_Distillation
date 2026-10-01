@@ -47,11 +47,11 @@ from openai import OpenAI
 # Config
 # ------------------------------------------------------------------------------------------
 GOLD_PATH = "hebrew_cs_eval_dataset_24.json"
-DEFAULT_OUTPUT = "hebrew_cs_pilot_dataset_48.json"
+DEFAULT_OUTPUT = "hebrew_cs_pilot_dataset_92.json"
 MODEL = "gpt-4o-mini"
 N_PER_DOMAIN = 4
 MAX_RETRIES = 6
-SLEEP_BETWEEN_CALLS = 1.0  # seconds, be gentle on rate limits
+SLEEP_BETWEEN_CALLS = 2.5  # seconds, be gentle on rate limits
 
 # ------------------------------------------------------------------------------------------
 # Syllabus-constrained topics.
@@ -204,6 +204,108 @@ DOMAIN_TOPICS = {
             "scrum", "agile sprint",
             "unit testing", "בדיקות יחידה",
             "ci/cd",
+        ],
+    },
+    "Introduction to AI": {
+        "course_name": "מבוא לבינה מלאכותית",
+        "topics": [
+            "חיפוש עיוור (BFS/DFS) לעומת חיפוש מיודע עם פונקציית היוריסטיקה",
+            "חיפוש בתנאי יריבות: עצי משחק, אלגוריתם Minimax וגיזום Alpha-Beta",
+            "בעיות סיפוק אילוצים (CSP) והגדרתן",
+            "תהליכי החלטה מרקוביים (MDPs) - הגדרה ומרכיבים עיקריים",
+        ],
+        "forbidden": ["רשת נוירונים", "neural network", "deep learning", "למידה עמוקה",
+                    "gradient descent", "supervised learning", "decision tree"],
+    },
+    "AI-Based Software Development": {
+        "course_name": "פיתוח תוכנה מבוסס בינה מלאכותית",
+        "topics": [
+            "מבוא ל-Docker ולעקרון ה-Containerization",
+            "היכרות עם סוכני בינה מלאכותית (AI Agents) ועם OpenAI Gym",
+            "הנדסת פרומפטים (Prompt Engineering) וטכניקות לעיצוב פרומפט יעיל",
+            "יצירה מועצמת על-ידי שליפה (RAG) ומודלים של שפה גדולה (LLM)",
+        ],
+    },
+    "Introduction to Machine Learning": {
+        "course_name": "מבוא ללמידת מכונה",
+        "topics": [
+            "עצי החלטה: שיטות אימון והתמודדות עם התאמת יתר (Overfitting)",
+            "רגרסיה לינארית, פונקציית המחיר ומורד הגרדיאנט (Gradient Descent)",
+            "רגרסיה לוגיסטית ומכונת וקטורים תומכים (SVM)",
+            "ניתוח אשכולות (Clustering): K-Means ו-DBSCAN",
+        ],
+        "forbidden": ["רשת קונבולוציה", "cnn", "rnn", "transformer", "gan", "object detection"],
+    },
+    "Deep Learning": {
+        "course_name": "למידה עמוקה",
+        "topics": [
+            "מודל הפרספטרון ואימון רשתות רב-שכבתיות",
+            "מבוא לקונבולוציות, Pooling וארכיטקטורות CNN מוכרות (VGG, ResNet)",
+            "בעיית זיהוי עצמים (RCNN, YOLO) ובעיית סגמנטציה",
+            "רשתות Generative Adversarial (GAN) ועיבוד טקסטים באמצעות Transformers",
+        ],
+    },
+    "Computability and Complexity": {
+        "course_name": "חישוביות וסיבוכיות",
+        "topics": [
+            "מכונות טיורינג ותזת Church-Turing",
+            "בעיית העצירה (Halting Problem) והוכחת אי-כריעותה",
+            "משפט רייס (Rice's Theorem) ורדוקציות בין בעיות",
+            "המחלקות P, NP ו-NPC",
+        ],
+    },
+    "Introduction to Cryptography": {
+        "course_name": "יסודות תורת ההצפנה",
+        "topics": [
+            "הצפנה קלאסית ותורת שנון (Shannon)",
+            "הצפנה סימטרית לעומת הצפנה א-סימטרית",
+            "פונקציות גיבוב (Hash Functions) וסכמות חתימה דיגיטלית",
+            "פרוטוקול חילופי מפתחות Diffie-Hellman",
+        ],
+    },
+    "Information Systems Foundations": {
+        "course_name": "יסודות מערכות מידע",
+        "topics": [
+            "מערכות מידע ארגוניות: ERP, CRM ו-SCM",
+            "ממידע לידע: ניהול ידע ומודיעין עסקי (Business Intelligence)",
+            "טכנולוגיות מידע חדשניות: מיחשוב ענן, בלוקצ'ין ו-AR/VR",
+            "היבטים אתיים של השימוש בטכנולוגיות מידע",
+        ],
+    },
+    "Computational Biology Applications": {
+        "course_name": "יישומים בביולוגיה חישובית",
+        "topics": [
+            "מבוא ל-Biopython וקריאת קבצי רצף בפורמט FASTA ו-GenBank",
+            "יישור זוגי (Pairwise Alignment) לזיהוי מוטציות גנטיות",
+            "יישור מרובה של רצפים ובניית עצים פילוגנטיים",
+            "שימוש ב-Entrez וב-BLAST לשליפת וניתוח נתונים מ-NCBI",
+        ],
+    },
+    "Discrete Mathematics": {
+        "course_name": "מתמטיקה בדידה",
+        "topics": [
+            "עקרונות הלוגיקה הפסוקית וטבלאות אמת, בהסבר מילולי בלבד",
+            "פעולות בסיסיות על קבוצות (איחוד, חיתוך, הפרש) בדוגמאות מילוליות",
+            "עקרון האינדוקציה המתמטית והרעיון הלוגי מאחוריו, ללא הוכחה פורמלית ארוכה",
+            "עקרונות ספירה בקומבינטוריקה: תמורות וצירופים, בהסבר מושגי",
+        ],
+    },
+    "Logic and Set Theory": {
+        "course_name": "לוגיקה ותורת הקבוצות",
+        "topics": [
+            "תחשיב הפסוקים: טאוטולוגיות ושקילויות לוגיות, בהסבר מילולי",
+            "תחשיב היחסים וכמתים, ברמה מושגית וללא סימון פורמלי מלא",
+            "יחסי שקילות ויחסי סדר על קבוצות, בהסבר אינטואיטיבי",
+            "עוצמות קבוצות ושיטת הליכסון של קנטור, בהסבר מושגי בלבד",
+        ],
+    },
+    "Graph Theory": {
+        "course_name": "תורת הגרפים",
+        "topics": [
+            "מונחי יסוד בתורת הגרפים ומסלולים בגרף, בהסבר מילולי",
+            "גרפי אוילר וגרפי המילטון: הבדל מושגי וקריטריונים מילוליים לקיומם",
+            "גרפים מישוריים וצביעת גרפים, בהסבר אלגוריתמי-מושגי",
+            "משפט הול ומשפט טוט בגרפים דו-צדדיים, בהסבר אינטואיטיבי בלבד",
         ],
     },
 }

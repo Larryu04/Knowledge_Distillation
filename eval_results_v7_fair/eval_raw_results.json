@@ -1,0 +1,830 @@
+[
+  {
+    "qid": "Q01",
+    "domain": "Computer Networks",
+    "instruction": "מהם היתרונות והחסרונות של מודל השכבות OSI בהשוואה למודל TCP/IP, ומהן השכבות המקבילות בין שני המודלים?",
+    "base_loss": 1.1299512386322021,
+    "ft_loss": 0.6927834749221802,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q02",
+    "domain": "Computer Networks",
+    "instruction": "מהו תהליך ה-handshake התלת-שלבי בפרוטוקול TCP, ומה תפקידו בהקשר של הקמת חיבור בין שני מתקנים?",
+    "base_loss": 0.7521141171455383,
+    "ft_loss": 0.4889412224292755,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q03",
+    "domain": "Computer Networks",
+    "instruction": "מהם העקרונות הבסיסיים של ניתוב (routing) בשכבת הרשת, וכיצד נבחרים מסלולים להעברת נתונים בין התקנים שונים ברשת?",
+    "base_loss": 0.941705048084259,
+    "ft_loss": 0.6323859691619873,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q04",
+    "domain": "Computer Networks",
+    "instruction": "מהו תהליך המיסוך של כתובות IP, וכיצד הוא מתבצע בפועל כדי ליצור רשתות משנה (subnets)?",
+    "base_loss": 0.765878438949585,
+    "ft_loss": 0.5916040539741516,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q05",
+    "domain": "Operating Systems",
+    "instruction": "מהם העקרונות הבסיסיים של תזמון תהליכים במערכות הפעלה, ואילו אלגוריתמים נפוצים משמשים לכך? פרט את היתרונות והחסרונות של כל אלגוריתם.",
+    "base_loss": 0.9666082859039307,
+    "ft_loss": 0.6549164652824402,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q06",
+    "domain": "Operating Systems",
+    "instruction": "מהם העקרונות המרכזיים של ניהול זיכרון וזיכרון וירטואלי במערכות הפעלה, וכיצד הם תורמים ליעילות המערכת?",
+    "base_loss": 0.7739060521125793,
+    "ft_loss": 0.5237011313438416,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q07",
+    "domain": "Operating Systems",
+    "instruction": "מהו תהליך ומהו תהליכון (thread), וכיצד מתבצע סנכרון בין תהליכים בתוכנית?",
+    "base_loss": 0.8291221261024475,
+    "ft_loss": 0.489533394575119,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q08",
+    "domain": "Operating Systems",
+    "instruction": "מהו תפקידם של מנעולים וסמפורים במניעת מצבי deadlock במערכות הפעלה, וכיצד כל אחד מהם פועל?",
+    "base_loss": 1.0358705520629883,
+    "ft_loss": 0.6594088673591614,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q09",
+    "domain": "Cybersecurity",
+    "instruction": "מהם העקרונות המרכזיים של הצפנה סימטרית ואסימטרית, וכיצד הם שונים זה מזה?",
+    "base_loss": 0.7545859217643738,
+    "ft_loss": 0.5914274454116821,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q10",
+    "domain": "Cybersecurity",
+    "instruction": "מהן ההתקפות הנפוצות ביותר ברשתות מחשבים, וכיצד כל אחת מהן פועלת באופן בסיסי?",
+    "base_loss": 0.8721935153007507,
+    "ft_loss": 0.6297693848609924,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q11",
+    "domain": "Cybersecurity",
+    "instruction": "מהם שלושת העקרונות של מודל ה-CIA triad, וכיצד כל אחד מהם תורם לאבטחת מידע בארגון?",
+    "base_loss": 0.8039595484733582,
+    "ft_loss": 0.541856586933136,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q12",
+    "domain": "Cybersecurity",
+    "instruction": "מהם סוגי הפגיעויות הבסיסיות הנפוצות ביותר בסייבר, וכיצד ניתן לבצע בדיקות חוסן כדי לזהותן?",
+    "base_loss": 0.8970111608505249,
+    "ft_loss": 0.5174281001091003,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q13",
+    "domain": "C++",
+    "instruction": "מהם ההבדלים בין סוגי המשתנים השונים ב-C++ כגון int, float ו-string, וכיצד משפיעים טיפוסי הנתונים על השימוש באופרטורים?",
+    "base_loss": 0.8652204275131226,
+    "ft_loss": 0.5657698512077332,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q14",
+    "domain": "C++",
+    "instruction": "כיצד ניתן להשתמש במבני בקרה של תנאים ולולאות בשפת C++ כדי לפתור בעיה של חישוב סכום המספרים הזוגיים מ-1 עד N, כאשר N הוא מספר שניתן על ידי המשתמש?",
+    "base_loss": 0.7844118475914001,
+    "ft_loss": 0.5569125413894653,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q15",
+    "domain": "C++",
+    "instruction": "מהו תהליך העברת פרמטרים לפונקציות בשפת C++, והסבירו את ההבדל בין העברת פרמטרים לפי ערך להעברת פרמטרים לפי הפניה?",
+    "base_loss": 0.6333845853805542,
+    "ft_loss": 0.3781927227973938,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q16",
+    "domain": "C++",
+    "instruction": "מה ההבדל בין מערך (array) למחרוזת (string) בשפת C++, וכיצד ניתן לבצע פעולות בסיסיות על כל אחד מהם?",
+    "base_loss": 0.9293285012245178,
+    "ft_loss": 0.6887711882591248,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q17",
+    "domain": "Java",
+    "instruction": "הסבירו כיצד ליצור מחלקה בסיסית ב-Java, כולל הגדרת משתנים, בנאי, ושיטות, והציגו דוגמה קוד שתדגים את השימוש במחלקה זו.",
+    "base_loss": 0.9662284255027771,
+    "ft_loss": 0.5625893473625183,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q18",
+    "domain": "Java",
+    "instruction": "מהו עקרון ההורשה בפולימורפיזם בשפת Java וכיצד הם פועלים יחד בדוגמה מעשית?",
+    "base_loss": 0.9299935102462769,
+    "ft_loss": 0.5246438384056091,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q19",
+    "domain": "Java",
+    "instruction": "מה ההבדל בין ממשק (interface) למחלקה אבסטרקטית (abstract class) בשפת Java, ואילו יתרונות כל אחד מהם מציע?",
+    "base_loss": 0.8817195296287537,
+    "ft_loss": 0.5747517943382263,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q20",
+    "domain": "Java",
+    "instruction": "מהו עקרון ההכמסה (encapsulation) בתכנות מונחה עצמים בשפת Java, ומהם המאפיינים המרכזיים שלו?",
+    "base_loss": 0.9184384942054749,
+    "ft_loss": 0.5599729418754578,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q21",
+    "domain": "Python",
+    "instruction": "מהם ההבדלים המרכזיים בין רשימות (lists), טאפלים (tuples) ומילונים (dictionaries) בפייתון, וכיצד ניתן להשתמש בכל אחד מהם לדוגמה?",
+    "base_loss": 0.7153725624084473,
+    "ft_loss": 0.43031561374664307,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q22",
+    "domain": "Python",
+    "instruction": "מהו ה-scope של משתנה בפייתון, וכיצד הוא משפיע על גישה למשתנים בתוך פונקציות שונות?",
+    "base_loss": 0.6599665880203247,
+    "ft_loss": 0.4974423050880432,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q23",
+    "domain": "Python",
+    "instruction": "מהם הצעדים הנדרשים כדי לקרוא נתונים מקובץ טקסט בפייתון, וכיצד יש לטפל במקרה שבו הקובץ לא קיים?",
+    "base_loss": 0.8730793595314026,
+    "ft_loss": 0.5054895877838135,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q24",
+    "domain": "Python",
+    "instruction": "מהם המאפיינים המרכזיים של תכנות מונחה עצמים (OOP) בפייתון, וכיצד ניתן ליישם אותם באמצעות דוגמה של מחלקה?",
+    "base_loss": 0.7994844913482666,
+    "ft_loss": 0.5512843132019043,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q25",
+    "domain": "Data Structures",
+    "instruction": "מהי סיבוכיות הזמן והזיכרון של אלגוריתם חיפוש בינארי, וכיצד ניתן לנתח אותה?",
+    "base_loss": 0.734962522983551,
+    "ft_loss": 0.4771258234977722,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q26",
+    "domain": "Data Structures",
+    "instruction": "מה ההבדלים המרכזיים בין מחסניות (stacks) לתורים (queues) מבחינת מבנה, עקרונות פעולה ודוגמאות לשימוש?",
+    "base_loss": 0.7817105054855347,
+    "ft_loss": 0.5021146535873413,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q27",
+    "domain": "Data Structures",
+    "instruction": "מהי רשימה מקושרת (linked list), אילו סוגים יש לה וכיצד מתבצע הוספת איבר חדש לרשימה?",
+    "base_loss": 0.7834214568138123,
+    "ft_loss": 0.492994099855423,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q28",
+    "domain": "Data Structures",
+    "instruction": "מהם היתרונות והחסרונות של עצי חיפוש בינאריים (BST) בהשוואה לעצי AVL, וכיצד ניתן להמחיש את ההבדלים ביניהם בעזרת דוגמה קונקרטית?",
+    "base_loss": 0.8789516091346741,
+    "ft_loss": 0.5368823409080505,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q29",
+    "domain": "Algorithms",
+    "instruction": "מהם העקרונות הבסיסיים של אלגוריתמים חמדניים, וכיצד ניתן ליישם אותם בפתרון בעיית הבעיה של תיקול מטבעות?",
+    "base_loss": 0.9346489310264587,
+    "ft_loss": 0.6090155839920044,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q30",
+    "domain": "Algorithms",
+    "instruction": "מהו עקרון החלק-ופתור (divide and conquer), ואילו שלבים נדרשים ליישום עקרון זה באלגוריתמים? אנא הצג דוגמה קונקרטית ליישום העיקרון.",
+    "base_loss": 0.7846421599388123,
+    "ft_loss": 0.47035929560661316,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q31",
+    "domain": "Algorithms",
+    "instruction": "מהי טכניקת התכנות הדינמי וכיצד היא מסייעת בפתרון בעיות חזרתיות? הצג דוגמה לבעיה שניתן לפתור באמצעות טכניקה זו.",
+    "base_loss": 0.8719802498817444,
+    "ft_loss": 0.6347126364707947,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q32",
+    "domain": "Algorithms",
+    "instruction": "מהם ההבדלים המרכזיים בין אלגוריתם החיפוש לרוחב (BFS) לאלגוריתם החיפוש לעומק (DFS), וכיצד כל אחד מהם פועל על גרף?",
+    "base_loss": 0.9353119134902954,
+    "ft_loss": 0.5716041922569275,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q33",
+    "domain": "Computer Architecture",
+    "instruction": "מהו ייצוג בינארי של מספרים שלמים חיוביים ושליליים, ואילו בעיות עלולות להתעורר כאשר משתמשים במשלימים לשני ובתקן IEEE754 לייצוג מספרים ממשיים?",
+    "base_loss": 1.055216670036316,
+    "ft_loss": 0.7823561429977417,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q34",
+    "domain": "Computer Architecture",
+    "instruction": "מהו תהליך מחזור האחזור-פענוח-ביצוע (fetch-decode-execute) במעבד, וכיצד הוא משפיע על ביצוע תוכניות?",
+    "base_loss": 0.8521402478218079,
+    "ft_loss": 0.5596140027046204,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q35",
+    "domain": "Computer Architecture",
+    "instruction": "מהן פקודות שפת הסף הבסיסיות להעברתה וחשבון, וכיצד הן פועלות במעבד?",
+    "base_loss": 0.9495580792427063,
+    "ft_loss": 0.6523166298866272,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q36",
+    "domain": "Computer Architecture",
+    "instruction": "מהו תפקידו של מצבור (stack) במהלך קריאות פרוצדורה, וכיצד הוא מתנהל בזיכרון?",
+    "base_loss": 0.8854290843009949,
+    "ft_loss": 0.588248074054718,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q37",
+    "domain": "Databases",
+    "instruction": "מהם המרכיבים המרכזיים של המודל הרלציוני, ואילו פעולות מאפשרת אלגברה רלציונית על נתונים בטבלאות?",
+    "base_loss": 0.7952849268913269,
+    "ft_loss": 0.5374917387962341,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q38",
+    "domain": "Databases",
+    "instruction": "מה ההבדל בין פקודות DDL ל-DML בשפת SQL, והציגו דוגמה לשימוש בכל אחת מהן?",
+    "base_loss": 0.6814581751823425,
+    "ft_loss": 0.32994335889816284,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q39",
+    "domain": "Databases",
+    "instruction": "מהם המרכיבים המרכזיים של תרשים ER (Entity-Relationship) וכיצד הם משמשים בתהליך תכנון סכמה של מסד נתונים?",
+    "base_loss": 1.4838675260543823,
+    "ft_loss": 0.7250190377235413,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q40",
+    "domain": "Databases",
+    "instruction": "מהי נורמליזציה במסדי נתונים, מהו תהליך הנורמליזציה וכיצד ניתן להגיע מ-1NF ל-BCNF?",
+    "base_loss": 0.7130988836288452,
+    "ft_loss": 0.45326241850852966,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q41",
+    "domain": "Automata Theory",
+    "instruction": "מהם המאפיינים העיקריים של שפות רגולריות, וכיצד ניתן לבנות ביטוי רגולרי עבור שפה פשוטה כגון שפת המחרוזות המורכבת מאותיות 'a' ו-'b' בלבד?",
+    "base_loss": 0.7867061495780945,
+    "ft_loss": 0.4575171172618866,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q42",
+    "domain": "Automata Theory",
+    "instruction": "מהו ההבדל בין אוטומט סופי דטרמיניסטי (DFSM) לאוטומט סופי אי-דטרמיניסטי (NDFSM), והציג דוגמה לכל אחד מהם.",
+    "base_loss": 0.9144818186759949,
+    "ft_loss": 0.579779863357544,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q43",
+    "domain": "Automata Theory",
+    "instruction": "מהם המרכיבים העיקריים של דקדוק חופשי-הקשר (context-free grammar), וכיצד ניתן להמיר מילה שמתקבלת מדקדוק כזה לייצוג עץ סינטקטי?",
+    "base_loss": 0.9169771671295166,
+    "ft_loss": 0.568345844745636,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q44",
+    "domain": "Automata Theory",
+    "instruction": "מהם המאפיינים המרכזיים של אוטומט מחסנית (pushdown automaton) ואילו סוגי שפות הוא יכול לזהות?",
+    "base_loss": 0.8915267586708069,
+    "ft_loss": 0.6082370281219482,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q45",
+    "domain": "Software Engineering",
+    "instruction": "מהם המרכיבים המרכזיים של מסמך דרישות לפי תקן IEEE, ומה החשיבות של כל מרכיב בתהליך פיתוח תוכנה?",
+    "base_loss": 0.743664026260376,
+    "ft_loss": 0.39759111404418945,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q46",
+    "domain": "Software Engineering",
+    "instruction": "מהי ההגדרה של דרישות פונקציונליות ולא-פונקציונליות, ומהם ההבדלים המרכזיים ביניהן בעבודת פיתוח תוכנה?",
+    "base_loss": 0.7082668542861938,
+    "ft_loss": 0.42600417137145996,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q47",
+    "domain": "Software Engineering",
+    "instruction": "מהם היתרונות של שימוש בתרשימי UML מסוג use case ותרשימי רצף בפיתוח תוכנה, ואילו פרטים חשובים יש לכלול בכל אחד מהם?",
+    "base_loss": 0.9188770055770874,
+    "ft_loss": 0.5142330527305603,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q48",
+    "domain": "Software Engineering",
+    "instruction": "מהו מחזור חיי פיתוח תוכנה (SDLC) ומהן המתודולוגיות המרכזיות הנמצאות בשימוש בכל שלב של מחזור זה?",
+    "base_loss": 0.9291577339172363,
+    "ft_loss": 0.6562663912773132,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q49",
+    "domain": "Introduction to AI",
+    "instruction": "מה ההבדלים המרכזיים בין חיפוש עיוור (BFS/DFS) לחיפוש מיודע שמשתמש בפונקציית יוריסטיקה, וכיצד כל אחת מהשיטות משפיעה על ביצועי החיפוש?",
+    "base_loss": 0.8770679235458374,
+    "ft_loss": 0.7395551204681396,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q50",
+    "domain": "Introduction to AI",
+    "instruction": "הסבירו כיצד פועל אלגוריתם Minimax לחיפוש בתנאי יריבות, וכן פרטו כיצד גיזום Alpha-Beta משפר את ביצועי האלגוריתם.",
+    "base_loss": 0.771484911441803,
+    "ft_loss": 0.5193332433700562,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q51",
+    "domain": "Introduction to AI",
+    "instruction": "מהי בעיית סיפוק אילוצים (CSP) וכיצד ניתן להגדיר בעיה כזו עם דוגמה קונקרטית?",
+    "base_loss": 0.6237348318099976,
+    "ft_loss": 0.4594070315361023,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q52",
+    "domain": "Introduction to AI",
+    "instruction": "מהם המרכיבים העיקריים של תהליך החלטה מרקובי (MDP), וכיצד הם פועלים יחד כדי לקבוע החלטות בסביבה לא ודאית?",
+    "base_loss": 0.5661227703094482,
+    "ft_loss": 0.35399729013442993,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q53",
+    "domain": "AI-Based Software Development",
+    "instruction": "מהם היתרונות של שימוש ב-Docker בעבודה עם קונטיינרים, וכיצד ניתן להמחיש את השפעתם על פיתוח תוכנה?",
+    "base_loss": 0.947184681892395,
+    "ft_loss": 0.6952826380729675,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q54",
+    "domain": "AI-Based Software Development",
+    "instruction": "מהם מאפייני סוכני בינה מלאכותית (AI Agents) וכיצד OpenAI Gym תומך בפיתוחם?",
+    "base_loss": 0.9889519810676575,
+    "ft_loss": 0.7139103412628174,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q55",
+    "domain": "AI-Based Software Development",
+    "instruction": "מהם העקרונות המרכזיים להנדסת פרומפטים (Prompt Engineering) וכיצד ניתן ליישם טכניקות לעיצוב פרומפט יעיל?",
+    "base_loss": 1.0470637083053589,
+    "ft_loss": 0.7124811410903931,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q56",
+    "domain": "AI-Based Software Development",
+    "instruction": "מהם היתרונות של שימוש ביצירה מועצמת על-ידי שליפה (RAG) בשילוב עם מודלים של שפה גדולה (LLM) לפיתוח תוכנה, וכיצד ניתן להמחיש את היתרונות הללו עם דוגמה מעשית?",
+    "base_loss": 0.9356797933578491,
+    "ft_loss": 0.6620773673057556,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q57",
+    "domain": "Introduction to Machine Learning",
+    "instruction": "מהם עקרונות הפעולה של עצי החלטה, וכיצד ניתן להתמודד עם בעיית ההתאמת יתר (Overfitting) במהלך אימון המודל?",
+    "base_loss": 0.9187864065170288,
+    "ft_loss": 0.677428126335144,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q58",
+    "domain": "Introduction to Machine Learning",
+    "instruction": "מהי רגרסיה לינארית וכיצד משפיעה פונקציית המחיר על תהליך האימון של המודל באמצעות מורד הגרדיאנט?",
+    "base_loss": 0.7600510120391846,
+    "ft_loss": 0.6201115250587463,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q59",
+    "domain": "Introduction to Machine Learning",
+    "instruction": "מהי רגרסיה לוגיסטית וכיצד היא שונה ממכונת וקטורים תומכים (SVM) בשימושים ובמטרות?",
+    "base_loss": 0.905040979385376,
+    "ft_loss": 0.6443741321563721,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q60",
+    "domain": "Introduction to Machine Learning",
+    "instruction": "מהם ההבדלים המרכזיים בין האלגוריתם K-Means לאלגוריתם DBSCAN, וכיצד כל אחד מהם מתמודד עם נתונים באשכולות?",
+    "base_loss": 0.820409893989563,
+    "ft_loss": 0.6940825581550598,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q61",
+    "domain": "Deep Learning",
+    "instruction": "מהו מודל הפרספטרון, וכיצד הוא משמש לאימון רשתות רב-שכבתיות? הסבר את עקרונות הפעולה שלו ודוגמה לשימוש.",
+    "base_loss": 0.9036824107170105,
+    "ft_loss": 0.6913927793502808,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q62",
+    "domain": "Deep Learning",
+    "instruction": "מהן הקונבולוציות ומה תפקידן בארכיטקטורות CNN, כמו VGG ו-ResNet?",
+    "base_loss": 1.070725440979004,
+    "ft_loss": 0.8030258417129517,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q63",
+    "domain": "Deep Learning",
+    "instruction": "מהן השיטות השונות לזיהוי עצמים ומדוע חשוב להבחין ביניהן?",
+    "base_loss": 1.0456199645996094,
+    "ft_loss": 0.7311099767684937,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q64",
+    "domain": "Deep Learning",
+    "instruction": "מהם העקרונות הבסיסיים המנחים את הפעולה של רשתות Generative Adversarial (GAN), וכיצד הם מיועדים לשפר את תהליכי עיבוד הטקסטים?",
+    "base_loss": 0.9364097118377686,
+    "ft_loss": 0.6796125173568726,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q65",
+    "domain": "Computability and Complexity",
+    "instruction": "מהי מכונת טיורינג, וכיצד היא מתקשרת עם תזת Church-Turing?",
+    "base_loss": 0.9152554869651794,
+    "ft_loss": 0.6624733209609985,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q66",
+    "domain": "Computability and Complexity",
+    "instruction": "מהי בעיית העצירה (Halting Problem) וכיצד ניתן להוכיח את אי-כריעותה?",
+    "base_loss": 0.9741453528404236,
+    "ft_loss": 0.7230830788612366,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q67",
+    "domain": "Computability and Complexity",
+    "instruction": "מהו משפט רייס וכיצד הוא רלוונטי לבעיות חישוביות, כולל דוגמה לרדוקציה בין בעיות?",
+    "base_loss": 1.0283197164535522,
+    "ft_loss": 0.8787732124328613,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q68",
+    "domain": "Computability and Complexity",
+    "instruction": "מהם ההבדלים המרכזיים בין מחלקות הבעיות P, NP ו-NP-קשה, וכיצד ניתן להמחיש הבדל זה באמצעות דוגמה קונקרטית?",
+    "base_loss": 0.8646232485771179,
+    "ft_loss": 0.6424980759620667,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q69",
+    "domain": "Introduction to Cryptography",
+    "instruction": "מהי ההצפנה הקלאסית ומהם העקרונות הבסיסיים של תורת שנון (Shannon) בהקשר זה?",
+    "base_loss": 0.9878280758857727,
+    "ft_loss": 0.6693004965782166,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q70",
+    "domain": "Introduction to Cryptography",
+    "instruction": "מה ההבדלים העיקריים בין הצפנה סימטרית להצפנה א-סימטרית, וכיצד כל אחת מהן מתבצעת בפועל?",
+    "base_loss": 0.70329350233078,
+    "ft_loss": 0.5017527937889099,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q71",
+    "domain": "Introduction to Cryptography",
+    "instruction": "מהן פונקציות הגיבוב (Hash Functions) ומה תפקידן בסכמות חתימה דיגיטלית? הסבירו את העקרונות הפועלים מאחורי פונקציות הגיבוב ודוגמה לשימושן בחתימה דיגיטלית.",
+    "base_loss": 0.83014976978302,
+    "ft_loss": 0.6494876742362976,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q72",
+    "domain": "Introduction to Cryptography",
+    "instruction": "מהו פרוטוקול חילופי המפתחות Diffie-Hellman, וכיצד הוא פועל כדי לאפשר חילופי מפתחות מאובטחים בין צדדים שלא מכירים זה את זה?",
+    "base_loss": 0.7341009974479675,
+    "ft_loss": 0.5187788605690002,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q73",
+    "domain": "Information Systems Foundations",
+    "instruction": "מה ההבדלים המרכזיים בין מערכות ERP, CRM ו-SCM, וכיצד כל אחת מהן תורמת לניהול משאבים בארגון?",
+    "base_loss": 0.670965850353241,
+    "ft_loss": 0.41115087270736694,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q74",
+    "domain": "Information Systems Foundations",
+    "instruction": "מהם השלבים המרכזיים בתהליך ניהול ידע, וכיצד כל שלב תורם להמרת מידע לידע במערכת מידע?",
+    "base_loss": 0.8571564555168152,
+    "ft_loss": 0.594262957572937,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q75",
+    "domain": "Information Systems Foundations",
+    "instruction": "מהם היתרונות והחסרונות של מיחשוב ענן לעומת טכנולוגיות מסורתיות, והאם תוכל לספק דוגמה לשימוש במיחשוב ענן בארגון?",
+    "base_loss": 0.9330661296844482,
+    "ft_loss": 0.5899061560630798,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q76",
+    "domain": "Information Systems Foundations",
+    "instruction": "מהם ההיבטים האתיים שצריך לקחת בחשבון בעת השימוש בטכנולוגיות מידע, וכיצד ניתן להמחיש את ההשפעה של אתיקה זו על משתמשים וארגונים?",
+    "base_loss": 0.9903945326805115,
+    "ft_loss": 0.6811171770095825,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q77",
+    "domain": "Computational Biology Applications",
+    "instruction": "מהן הדרכים לקרוא קבצי רצף בפורמטים FASTA ו-GenBank באמצעות Biopython, ומה ההבדלים בין הפורמטים הללו?",
+    "base_loss": 0.7912701964378357,
+    "ft_loss": 0.6200159192085266,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q78",
+    "domain": "Computational Biology Applications",
+    "instruction": "מהו תהליך היישור הזוגי (Pairwise Alignment) וכיצד הוא משמש לזיהוי מוטציות גנטיות בין שני רצפי DNA?",
+    "base_loss": 1.0925260782241821,
+    "ft_loss": 0.847076416015625,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q79",
+    "domain": "Computational Biology Applications",
+    "instruction": "הסבירו את תהליך היישור המרובה של רצפים ואת השפעתו על בניית עצים פילוגנטיים.",
+    "base_loss": 0.8124545812606812,
+    "ft_loss": 0.5761520266532898,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q80",
+    "domain": "Computational Biology Applications",
+    "instruction": "כיצד ניתן להשתמש ב-Entrez וב-BLAST לשליפת נתונים מ-NCBI, ומהם היתרונות של כל אחד מהכלים?",
+    "base_loss": 0.8188773393630981,
+    "ft_loss": 0.578528106212616,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q81",
+    "domain": "Discrete Mathematics",
+    "instruction": "מהם עקרונות הלוגיקה הפסוקית וכיצד ניתן לבנות טבלאות אמת עבור ביטויים לוגיים?",
+    "base_loss": 0.8077391982078552,
+    "ft_loss": 0.6695208549499512,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q82",
+    "domain": "Discrete Mathematics",
+    "instruction": "מהם הפעולות הבסיסיות על קבוצות, הסבירו כל פעולה באמצעות דוגמה מילולית.",
+    "base_loss": 0.7201669812202454,
+    "ft_loss": 0.4589081406593323,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q83",
+    "domain": "Discrete Mathematics",
+    "instruction": "מהו עקרון האינדוקציה המתמטית, וכיצד הוא מתבצע בשיטה של שני שלבים? הסבירו כל שלב עם דוגמה קונקרטית.",
+    "base_loss": 0.6894927620887756,
+    "ft_loss": 0.5553048253059387,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q84",
+    "domain": "Discrete Mathematics",
+    "instruction": "מה ההבדל בין תמורה לצירוף בקומבינטוריקה, והציגו דוגמה לכל אחד מהם.",
+    "base_loss": 0.8381898403167725,
+    "ft_loss": 0.6179314851760864,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q85",
+    "domain": "Logic and Set Theory",
+    "instruction": "מהי טאוטולוגיה בלוגיקה, כיצד ניתן לזהות אותה, וכיצד היא נבדלת משקילות לוגיות?",
+    "base_loss": 0.851310133934021,
+    "ft_loss": 0.5990055799484253,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q86",
+    "domain": "Logic and Set Theory",
+    "instruction": "מהו תפקידו של תחשיב היחסים בכמתים, וכיצד הוא מסייע בניתוח הקשרים בין קבוצות?",
+    "base_loss": 0.9110708236694336,
+    "ft_loss": 0.6855669617652893,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q87",
+    "domain": "Logic and Set Theory",
+    "instruction": "הסבירו מהו יחס שקילות ומהו יחס סדר על קבוצות, ואילו דוגמאות אינטואיטיביות ניתן להביא לכל אחד מהם.",
+    "base_loss": 0.6111448407173157,
+    "ft_loss": 0.4790371358394623,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q88",
+    "domain": "Logic and Set Theory",
+    "instruction": "מהי שיטת הליכסון של קנטור, ואילו עקרונות עקרוניים היא מציעה בהבנת עוצמות קבוצות?",
+    "base_loss": 0.6949318647384644,
+    "ft_loss": 0.5237960815429688,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q89",
+    "domain": "Graph Theory",
+    "instruction": "מהם המונחים הבסיסיים בתורת הגרפים, וכיצד ניתן להסביר את המושג 'מסלול' בגרף?",
+    "base_loss": 0.7618526816368103,
+    "ft_loss": 0.5130448937416077,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q90",
+    "domain": "Graph Theory",
+    "instruction": "מהו ההבדל המושגי בין גרפי אוילר לגרפי המילטון, ואילו קריטריונים מילוליים קובעים את קיומם של כל אחד מהם?",
+    "base_loss": 0.7717719078063965,
+    "ft_loss": 0.6586259007453918,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q91",
+    "domain": "Graph Theory",
+    "instruction": "מהם הקריטריונים לכך שגרף הוא מישורי, וכיצד ניתן לטעון גרף עם צביעה יעילה תוך כדי שמירה על המאפיינים המישוריים שלו?",
+    "base_loss": 0.9470601081848145,
+    "ft_loss": 0.7228856682777405,
+    "base_generation": null,
+    "ft_generation": null
+  },
+  {
+    "qid": "Q92",
+    "domain": "Graph Theory",
+    "instruction": "מהו משפט הול ומהו משפט טוט בגרפים דו-צדדיים, הסבירו את משמעותם האינטואיטיבית ואת הקשרים ביניהם.",
+    "base_loss": 0.9664631485939026,
+    "ft_loss": 0.7058188319206238,
+    "base_generation": null,
+    "ft_generation": null
+  }
+]

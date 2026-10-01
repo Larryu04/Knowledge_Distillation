@@ -1,25 +1,26 @@
 """
 evaluate_models.py — objective comparison of the fine-tuned QLoRA adapter against the
-raw base model (dicta-il/dictalm2.0-instruct) on the 24-item Hebrew CS gold set.
+raw base model (dicta-il/dictalm2.0-instruct) on the 92-item Hebrew CS gold set (23 domains).
 
 Pipeline
 --------
-1. Load hebrew_cs_pilot_dataset_24.json (lowercase course_name/domain/instruction/
+1. Load hebrew_cs_pilot_dataset_92.json (lowercase course_name/domain/instruction/
    rationale/output schema).
 2. Quantitative — masked teacher-forcing cross-entropy loss over ("rationale" + "output"),
    with the prompt ("PREAMBLE" + "instruction") masked to -100. Tokenization / masking is
    byte-for-byte the `make_example_builder` closure from train.py.
 3. Qualitative — generate a fresh answer for each instruction from both models, shuffle the
-   two answers per row into Answer_A / Answer_B, and export (all under eval_results_v6/):
+   two answers per row into Answer_A / Answer_B, and export (all under the output dir):
        blind_evaluation.csv   (for human grading; Score_A / Score_B left blank)
        answer_key.csv         (secret: which model is A / B per row)
 4. Report — per-domain average loss (domain read directly from each row's "domain" key)
-   + overall average, printed and written to eval_results_v6/loss_results.csv.
+   + overall average, printed and written to <output dir>/loss_results.csv.
 
 Memory: the base model is fully released (del + gc + torch.cuda.empty_cache) before the
 fine-tuned model is loaded, so a 12 GB card only ever holds one 7B/4-bit model at a time.
 
-Run:  python evaluate_models.py
+Run:  python evaluate_models.py                                                  # v8 -> eval_results_v8/
+      python evaluate_models.py --adapter-dir out/dictalm2-tutor-qlora-v7/adapter  # -> eval_results_v7_fair/
 """
 
 import argparse
@@ -28,6 +29,7 @@ import gc
 import json
 import os
 import random
+import re
 import numpy as np
 import torch
 from transformers import (
@@ -41,19 +43,23 @@ from transformers import (
 # Config — kept identical to train.py / inference.py where it matters for a fair comparison.
 # ------------------------------------------------------------------------------------------
 BASE_MODEL_ID = "dicta-il/dictalm2.0-instruct"
-ADAPTER_DIR = "out/dictalm2-tutor-qlora-v7/adapter"
-EVAL_PATH = "hebrew_cs_pilot_dataset_48.json"   # syllabus-aligned 48-item gold set (12 domains x 4),
-                                                 # lowercase 5-key schema -- new official benchmark as
-                                                 # of the 2026-09-27 12-course expansion, superseding
-                                                 # the 24-item/6-domain set (see project_memory.md).
-OUT_DIR = "eval_results_v7/"
+ADAPTER_DIR = "out/dictalm2-tutor-qlora-v8/adapter"
+EVAL_PATH = "hebrew_cs_pilot_dataset_92.json"   # syllabus-aligned 92-item gold set (23 domains x 4,
+                                                 # from generate_pilot_dataset_for_92.py) -- official
+                                                 # benchmark as of the 2026-09-30 23-course (v8)
+                                                 # expansion, superseding the 48-item/12-domain set.
+CURRENT_VERSION = "v8"   # the adapter trained with the current PREAMBLE
+OUT_DIR = None           # None -> derived from the adapter path, see default_out_dir()
 
 SEED = 42
 MAX_SEQ_LEN = 1024
 
 # MUST match train.py exactly (this is what the prompt-mask boundary depends on).
 PREAMBLE = (
-    "אתה מתרגל אקדמי מומחה בתחומי רשתות מחשבים, אבטחת סייבר, מערכות הפעלה, ושפות תכנות C++, Java וPython. "
+    "אתה מתרגל אקדמי מומחה בתחומי רשתות מחשבים, אבטחת סייבר, מערכות הפעלה, שפות תכנות C++, Java וPython, "
+    "מבני נתונים, אלגוריתמים, ארגון המחשב, בסיסי נתונים, אוטומטים ושפות פורמליות, שיטות בפיתוח תוכנה, "
+    "מתמטיקה בדידה, לוגיקה ותורת הקבוצות, תורת הגרפים, חישוביות וסיבוכיות, קריפטוגרפיה, בינה מלאכותית, "
+    "למידת מכונה, למידה עמוקה, פיתוח תוכנה מבוסס בינה מלאכותית, מערכות מידע וביולוגיה חישובית. "
     "ענה בעברית בלבד. תחילה הסבר את ההיגיון שלב אחר שלב, ולאחר מכן כתוב שורה "
     "שמתחילה ב'תשובה סופית:' ובה תשובה קצרה ותמציתית."
 )
@@ -83,9 +89,33 @@ DOMAINS = [
     "Databases",
     "Automata Theory",
     "Software Engineering",
+    "Discrete Mathematics",
+    "Logic and Set Theory",
+    "Graph Theory",
+    "Computability and Complexity",
+    "Introduction to Cryptography",
+    "Introduction to AI",
+    "Introduction to Machine Learning",
+    "Deep Learning",
+    "AI-Based Software Development",
+    "Information Systems Foundations",
+    "Computational Biology Applications",
 ]
 
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
+
+
+def default_out_dir(adapter_dir):
+    """eval_results_<version>/ for the current adapter, eval_results_<version>_fair/ for older
+    ones. "fair" marks an older adapter re-scored with the CURRENT 23-course PREAMBLE (not the
+    one it was trained with), so all versions are compared under an identical prompt and its
+    original eval_results_<version>/ folder is not overwritten."""
+    m = re.search(r"qlora-(v\d+)", adapter_dir.replace("\\", "/"))
+    if not m:
+        raise SystemExit(f"[error] cannot infer a version from adapter path {adapter_dir!r}; "
+                         f"pass --out-dir explicitly.")
+    version = m.group(1)
+    return f"eval_results_{version}/" if version == CURRENT_VERSION else f"eval_results_{version}_fair/"
 
 
 def seed_everything(seed: int) -> None:
@@ -379,7 +409,7 @@ def loss_report(rows, base_losses, ft_losses, out_path):
     of = _avg(ft_losses)
     ob_ppl = float(np.exp(ob)) if ob == ob else float("nan")
     of_ppl = float(np.exp(of)) if of == of else float("nan")
-    lines.append(f"{'OVERALL (all 24)':<20} {len(rows):>3}  {ob:>11.4f}  {of:>11.4f}  {ob - of:>+12.4f}  {ob_ppl:>10.2f}  {of_ppl:>10.2f}")
+    lines.append(f"{f'OVERALL (all {len(rows)})':<20} {len(rows):>3}  {ob:>11.4f}  {of:>11.4f}  {ob - of:>+12.4f}  {ob_ppl:>10.2f}  {of_ppl:>10.2f}")
     lines.append("=" * len(header))
     lines.append("")
     lines.append("Delta > 0  => fine-tuned model assigns higher likelihood to the gold target (better).")
@@ -410,7 +440,9 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--adapter-dir", default=ADAPTER_DIR)
     ap.add_argument("--eval-path", default=EVAL_PATH)
-    ap.add_argument("--out-dir", default=OUT_DIR)
+    ap.add_argument("--out-dir", default=OUT_DIR,
+                    help="default: eval_results_<version>/ for the current adapter, "
+                         "eval_results_<version>_fair/ for older ones (inferred from --adapter-dir)")
     ap.add_argument("--skip-generation", action="store_true",
                     help="only compute the loss report (no blind CSVs)")
     ap.add_argument("--blind-csv", default="blind_evaluation.csv")
@@ -421,6 +453,9 @@ def main():
 
     EVAL_PATH = args.eval_path
     ADAPTER_DIR = args.adapter_dir
+    if args.out_dir is None:
+        args.out_dir = default_out_dir(ADAPTER_DIR)
+    print(f"[out] adapter={ADAPTER_DIR}  ->  {args.out_dir}")
 
     os.makedirs(args.out_dir, exist_ok=True)
     blind_csv_path = os.path.join(args.out_dir, args.blind_csv)

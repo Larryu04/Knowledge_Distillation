@@ -1,5 +1,16 @@
 # Evaluation Summary — v5 (Corrected Balanced-Sampling) QLoRA Adapter vs. Base Model
 
+> **Project status (2026-10-01): model training is complete across all 23 domains.** The final
+> adapter is **v8** (`out/dictalm2-tutor-qlora-v8/adapter`, 27,600 rows / 23 courses). On the
+> 92-item, 23-domain benchmark it beats the base model on 92 / 92 items (loss 0.8598 → 0.5584)
+> and beats v7 by +0.078 on the 11 new domains, with a small −0.011 regression on the 12
+> prior ones — see [§11](#11-final-result--v8-23-course-corpus). The **CoreCS** desktop app
+> (Tauri UI ↔ Rust core ↔ llama.cpp sidecar, sibling repo `C:\Users\Larry\corecs`) is
+> runs the tutor fully offline: verified end-to-end at ~93 tokens/s on Vulkan, and the v8
+> model is now exported (`corecs-v8-q4_k_m.gguf`) and loaded in the app. The standalone NSIS
+> installer builds (18.5 MB, model shipped separately). Remaining: verify a run of the
+> installed app (§11.8).
+>
 > **Status update (2026-09-20):** §§1–8 record the **v5** evaluation and are kept as the
 > historical record. They are superseded by the v6 run — see
 > [§9 Final result — v6](#9-final-result--v6-richer-rationale-corpus). The v5 bottom line and
@@ -463,3 +474,167 @@ to "can answer".
   answer quality (neither `eval_results_v6_on48/` nor `eval_results_v7/` blind CSV is graded).
 - Generation format is unchanged: v6 also ends 48 / 48 answers with `תשובה:`, never
   `תשובה סופית:`; neither adapter shows CJK/Cyrillic drift.
+
+---
+
+## 11. Final result — v8 (23-course corpus)
+
+**Date:** 2026-10-01
+**Adapter:** `out/dictalm2-tutor-qlora-v8/adapter` (best checkpoint, step 2454 of 3278)
+**Base model:** `dicta-il/dictalm2.0-instruct` (4-bit NF4)
+**Training data:** `merged_all_courses.json` — 27,600 rows (1,200 per course × 23)
+**Eval set (official gold benchmark):** `hebrew_cs_pilot_dataset_92.json` — 92 items, 4 per domain × 23
+**Scripts:** `evaluate_models.py` (loss only, `--skip-generation`) · `compare_loss_results.py`
+→ `eval_results_v8/v6_vs_v7_vs_v8_comparison.csv`
+
+**Bottom line: v8 learned the 11 new domains and kept nearly all of its prior knowledge.** It
+is the best adapter overall (loss 0.5584 vs. v7 0.5899 and v6 0.6433; base 0.8598) and the best
+on all 11 new domains (+0.078 mean gain over v7, 42 / 44 items). On the 12 prior domains it is
+slightly behind v7 (−0.011 mean, i.e. ~2% higher loss) but still retains ~97% of v7's gain over
+the base model there and remains clearly ahead of v6.
+
+### 11.1 What changed relative to v7
+
+| | v7 | v8 |
+|---|---|---|
+| Training data | 14,400 rows, 12 courses | 27,600 rows, 23 courses (+11 new, same generator / format, `gpt-4o-mini`) |
+| `PREAMBLE` | names 12 subject areas | names all 23 (identical in `train.py` / `inference.py` / `evaluate_models.py`); ~88 tokens longer |
+| Sequence length (incl. preamble) | tok p50 610 / p99 742 / max 866 | tok p50 696 / p99 821 / max 1079 |
+| `MAX_SEQ_LEN` | 872 | **960** (872 would drop 43 rows; 960 drops 1 outlier) |
+| Steps | 1,710 (2 epochs), eval/save every 213 | 3,278 (2 epochs), eval/save every 409 |
+| Benchmark | 48 items, 12 domains | **92 items, 23 domains** (`generate_pilot_dataset_for_92.py`) |
+| LoRA / LR / epochs / batch | r=16, α=32, 1e-4, 2, eff. 16 (2 × 8) | unchanged |
+
+New domains: Discrete Mathematics, Logic and Set Theory, Graph Theory, Computability and
+Complexity, Introduction to Cryptography, Introduction to AI, Introduction to Machine Learning,
+Deep Learning, AI-Based Software Development, Information Systems Foundations, Computational
+Biology Applications.
+
+### 11.2 Training run
+
+- **3,278 / 3,278 steps** (2 epochs); no early stopping.
+- Validation `macro_domain_loss` per eval (every 409 steps): 0.8162 → 0.7998 → 0.7921 →
+  0.7879 → 0.7859 → **0.7834** (step 2454, restored as the final adapter) → 0.7844 → 0.7838.
+  Flat from ~step 2000; the last ~800 steps added nothing. Train loss 1.084 → 0.631.
+- Not comparable to v7's 0.7695: the val split now covers 23 domains and the prompt is longer.
+
+### 11.3 Evaluation protocol — "fair" re-scoring
+
+All three adapters were scored on the same 92 items with the **same 23-course `PREAMBLE`**
+(v6 and v7 into `eval_results_v6_fair/` and `eval_results_v7_fair/`, v8 into
+`eval_results_v8/`). Per-item base-model losses are identical across the three runs (max
+difference 0.0), so the comparison is like-for-like. Because the preamble and item set
+differ from §10, the v7 numbers here are **not** the same as v7's §10 numbers.
+
+### 11.4 Results — v6 vs. v7 vs. v8 (92 items)
+
+| Domain | Group | Base | v6 | v7 | v8 | Gain v8 over v7 | Gain v8 over v6 | Best |
+|---|---|--:|--:|--:|--:|--:|--:|---|
+| Computer Networks | prior | 0.8974 | 0.6355 | 0.6014 | 0.6234 | −0.0219 | +0.0121 | v7 |
+| Cybersecurity | prior | 0.8319 | 0.5909 | 0.5701 | 0.5373 | **+0.0329** | +0.0536 | v8 |
+| Operating Systems | prior | 0.9014 | 0.6205 | 0.5819 | 0.5965 | −0.0146 | +0.0240 | v7 |
+| C++ | prior | 0.8031 | 0.5796 | 0.5474 | 0.5640 | −0.0166 | +0.0157 | v7 |
+| Java | prior | 0.9241 | 0.5808 | 0.5555 | 0.5770 | −0.0215 | +0.0038 | v7 |
+| Python | prior | 0.7620 | 0.5108 | 0.4961 | 0.5002 | −0.0040 | +0.0107 | v7 |
+| Data Structures | prior | 0.7948 | 0.6196 | 0.5023 | 0.5138 | −0.0115 | +0.1058 | v7 |
+| Algorithms | prior | 0.8816 | 0.7527 | 0.5714 | 0.5829 | −0.0115 | +0.1698 | v7 |
+| Computer Architecture | prior | 0.9356 | 0.7409 | 0.6456 | 0.6475 | −0.0019 | +0.0934 | v7 |
+| Databases | prior | 0.9184 | 0.6272 | 0.5114 | 0.5281 | −0.0166 | +0.0991 | v7 |
+| Automata Theory | prior | 0.8774 | 0.6980 | 0.5535 | 0.5763 | −0.0228 | +0.1217 | v7 |
+| Software Engineering | prior | 0.8250 | 0.5800 | 0.4985 | 0.5165 | −0.0180 | +0.0635 | v7 |
+| Discrete Mathematics | new | 0.7639 | 0.6081 | 0.5754 | 0.5163 | **+0.0592** | +0.0918 | v8 |
+| Logic and Set Theory | new | 0.7671 | 0.5972 | 0.5719 | 0.4395 | **+0.1324** | +0.1577 | v8 |
+| Graph Theory | new | 0.8618 | 0.7161 | 0.6501 | 0.5881 | **+0.0620** | +0.1280 | v8 |
+| Computability and Complexity | new | 0.9456 | 0.7563 | 0.7267 | 0.5995 | **+0.1272** | +0.1568 | v8 |
+| Introduction to Cryptography | new | 0.8138 | 0.6063 | 0.5848 | 0.4874 | **+0.0975** | +0.1189 | v8 |
+| Introduction to AI | new | 0.7096 | 0.5510 | 0.5181 | 0.4761 | **+0.0419** | +0.0748 | v8 |
+| Introduction to Machine Learning | new | 0.8511 | 0.6798 | 0.6590 | 0.5587 | **+0.1003** | +0.1211 | v8 |
+| Deep Learning | new | 0.9891 | 0.7656 | 0.7263 | 0.6418 | **+0.0845** | +0.1238 | v8 |
+| AI-Based Software Development | new | 0.9797 | 0.7134 | 0.6959 | 0.6402 | **+0.0557** | +0.0731 | v8 |
+| Information Systems Foundations | new | 0.8629 | 0.5883 | 0.5691 | 0.5388 | **+0.0303** | +0.0494 | v8 |
+| Computational Biology Applications | new | 0.8788 | 0.6772 | 0.6554 | 0.5943 | **+0.0612** | +0.0830 | v8 |
+| **Prior 12 (mean)** | | 0.8627 | 0.6281 | 0.5529 | 0.5636 | **−0.0107** | +0.0644 | v7 |
+| **New 11 (mean)** | | 0.8567 | 0.6599 | 0.6303 | 0.5528 | **+0.0775** | +0.1071 | v8 |
+| **OVERALL (92)** | | 0.8598 | 0.6433 | 0.5899 | 0.5584 | **+0.0315** | +0.0849 | v8 |
+
+*Loss = masked teacher-forcing loss (lower is better). Gain = older loss − v8 loss; > 0 ⇒ v8 is better.*
+
+Item-level counts (from `eval_raw_results.json`):
+
+| | v8 better than base | v8 better than v7 | v8 better than v6 |
+|---|--:|--:|--:|
+| Prior 12 domains (48 items) | 48 / 48 | 15 / 48 | 40 / 48 |
+| New 11 domains (44 items) | 44 / 44 | 42 / 44 | 44 / 44 |
+
+### 11.5 Analysis
+
+**New domains — the expansion worked.** v8 is the best adapter on all 11 new domains. Mean
+loss on them fell from 0.6303 (v7) to 0.5528 (−12%), and v8 beats v7 on 42 of 44 items. The
+largest gains are mostly in the formal / theoretical courses: Logic and Set Theory (+0.132), Computability and Complexity (+0.127), Introduction to Machine
+Learning (+0.100), and Introduction to Cryptography (+0.097). The smallest gains are
+Information Systems Foundations (+0.030) and Introduction to AI (+0.042). On the new domains v8 is now on par with the prior ones (0.553 vs.
+0.564 mean loss).
+
+**Prior domains — mild dilution, no catastrophic forgetting.** v8 is slightly worse than v7 on
+11 of 12 prior domains (only Cybersecurity improved, +0.033), with a mean regression of −0.011
+loss (~2%), and it beats v7 on only 15 of 48 items. The effect is small but consistent in
+direction, so it should be read as real, not noise: the prior courses fell from 100% to 52% of
+the corpus. In context it is minor: v8 keeps a +0.299 gain over the base model on these domains
+(v7: +0.310, i.e. **~97% retained**), still beats the base model on 48 / 48 items, and is still
+clearly better than v6 (+0.064). The largest drops (Automata Theory −0.023, Computer Networks
+−0.022, Java −0.022) are each smaller than any single new-domain gain.
+
+**Overall.** v8 is the best adapter: overall loss 0.5584 (Δ vs. base +0.301, PPL 2.36 → 1.75),
++0.031 over v7 and +0.085 over v6, and better than base on all 92 items. Scaling from 12 to 23
+courses traded a ~2% loss increase on the old domains for a ~12% decrease on the new ones,
+which is the right trade for a tutor that must cover the whole program.
+
+### 11.6 Scope and caveats
+
+- **Preamble handicap for older adapters.** v6 and v7 were scored with the 23-course preamble
+  they were not trained on. This is the fair way to compare them on one prompt, but it may cost
+  them a little; if so, v8's prior-domain regression versus v7's *native* prompt is slightly
+  larger than −0.011.
+- **Steps confound.** v8 ran ~1.9× more optimizer steps than v7 (3,278 vs. 1,710), but the
+  prior domains received roughly the same number of updates in both runs (their share halved),
+  which matches the small regression rather than a gain.
+- **Overlap check.** 0 / 92 exact instruction matches with the training corpus; max
+  within-domain token-Jaccard 0.579 (3 items > 0.5, none > 0.6).
+- **In-distribution by design**, same as §9.5 / §10.4: benchmark and corpus come from the same
+  syllabi and the `gpt-4o-mini` pipeline family.
+- **Small N.** Four items per domain; group means (N = 48 / 44) and the overall figure
+  (N = 92) are the stable numbers.
+- **Loss ≠ answer quality.** This run was loss-only (`--skip-generation`): no blind A/B sheets
+  were produced, so v8's generation format (incl. the `תשובה:` vs. `תשובה סופית:` prefix, §10.4)
+  and answer quality have not been checked yet.
+
+### 11.7 Output artifacts
+
+| File | Contents |
+|---|---|
+| `eval_results_v8/v6_vs_v7_vs_v8_comparison.csv` | Three-way comparison (§11.4), built by `compare_loss_results.py` |
+| `eval_results_v8/loss_results.csv`, `eval_raw_results.json` | v8 vs. base, per domain / per item |
+| `eval_results_v7_fair/`, `eval_results_v6_fair/` | v7 / v6 re-scored on the 92 items with the 23-course preamble |
+| `hebrew_cs_pilot_dataset_92.json` | Official gold benchmark (92 items, 23 domains) |
+| `out/dictalm2-tutor-qlora-v8/adapter` | Final adapter (best checkpoint, step 2454) |
+
+### 11.8 Project completion status
+
+| Component | Status |
+|---|---|
+| Training corpus (23 courses, 27,600 rows) | ✅ done |
+| v8 adapter, trained and benchmarked on all 23 domains | ✅ done (final model) |
+| CoreCS app: UI ↔ Rust core ↔ llama.cpp `llama-server` sidecar | ✅ verified end-to-end with the v7 GGUF (~93 tokens/s, Vulkan, RTX 4070 SUPER) |
+| Standalone NSIS installer | ✅ builds (`CoreCS_0.1.0_x64-setup.exe`, 18.5 MB; model distributed separately) |
+| v8 → GGUF export and load in CoreCS | ✅ done 2026-10-01 — `corecs-v8-q4_k_m.gguf` (Q4_K_M, 4.37 GB) + profile with the 23-subject preamble, selectable in the model picker |
+| Installed-app run (from `setup.exe`) | ⏳ not yet verified |
+| Generation check / human grading of blind A/B sheets | ⏳ open |
+
+The ~93 tokens/s figure was measured with the v7 GGUF; v8 has the identical architecture and
+quantization, so the same speed is expected, but it has not been re-measured separately.
+
+v8 was exported with (from this repo, with its `.venv`):
+
+```powershell
+python ..\corecs\scripts\export_gguf.py --adapter out/dictalm2-tutor-qlora-v8/adapter --name corecs-v8
+```
