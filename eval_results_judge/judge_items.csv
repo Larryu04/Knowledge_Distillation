@@ -1,0 +1,369 @@
+﻿Opponent,idx,Domain,Outcome_for_v8,Position_Flip,v8_chars,Opp_chars
+base7b,0,Computer Networks,tie,1,762,1217
+base7b,1,Computer Networks,win,0,781,1092
+base7b,2,Computer Networks,win,0,1009,996
+base7b,3,Computer Networks,tie,1,804,1562
+base7b,4,Operating Systems,tie,1,1027,2647
+base7b,5,Operating Systems,loss,0,893,1196
+base7b,6,Operating Systems,win,0,844,1515
+base7b,7,Operating Systems,win,0,1133,1075
+base7b,8,Cybersecurity,win,0,972,1950
+base7b,9,Cybersecurity,win,0,733,1678
+base7b,10,Cybersecurity,tie,1,721,1159
+base7b,11,Cybersecurity,loss,0,852,1912
+base7b,12,C++,win,0,813,1457
+base7b,13,C++,win,0,754,1190
+base7b,14,C++,tie,1,811,1023
+base7b,15,C++,win,0,864,2105
+base7b,16,Java,tie,1,826,1305
+base7b,17,Java,win,0,866,2887
+base7b,18,Java,win,0,799,1643
+base7b,19,Java,win,0,782,1086
+base7b,20,Python,win,0,944,1236
+base7b,21,Python,win,0,962,1153
+base7b,22,Python,win,0,792,574
+base7b,23,Python,win,0,724,2374
+base7b,24,Data Structures,win,0,941,1179
+base7b,25,Data Structures,tie,1,1038,2413
+base7b,26,Data Structures,tie,1,873,440
+base7b,27,Data Structures,win,0,808,1475
+base7b,28,Algorithms,win,0,918,941
+base7b,29,Algorithms,loss,0,758,855
+base7b,30,Algorithms,win,0,733,1768
+base7b,31,Algorithms,win,0,1146,1306
+base7b,32,Computer Architecture,win,0,927,717
+base7b,33,Computer Architecture,tie,1,870,721
+base7b,34,Computer Architecture,tie,1,810,1513
+base7b,35,Computer Architecture,win,0,875,1206
+base7b,36,Databases,win,0,913,1706
+base7b,37,Databases,loss,0,765,1702
+base7b,38,Databases,tie,1,889,2332
+base7b,39,Databases,tie,1,914,2259
+base7b,40,Automata Theory,tie,1,688,1220
+base7b,41,Automata Theory,win,0,870,886
+base7b,42,Automata Theory,win,0,816,646
+base7b,43,Automata Theory,win,0,904,1699
+base7b,44,Software Engineering,tie,1,841,1483
+base7b,45,Software Engineering,win,0,705,703
+base7b,46,Software Engineering,win,0,636,1386
+base7b,47,Software Engineering,loss,0,960,1396
+base7b,48,Introduction to AI,win,0,922,1469
+base7b,49,Introduction to AI,loss,0,1025,1326
+base7b,50,Introduction to AI,win,0,732,1542
+base7b,51,Introduction to AI,win,0,1049,1385
+base7b,52,AI-Based Software Development,win,0,815,1221
+base7b,53,AI-Based Software Development,win,0,828,1075
+base7b,54,AI-Based Software Development,tie,1,815,1962
+base7b,55,AI-Based Software Development,win,0,784,1252
+base7b,56,Introduction to Machine Learning,loss,0,978,2037
+base7b,57,Introduction to Machine Learning,win,0,898,1602
+base7b,58,Introduction to Machine Learning,tie,1,952,1296
+base7b,59,Introduction to Machine Learning,tie,1,996,1352
+base7b,60,Deep Learning,tie,1,881,1320
+base7b,61,Deep Learning,win,0,926,1190
+base7b,62,Deep Learning,win,0,963,1908
+base7b,63,Deep Learning,loss,0,887,1356
+base7b,64,Computability and Complexity,win,0,992,1556
+base7b,65,Computability and Complexity,tie,1,878,1452
+base7b,66,Computability and Complexity,win,0,1010,1325
+base7b,67,Computability and Complexity,loss,0,981,613
+base7b,68,Introduction to Cryptography,win,0,887,1343
+base7b,69,Introduction to Cryptography,win,0,1003,1240
+base7b,70,Introduction to Cryptography,win,0,838,1215
+base7b,71,Introduction to Cryptography,win,0,880,876
+base7b,72,Information Systems Foundations,loss,0,983,1581
+base7b,73,Information Systems Foundations,tie,1,751,970
+base7b,74,Information Systems Foundations,loss,0,739,1150
+base7b,75,Information Systems Foundations,loss,0,786,1932
+base7b,76,Computational Biology Applications,win,0,763,1507
+base7b,77,Computational Biology Applications,win,0,860,1011
+base7b,78,Computational Biology Applications,win,0,811,1152
+base7b,79,Computational Biology Applications,win,0,846,1471
+base7b,80,Discrete Mathematics,tie,1,703,1906
+base7b,81,Discrete Mathematics,tie,1,515,1358
+base7b,82,Discrete Mathematics,win,0,726,1031
+base7b,83,Discrete Mathematics,loss,0,805,694
+base7b,84,Logic and Set Theory,win,0,785,466
+base7b,85,Logic and Set Theory,win,0,819,1197
+base7b,86,Logic and Set Theory,loss,0,787,1501
+base7b,87,Logic and Set Theory,tie,1,900,1244
+base7b,88,Graph Theory,tie,1,803,1879
+base7b,89,Graph Theory,win,0,903,777
+base7b,90,Graph Theory,win,0,977,1127
+base7b,91,Graph Theory,tie,1,910,1447
+dicta12b,0,Computer Networks,loss,0,762,1266
+dicta12b,1,Computer Networks,loss,0,781,1103
+dicta12b,2,Computer Networks,loss,0,1009,1508
+dicta12b,3,Computer Networks,loss,0,804,1347
+dicta12b,4,Operating Systems,loss,0,1027,2087
+dicta12b,5,Operating Systems,loss,0,893,2331
+dicta12b,6,Operating Systems,loss,0,844,1439
+dicta12b,7,Operating Systems,win,0,1133,708
+dicta12b,8,Cybersecurity,loss,0,972,1285
+dicta12b,9,Cybersecurity,loss,0,733,1840
+dicta12b,10,Cybersecurity,loss,0,721,1407
+dicta12b,11,Cybersecurity,tie,1,852,1970
+dicta12b,12,C++,tie,1,813,2501
+dicta12b,13,C++,loss,0,754,549
+dicta12b,14,C++,loss,0,811,1222
+dicta12b,15,C++,loss,0,864,1318
+dicta12b,16,Java,loss,0,826,2554
+dicta12b,17,Java,loss,0,866,2627
+dicta12b,18,Java,loss,0,799,1469
+dicta12b,19,Java,loss,0,782,1738
+dicta12b,20,Python,loss,0,944,1965
+dicta12b,21,Python,loss,0,962,1628
+dicta12b,22,Python,loss,0,792,589
+dicta12b,23,Python,loss,0,724,2320
+dicta12b,24,Data Structures,tie,1,941,1124
+dicta12b,25,Data Structures,loss,0,1038,1481
+dicta12b,26,Data Structures,loss,0,873,2644
+dicta12b,27,Data Structures,loss,0,808,1250
+dicta12b,28,Algorithms,loss,0,918,1701
+dicta12b,29,Algorithms,loss,0,758,1605
+dicta12b,30,Algorithms,tie,1,733,1329
+dicta12b,31,Algorithms,loss,0,1146,1733
+dicta12b,32,Computer Architecture,loss,0,927,1532
+dicta12b,33,Computer Architecture,loss,0,870,1444
+dicta12b,34,Computer Architecture,win,0,810,1467
+dicta12b,35,Computer Architecture,loss,0,875,1020
+dicta12b,36,Databases,loss,0,913,2125
+dicta12b,37,Databases,loss,0,765,956
+dicta12b,38,Databases,win,0,889,2556
+dicta12b,39,Databases,loss,0,914,1271
+dicta12b,40,Automata Theory,loss,0,688,1224
+dicta12b,41,Automata Theory,loss,0,870,1545
+dicta12b,42,Automata Theory,loss,0,816,1503
+dicta12b,43,Automata Theory,tie,1,904,1501
+dicta12b,44,Software Engineering,loss,0,841,2295
+dicta12b,45,Software Engineering,loss,0,705,1337
+dicta12b,46,Software Engineering,loss,0,636,1346
+dicta12b,47,Software Engineering,loss,0,960,1709
+dicta12b,48,Introduction to AI,loss,0,922,1578
+dicta12b,49,Introduction to AI,loss,0,1025,1914
+dicta12b,50,Introduction to AI,loss,0,732,1114
+dicta12b,51,Introduction to AI,loss,0,1049,1459
+dicta12b,52,AI-Based Software Development,loss,0,815,2025
+dicta12b,53,AI-Based Software Development,loss,0,828,1470
+dicta12b,54,AI-Based Software Development,loss,0,815,1660
+dicta12b,55,AI-Based Software Development,loss,0,784,1457
+dicta12b,56,Introduction to Machine Learning,loss,0,978,1808
+dicta12b,57,Introduction to Machine Learning,loss,0,898,1960
+dicta12b,58,Introduction to Machine Learning,loss,0,952,923
+dicta12b,59,Introduction to Machine Learning,loss,0,996,2094
+dicta12b,60,Deep Learning,loss,0,881,1393
+dicta12b,61,Deep Learning,loss,0,926,1726
+dicta12b,62,Deep Learning,loss,0,963,1508
+dicta12b,63,Deep Learning,loss,0,887,1875
+dicta12b,64,Computability and Complexity,loss,0,992,1033
+dicta12b,65,Computability and Complexity,loss,0,878,1484
+dicta12b,66,Computability and Complexity,win,0,1010,1280
+dicta12b,67,Computability and Complexity,loss,0,981,2385
+dicta12b,68,Introduction to Cryptography,loss,0,887,1486
+dicta12b,69,Introduction to Cryptography,loss,0,1003,1417
+dicta12b,70,Introduction to Cryptography,loss,0,838,1495
+dicta12b,71,Introduction to Cryptography,loss,0,880,1669
+dicta12b,72,Information Systems Foundations,loss,0,983,1759
+dicta12b,73,Information Systems Foundations,loss,0,751,1404
+dicta12b,74,Information Systems Foundations,loss,0,739,1550
+dicta12b,75,Information Systems Foundations,loss,0,786,1625
+dicta12b,76,Computational Biology Applications,loss,0,763,1698
+dicta12b,77,Computational Biology Applications,loss,0,860,1488
+dicta12b,78,Computational Biology Applications,loss,0,811,1665
+dicta12b,79,Computational Biology Applications,tie,1,846,1503
+dicta12b,80,Discrete Mathematics,loss,0,703,1798
+dicta12b,81,Discrete Mathematics,loss,0,515,1630
+dicta12b,82,Discrete Mathematics,loss,0,726,1567
+dicta12b,83,Discrete Mathematics,loss,0,805,1035
+dicta12b,84,Logic and Set Theory,loss,0,785,820
+dicta12b,85,Logic and Set Theory,loss,0,819,1445
+dicta12b,86,Logic and Set Theory,loss,0,787,1842
+dicta12b,87,Logic and Set Theory,loss,0,900,1383
+dicta12b,88,Graph Theory,tie,1,803,1899
+dicta12b,89,Graph Theory,loss,0,903,1039
+dicta12b,90,Graph Theory,loss,0,977,1759
+dicta12b,91,Graph Theory,loss,0,910,1314
+dicta24b,0,Computer Networks,loss,0,762,2556
+dicta24b,1,Computer Networks,loss,0,781,1493
+dicta24b,2,Computer Networks,loss,0,1009,3109
+dicta24b,3,Computer Networks,loss,0,804,1719
+dicta24b,4,Operating Systems,loss,0,1027,3191
+dicta24b,5,Operating Systems,loss,0,893,2636
+dicta24b,6,Operating Systems,loss,0,844,2873
+dicta24b,7,Operating Systems,loss,0,1133,2175
+dicta24b,8,Cybersecurity,loss,0,972,2333
+dicta24b,9,Cybersecurity,loss,0,733,3715
+dicta24b,10,Cybersecurity,loss,0,721,2022
+dicta24b,11,Cybersecurity,loss,0,852,2433
+dicta24b,12,C++,loss,0,813,2749
+dicta24b,13,C++,loss,0,754,1015
+dicta24b,14,C++,loss,0,811,3581
+dicta24b,15,C++,loss,0,864,2891
+dicta24b,16,Java,loss,0,826,2970
+dicta24b,17,Java,loss,0,866,4029
+dicta24b,18,Java,loss,0,799,2461
+dicta24b,19,Java,loss,0,782,2161
+dicta24b,20,Python,loss,0,944,1861
+dicta24b,21,Python,loss,0,962,2057
+dicta24b,22,Python,loss,0,792,1305
+dicta24b,23,Python,loss,0,724,3211
+dicta24b,24,Data Structures,tie,1,941,1417
+dicta24b,25,Data Structures,loss,0,1038,3170
+dicta24b,26,Data Structures,loss,0,873,2459
+dicta24b,27,Data Structures,loss,0,808,3282
+dicta24b,28,Algorithms,loss,0,918,2187
+dicta24b,29,Algorithms,loss,0,758,1866
+dicta24b,30,Algorithms,loss,0,733,1949
+dicta24b,31,Algorithms,loss,0,1146,1749
+dicta24b,32,Computer Architecture,loss,0,927,3313
+dicta24b,33,Computer Architecture,loss,0,870,2526
+dicta24b,34,Computer Architecture,loss,0,810,2615
+dicta24b,35,Computer Architecture,loss,0,875,2884
+dicta24b,36,Databases,loss,0,913,2020
+dicta24b,37,Databases,loss,0,765,1106
+dicta24b,38,Databases,loss,0,889,1748
+dicta24b,39,Databases,loss,0,914,2684
+dicta24b,40,Automata Theory,loss,0,688,1785
+dicta24b,41,Automata Theory,loss,0,870,1867
+dicta24b,42,Automata Theory,loss,0,816,2050
+dicta24b,43,Automata Theory,loss,0,904,2089
+dicta24b,44,Software Engineering,loss,0,841,2411
+dicta24b,45,Software Engineering,loss,0,705,1975
+dicta24b,46,Software Engineering,loss,0,636,2530
+dicta24b,47,Software Engineering,loss,0,960,2682
+dicta24b,48,Introduction to AI,loss,0,922,1787
+dicta24b,49,Introduction to AI,loss,0,1025,2951
+dicta24b,50,Introduction to AI,loss,0,732,2177
+dicta24b,51,Introduction to AI,loss,0,1049,1705
+dicta24b,52,AI-Based Software Development,loss,0,815,2820
+dicta24b,53,AI-Based Software Development,loss,0,828,1959
+dicta24b,54,AI-Based Software Development,loss,0,815,2248
+dicta24b,55,AI-Based Software Development,loss,0,784,2737
+dicta24b,56,Introduction to Machine Learning,loss,0,978,2449
+dicta24b,57,Introduction to Machine Learning,loss,0,898,3202
+dicta24b,58,Introduction to Machine Learning,loss,0,952,2526
+dicta24b,59,Introduction to Machine Learning,loss,0,996,1787
+dicta24b,60,Deep Learning,loss,0,881,2286
+dicta24b,61,Deep Learning,loss,0,926,2351
+dicta24b,62,Deep Learning,loss,0,963,3742
+dicta24b,63,Deep Learning,loss,0,887,2663
+dicta24b,64,Computability and Complexity,loss,0,992,2118
+dicta24b,65,Computability and Complexity,loss,0,878,1925
+dicta24b,66,Computability and Complexity,loss,0,1010,2684
+dicta24b,67,Computability and Complexity,loss,0,981,2280
+dicta24b,68,Introduction to Cryptography,loss,0,887,3166
+dicta24b,69,Introduction to Cryptography,loss,0,1003,1314
+dicta24b,70,Introduction to Cryptography,loss,0,838,2256
+dicta24b,71,Introduction to Cryptography,loss,0,880,2203
+dicta24b,72,Information Systems Foundations,loss,0,983,2235
+dicta24b,73,Information Systems Foundations,loss,0,751,1758
+dicta24b,74,Information Systems Foundations,loss,0,739,3143
+dicta24b,75,Information Systems Foundations,loss,0,786,3979
+dicta24b,76,Computational Biology Applications,loss,0,763,2227
+dicta24b,77,Computational Biology Applications,loss,0,860,1522
+dicta24b,78,Computational Biology Applications,loss,0,811,2221
+dicta24b,79,Computational Biology Applications,loss,0,846,2557
+dicta24b,80,Discrete Mathematics,loss,0,703,1954
+dicta24b,81,Discrete Mathematics,loss,0,515,2332
+dicta24b,82,Discrete Mathematics,loss,0,726,1923
+dicta24b,83,Discrete Mathematics,loss,0,805,1299
+dicta24b,84,Logic and Set Theory,loss,0,785,1472
+dicta24b,85,Logic and Set Theory,tie,1,819,2370
+dicta24b,86,Logic and Set Theory,loss,0,787,2993
+dicta24b,87,Logic and Set Theory,loss,0,900,2529
+dicta24b,88,Graph Theory,loss,0,803,1567
+dicta24b,89,Graph Theory,loss,0,903,1971
+dicta24b,90,Graph Theory,loss,0,977,2439
+dicta24b,91,Graph Theory,loss,0,910,2269
+gpt4o,0,Computer Networks,loss,0,762,2016
+gpt4o,1,Computer Networks,loss,0,781,1014
+gpt4o,2,Computer Networks,loss,0,1009,1316
+gpt4o,3,Computer Networks,loss,0,804,1391
+gpt4o,4,Operating Systems,loss,0,1027,2009
+gpt4o,5,Operating Systems,loss,0,893,1297
+gpt4o,6,Operating Systems,loss,0,844,1373
+gpt4o,7,Operating Systems,tie,1,1133,1388
+gpt4o,8,Cybersecurity,loss,0,972,1407
+gpt4o,9,Cybersecurity,loss,0,733,1683
+gpt4o,10,Cybersecurity,loss,0,721,1246
+gpt4o,11,Cybersecurity,loss,0,852,1650
+gpt4o,12,C++,loss,0,813,1260
+gpt4o,13,C++,loss,0,754,1209
+gpt4o,14,C++,loss,0,811,1163
+gpt4o,15,C++,loss,0,864,1313
+gpt4o,16,Java,loss,0,826,2219
+gpt4o,17,Java,loss,0,866,1649
+gpt4o,18,Java,loss,0,799,1437
+gpt4o,19,Java,loss,0,782,1329
+gpt4o,20,Python,loss,0,944,1959
+gpt4o,21,Python,loss,0,962,1113
+gpt4o,22,Python,loss,0,792,1327
+gpt4o,23,Python,loss,0,724,2076
+gpt4o,24,Data Structures,loss,0,941,1071
+gpt4o,25,Data Structures,loss,0,1038,1524
+gpt4o,26,Data Structures,loss,0,873,1317
+gpt4o,27,Data Structures,loss,0,808,1448
+gpt4o,28,Algorithms,loss,0,918,1245
+gpt4o,29,Algorithms,loss,0,758,1101
+gpt4o,30,Algorithms,tie,1,733,1166
+gpt4o,31,Algorithms,loss,0,1146,1487
+gpt4o,32,Computer Architecture,loss,0,927,1203
+gpt4o,33,Computer Architecture,loss,0,870,1190
+gpt4o,34,Computer Architecture,loss,0,810,1523
+gpt4o,35,Computer Architecture,loss,0,875,1131
+gpt4o,36,Databases,loss,0,913,1489
+gpt4o,37,Databases,loss,0,765,1492
+gpt4o,38,Databases,loss,0,889,1583
+gpt4o,39,Databases,loss,0,914,1580
+gpt4o,40,Automata Theory,loss,0,688,1166
+gpt4o,41,Automata Theory,loss,0,870,1580
+gpt4o,42,Automata Theory,loss,0,816,1499
+gpt4o,43,Automata Theory,loss,0,904,1182
+gpt4o,44,Software Engineering,loss,0,841,1737
+gpt4o,45,Software Engineering,loss,0,705,1351
+gpt4o,46,Software Engineering,loss,0,636,1530
+gpt4o,47,Software Engineering,loss,0,960,1537
+gpt4o,48,Introduction to AI,loss,0,922,1391
+gpt4o,49,Introduction to AI,loss,0,1025,1603
+gpt4o,50,Introduction to AI,loss,0,732,1191
+gpt4o,51,Introduction to AI,loss,0,1049,1492
+gpt4o,52,AI-Based Software Development,loss,0,815,1345
+gpt4o,53,AI-Based Software Development,loss,0,828,1662
+gpt4o,54,AI-Based Software Development,loss,0,815,1366
+gpt4o,55,AI-Based Software Development,loss,0,784,1257
+gpt4o,56,Introduction to Machine Learning,loss,0,978,1449
+gpt4o,57,Introduction to Machine Learning,loss,0,898,1698
+gpt4o,58,Introduction to Machine Learning,loss,0,952,1602
+gpt4o,59,Introduction to Machine Learning,loss,0,996,1446
+gpt4o,60,Deep Learning,loss,0,881,1722
+gpt4o,61,Deep Learning,loss,0,926,1095
+gpt4o,62,Deep Learning,loss,0,963,1644
+gpt4o,63,Deep Learning,loss,0,887,1294
+gpt4o,64,Computability and Complexity,loss,0,992,1313
+gpt4o,65,Computability and Complexity,loss,0,878,1360
+gpt4o,66,Computability and Complexity,loss,0,1010,1374
+gpt4o,67,Computability and Complexity,loss,0,981,1673
+gpt4o,68,Introduction to Cryptography,loss,0,887,1234
+gpt4o,69,Introduction to Cryptography,loss,0,1003,1506
+gpt4o,70,Introduction to Cryptography,loss,0,838,1586
+gpt4o,71,Introduction to Cryptography,loss,0,880,1498
+gpt4o,72,Information Systems Foundations,loss,0,983,1266
+gpt4o,73,Information Systems Foundations,loss,0,751,1571
+gpt4o,74,Information Systems Foundations,loss,0,739,1404
+gpt4o,75,Information Systems Foundations,loss,0,786,1045
+gpt4o,76,Computational Biology Applications,loss,0,763,1784
+gpt4o,77,Computational Biology Applications,loss,0,860,1420
+gpt4o,78,Computational Biology Applications,loss,0,811,1235
+gpt4o,79,Computational Biology Applications,tie,1,846,1529
+gpt4o,80,Discrete Mathematics,loss,0,703,1537
+gpt4o,81,Discrete Mathematics,loss,0,515,1256
+gpt4o,82,Discrete Mathematics,loss,0,726,1395
+gpt4o,83,Discrete Mathematics,loss,0,805,891
+gpt4o,84,Logic and Set Theory,loss,0,785,861
+gpt4o,85,Logic and Set Theory,tie,1,819,1206
+gpt4o,86,Logic and Set Theory,loss,0,787,1628
+gpt4o,87,Logic and Set Theory,loss,0,900,1271
+gpt4o,88,Graph Theory,loss,0,803,1039
+gpt4o,89,Graph Theory,loss,0,903,1269
+gpt4o,90,Graph Theory,loss,0,977,1044
+gpt4o,91,Graph Theory,loss,0,910,1336
