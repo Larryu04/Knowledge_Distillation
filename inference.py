@@ -30,7 +30,7 @@ PREAMBLE = (
 )
 
 GEN_KWARGS = dict(
-    max_new_tokens=512,
+    max_new_tokens=1024,
     min_new_tokens=8,
     do_sample=True,
     temperature=0.3,

@@ -10,3 +10,6 @@ out/
 archive/
 clean_dataset.py
 merged_training_dataset_V4.json
+# judge benchmark: downloaded opponent models
+models/
+*.gguf

@@ -1,0 +1,5 @@
+﻿Opponent,Params,Wins,Ties,Losses,N,Win_Rate,Win_or_Tie_Rate,Position_Flips,Judge
+"DictaLM-2.0, no fine-tune",7B,53,25,14,92,0.576,0.848,25,gpt-4o-mini
+DictaLM-3.0 Instruct,12B,4,7,81,92,0.043,0.12,7,gpt-4o-mini
+DictaLM-3.0 Thinking,24B,0,2,90,92,0.0,0.022,2,gpt-4o-mini
+GPT-4o,proprietary,0,4,88,92,0.0,0.043,4,gpt-4o-mini

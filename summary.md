@@ -11,6 +11,12 @@
 > installer builds (18.5 MB, model shipped separately). Remaining: verify a run of the
 > installed app (§11.8).
 >
+> **Final evaluation (2026-10-12):** in a pairwise, reference-guided LLM-as-a-judge benchmark
+> on the same 92 items (`gpt-4o-mini` judge, A/B position-swapped), v8 **wins or ties 84.8%**
+> of comparisons against its own base model (53 W / 25 T / 14 L). It loses clearly to larger
+> and newer models (DictaLM-3.0 12B Instruct, DictaLM-3.0 24B Thinking, GPT-4o), as expected
+> for a 7B model. See [§12](#12-final-benchmark--pairwise-llm-as-a-judge-v8-vs-base-and-larger-models).
+>
 > **Status update (2026-09-20):** §§1–8 record the **v5** evaluation and are kept as the
 > historical record. They are superseded by the v6 run — see
 > [§9 Final result — v6](#9-final-result--v6-richer-rationale-corpus). The v5 bottom line and
@@ -628,7 +634,8 @@ which is the right trade for a tutor that must cover the whole program.
 | Standalone NSIS installer | ✅ builds (`CoreCS_0.1.0_x64-setup.exe`, 18.5 MB; model distributed separately) |
 | v8 → GGUF export and load in CoreCS | ✅ done 2026-10-01 — `corecs-v8-q4_k_m.gguf` (Q4_K_M, 4.37 GB) + profile with the 23-subject preamble, selectable in the model picker |
 | Installed-app run (from `setup.exe`) | ⏳ not yet verified |
-| Generation check / human grading of blind A/B sheets | ⏳ open |
+| Generation check: LLM-as-a-judge benchmark on generated answers | ✅ done 2026-10-12 (§12) |
+| Human validation of the judge (20-question blind sheet) | ⏳ open |
 
 The ~93 tokens/s figure was measured with the v7 GGUF; v8 has the identical architecture and
 quantization, so the same speed is expected, but it has not been re-measured separately.
@@ -638,3 +645,191 @@ v8 was exported with (from this repo, with its `.venv`):
 ```powershell
 python ..\corecs\scripts\export_gguf.py --adapter out/dictalm2-tutor-qlora-v8/adapter --name corecs-v8
 ```
+
+---
+
+## 12. Final benchmark — pairwise LLM-as-a-judge (v8 vs. base and larger models)
+
+**Date:** 2026-10-11 → 2026-10-12
+**Benchmark:** `hebrew_cs_pilot_dataset_92.json` (92 items, 4 per domain × 23), same gold set as §11
+**Scripts:** `generate_answers.py` (answers) → `judge_eval.py` (verdicts) → `plot_metrics.py` (figures)
+**Outputs:** `eval_results_judge/` (answers, verdicts, `judge_summary.csv`, `judge_items.csv`), `figures/`
+
+**Bottom line.** Judged on generated answers rather than teacher-forced loss, **v8 wins or ties
+84.8% of head-to-head comparisons against its own base model** (DictaLM-2.0-instruct 7B without
+the adapter): 53 wins, 25 ties, 14 losses. This is the first evaluation of this project that scores
+the answers the tutor actually produces, and it confirms that the loss gains of §9–§11
+translate into answers a grader prefers. Against larger and newer models (DictaLM-3.0 12B
+Instruct, DictaLM-3.0 24B Thinking, GPT-4o), v8 loses clearly (win-or-tie 12.0%, 2.2% and 4.3%).
+That is the expected ceiling for a 7B model, and §12.5 discusses what these comparisons do and
+do not show.
+
+### 12.1 Why a judge-based evaluation
+
+Masked teacher-forcing loss (§1, §9–§11) has two limitations for a final evaluation:
+
+1. **It cannot compare models with different tokenizers.** Loss and perplexity are measured per
+   token, so the values for DictaLM-2.0, DictaLM-3.0 and GPT-4o are on incomparable scales.
+2. **It does not measure answer quality.** It rewards reproducing the reference wording under
+   teacher forcing, not a correct answer generated freely.
+
+Pairwise comparison of generated answers, graded against the gold reference, avoids both
+problems: every model is scored on the same text-level output, independent of its tokenizer.
+
+### 12.2 Protocol
+
+**Contestants.** Every model received the identical prompt: the 23-subject `PREAMBLE` from
+`train.py` / `inference.py`, followed by the question, as a single user turn.
+
+| Model | Parameters | Runtime | Generation cap |
+|---|---|---|---|
+| **v8** (DictaLM-2.0-instruct + v8 QLoRA adapter) | 7B | transformers, 4-bit NF4, fully on GPU | 1,024 new tokens |
+| DictaLM-2.0-instruct, no adapter (sanity check) | 7B | transformers, 4-bit NF4, fully on GPU | 1,024 new tokens |
+| DictaLM-3.0-Nemotron-12B-Instruct | 12B | llama.cpp `llama-server`, Q4_K_M GGUF, fully on GPU | 1,024 tokens |
+| DictaLM-3.0-24B-Thinking | 24B | llama.cpp `llama-server`, Q4_K_M GGUF, split GPU / system RAM | 2,048 reasoning + 1,024 answer tokens |
+| GPT-4o | proprietary | OpenAI API | 1,024 tokens |
+
+Sampling: temperature 0.3, top-p 0.9, and a fixed per-item seed for all models. The local 7B models
+also use `inference.py`'s repetition guards (`repetition_penalty` 1.15, `no_repeat_ngram_size` 4).
+Dicta has not released a 24B *Instruct* model; the 24B is available only as Base or
+Thinking. The Thinking variant was used, its reasoning block was discarded, and only the final
+answer was judged.
+
+**Judge.** `gpt-4o-mini` at temperature 0, in JSON mode. The judge is given the question, the gold
+reference answer (the item's `rationale` plus a `תשובה סופית:` line built from its `output`) and
+two anonymous candidate answers, A and B. It is instructed to rank by (1) correctness against the
+reference, (2) completeness, and (3) clarity in correct Hebrew. It is told explicitly to ignore
+length, formatting, and the wording of the final-answer line, and not to reward phrasing that
+merely resembles the reference. It returns `A`, `B` or `tie`, with a short justification.
+
+**Position swapping.** Every pair is judged twice, once with v8 as A and once with v8 as B.
+In each order v8 receives +1 for a win, 0 for a tie and −1 for a loss. The item outcome is the
+sign of the sum. A verdict that reverses when the order is swapped therefore counts as a
+**tie**, so the result cannot be driven by a preference for one position. The cost is
+4 × 92 × 2 = 736 judge calls in total. An empty answer would have counted as a loss without
+calling the judge, but no model produced one.
+
+### 12.3 Results
+
+| v8 vs. | Params | v8 wins | Ties | v8 losses | Win rate | Win-or-tie rate |
+|---|---|--:|--:|--:|--:|--:|
+| **DictaLM-2.0-instruct (no fine-tuning)** | 7B | **53** | 25 | 14 | **57.6%** | **84.8%** |
+| DictaLM-3.0 Nemotron-12B-Instruct | 12B | 4 | 7 | 81 | 4.3% | 12.0% |
+| DictaLM-3.0 24B-Thinking | 24B | 0 | 2 | 90 | 0.0% | 2.2% |
+| GPT-4o | proprietary | 0 | 4 | 88 | 0.0% | 4.3% |
+
+*N = 92 items per opponent; each item was judged in both A/B orders. Source:
+`eval_results_judge/judge_summary.csv`; per-item outcomes are in `judge_items.csv`.*
+
+**v8 vs. its base model, by domain group:**
+
+| Group | Wins | Ties | Losses | Win-or-tie |
+|---|--:|--:|--:|--:|
+| Prior 12 domains (48 items) | 29 | 14 | 5 | 89.6% |
+| New 11 domains (44 items) | 24 | 11 | 9 | 79.5% |
+
+### 12.4 Primary result: the fine-tuning works
+
+Against the identical base model, v8 is preferred more than four times as often as it is
+beaten (53 vs. 14), and it wins or ties 78 of 92 questions. The base model and v8 share the
+same weights, tokenizer, quantization, prompt and sampling settings. The only difference is
+the v8 QLoRA adapter, so the improvement can be attributed to the fine-tuning itself. The
+advantage holds in both domain groups. It is larger on the 12 domains that have been in the
+corpus since v7 (89.6%) than on the 11 added in v8 (79.5%), which is consistent with the
+longer exposure of the earlier domains across successive training rounds.
+
+The result is not explained by the judge preferring longer answers. v8's answers are *shorter*
+than the base model's on 79 of 92 items (median 862 vs. 1,323 characters), yet the judge still
+prefers v8. The judge can therefore reward a concise correct answer over a longer one.
+
+### 12.5 Comparison with larger and newer models
+
+v8 loses clearly to all three larger opponents. We read this as follows:
+
+- **An expected ceiling for a 7B model.** The opponents are 1.7× to 3.4× larger (or, for GPT-4o,
+  a frontier-scale proprietary model). They are also a newer model generation: DictaLM-3.0 is
+  built on Mistral-Small-3.1 and Nemotron bases, while v8's base is from the Mistral-7B era. One
+  of them also reasons explicitly before answering. A domain adapter trained on 27,600 rows does
+  not close a gap of that size, and this benchmark sets realistic expectations for what a 7B
+  tutor can do.
+- **Evidence against a self-preference bias in the judge.** v8 was distilled from data generated
+  by `gpt-4o-mini`, the same model that acts as judge, so a judge that favoured familiar style
+  would have favoured v8. It did not: the judge consistently preferred the stronger models. This
+  reduces the main concern about using a same-family judge. It does not establish that the judge
+  is accurate (see §12.6).
+- **Not a controlled scaling study.** The opponents differ from v8 in parameter count, base
+  model, training data and inference method all at once, and they are quantized differently (Q4_K_M
+  GGUF vs. 4-bit NF4). The results are *consistent with* the advantage expected from larger
+  and newer models, but they do not isolate the effect of scale. The fair framing for v8 is
+  its position in the cost/quality trade-off: it is the only contestant that runs fully offline
+  inside the CoreCS app at interactive speed on a consumer GPU.
+
+### 12.6 Scope and caveats
+
+- **Length confound with the larger models.** v8 writes the shortest answers of all contestants
+  (median 862 characters, vs. 1,390 for GPT-4o, 1,503 for the 12B and 2,283 for the 24B). It is
+  shorter than GPT-4o and the 24B on 92 / 92 items and shorter than the 12B on 88 / 92. LLM judges
+  are known to favour longer answers despite instructions, so part of the gap may reflect
+  verbosity rather than correctness. §12.4 shows the judge *can* prefer the shorter answer,
+  but the size of this effect against the larger models has not been measured.
+- **The judge is not yet human-validated.** A 20-question blind A/B sheet
+  (`judge_eval.py --make-blind`, with an agreement report via `--agreement`) is planned and has
+  not been graded yet. Until then, the verdicts are a single automated grader's opinion.
+- **Ties come only from position disagreements.** The judge never returned `tie` directly. Every
+  tie in §12.3 is an item where the verdict reversed when the A/B order was swapped (25 against
+  the base model, 7 / 2 / 4 against the larger models). Across all 736 verdicts the judge picked
+  position A 53% of the time, a mild position bias that the swap neutralizes.
+- **Truncation.** Some answers hit their generation cap: base 7B 4 / 92, 12B 7 / 92, 24B 9 / 92
+  (reasoning plus answer budget). v8 and GPT-4o: 0. Truncated answers were judged as they were.
+  One base-model answer (item 0) was produced during the pipeline smoke test, under the earlier
+  512-token cap. All other local answers used the 1,024-token cap.
+- **Final-answer prefix.** v8 ends 89 / 92 answers with `תשובה:` and never with the trained
+  `תשובה סופית:` (same as v6 / v7, §10.4). All three larger models follow the preamble's
+  `תשובה סופית:` instruction on 86–90 / 92 items. The judge was told to ignore this difference.
+  No answer from any model contains CJK or Cyrillic characters, so v8 shows no language drift.
+- **Single sample, small N.** One sampled answer per model per item (temperature 0.3, fixed
+  seed). Four items per domain, so per-domain judge results are not reported. The group and
+  overall rates are the stable numbers.
+- **In-distribution benchmark.** As in §11.6, the gold set comes from the same syllabi and the
+  same `gpt-4o-mini` generation pipeline as v8's training data. This favours v8 relative to the
+  general-purpose opponents, which makes the large-model results a conservative estimate of
+  the gap.
+- **Use of `gpt-4o`.** The project rule is that all OpenAI calls use `gpt-4o-mini`. GPT-4o was
+  admitted as an exception, approved by the project owner, as a *contestant* only: 92
+  generation calls, throttled under the account's 30k TPM limit. The judge and all data
+  generation remain `gpt-4o-mini`.
+
+### 12.7 Run statistics
+
+| Model | Mean time / answer | Generation speed | Total |
+|---|--:|--:|--:|
+| v8 (7B, transformers 4-bit) | 35.6 s | — | 0.9 h |
+| Base 7B (transformers 4-bit) | 27.4 s | — | 0.7 h |
+| 12B Instruct (llama.cpp, all layers on GPU) | 12.0 s | ~57 tokens/s | 0.3 h |
+| 24B Thinking (llama.cpp, GPU + RAM offload) | 222.5 s | ~6.5 tokens/s | 5.7 h |
+| GPT-4o (API, throttled) | 3.8 s | — | 0.1 h |
+
+The 7B models were run through `transformers` + `bitsandbytes` for parity with the training and
+loss-evaluation stack. Deployed v8 runs much faster in CoreCS (llama.cpp, ~93 tokens/s).
+
+### 12.8 Figures for presentation
+
+`plot_metrics.py` renders presentation-ready charts (300-dpi PNG plus SVG; light theme by default,
+`--theme dark` for dark slides) into `figures/`:
+
+| File | Content |
+|---|---|
+| `loss_progression` | Overall gold-set loss, Base → v6 → v7 → v8 (0.860 → 0.643 → 0.590 → 0.558) |
+| `prior_vs_new_domains` | Mean loss on the 12 prior vs. 11 new domains for each version |
+| `judge_results` | v8's win / tie / loss share against each opponent (§12.3) |
+
+### 12.9 Output artifacts
+
+| File | Contents |
+|---|---|
+| `eval_results_judge/answers/<model>.jsonl` | One answer per item per model, with timing, token count and finish reason |
+| `eval_results_judge/answers/llama_server.log` | llama.cpp server log for the 12B / 24B runs |
+| `eval_results_judge/judgments/<opponent>.jsonl` | Raw judge verdicts (both orders) and justifications |
+| `eval_results_judge/judge_items.csv` | Per item and opponent: outcome, position flip, answer lengths |
+| `eval_results_judge/judge_summary.csv` | The table in §12.3 (input to `plot_metrics.py`) |
+| `figures/` | Presentation charts (§12.8) |
