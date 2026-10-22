@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Course Tutor</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="title"><span class="logo">C</span><span id="name">Course Tutor</span></div>
+    <div class="right">
+      <span id="status" class="status">Connecting…</span>
+      <button id="new" type="button">New chat</button>
+    </div>
+  </header>
+  <main id="chat">
+    <section id="empty" class="empty">
+      <h1>What are we studying today?</h1>
+      <p id="courses" class="muted"></p>
+      <div id="examples" class="examples"></div>
+      <p class="muted small">Runs 100% on this computer. The tutor can make mistakes, so double-check important answers.</p>
+    </section>
+    <div id="messages"></div>
+  </main>
+  <form id="composer">
+    <textarea id="input" rows="1" placeholder="Ask a question…" dir="auto"></textarea>
+    <button id="send" type="submit">Send</button>
+  </form>
+  <script src="chat.js"></script>
+</body>
+</html>

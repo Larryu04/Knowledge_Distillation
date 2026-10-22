@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0b0d12">
+  <title>CoreCS Global</title>
+  <link rel="stylesheet" href="/static/styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%235b7cfa'/><path d='M9 21l7-11 7 11' stroke='white' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+</head>
+<body>
+  <header class="topbar">
+    <a href="#/" class="brand"><span class="logo">C</span> CoreCS <b>Global</b></a>
+    <nav>
+      <a href="#/">New tutor</a>
+      <a href="#/jobs">My jobs</a>
+    </nav>
+  </header>
+  <div id="demo-banner" class="banner" hidden>Demo mode: the teacher model is simulated (GLOBAL_TEACHER_BACKEND=fake). No API calls are made.</div>
+  <main id="view"></main>
+  <div id="toast" class="toast" hidden></div>
+  <script src="/config.js"></script>
+  <script type="module" src="/static/app.js"></script>
+</body>
+</html>

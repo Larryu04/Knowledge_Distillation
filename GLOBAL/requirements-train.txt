@@ -1,0 +1,16 @@
+# GPU stages (train, package) — install into the interpreter GLOBAL_TRAIN_PYTHON points to.
+# Python 3.13. Install PyTorch FIRST, matched to your CUDA version, e.g.:
+#   pip install torch==2.6.0 --index-url https://download.pytorch.org/whl/cu124
+# then:
+#   pip install -r requirements-train.txt
+#
+# Verified together on Windows 11 + RTX 4070 Super (12 GB):
+transformers==5.16.1
+peft==0.20.0
+bitsandbytes==0.50.2        # official Windows wheels
+accelerate==1.14.0
+datasets==5.0.1
+sentencepiece==0.2.2        # SentencePiece tokenizers (Mistral/DictaLM) + GGUF conversion
+numpy==2.5.2
+huggingface_hub
+protobuf                    # some tokenizers / the GGUF converter

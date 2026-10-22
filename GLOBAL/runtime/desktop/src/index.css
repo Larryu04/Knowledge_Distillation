@@ -1,0 +1,124 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --font-sans: "Heebo", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Cascadia Code", "JetBrains Mono", Consolas, ui-monospace, monospace;
+
+  --color-bg: #0b0d12;
+  --color-sidebar: #0f1218;
+  --color-panel: #141821;
+  --color-elevated: #1b2030;
+  --color-border: #232838;
+  --color-muted: #8b93a7;
+  --color-accent: #7c9cff;
+  --color-accent-strong: #5b7cfa;
+  --color-code: #0d1117;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  @apply bg-bg font-sans text-zinc-100 antialiased;
+  overflow: hidden;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #2a3042 transparent;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--color-accent) 35%, transparent);
+}
+
+/* ---- Markdown answers ---------------------------------------------------------- */
+
+.markdown {
+  font-size: 15px;
+  line-height: 1.75;
+}
+
+.markdown > :first-child {
+  margin-top: 0;
+}
+
+.markdown > :last-child {
+  margin-bottom: 0;
+}
+
+/* Inline code and math stay left-to-right inside Hebrew (RTL) sentences. */
+.markdown :not(pre) > code {
+  direction: ltr;
+  unicode-bidi: isolate;
+  border-radius: 6px;
+  background: var(--color-elevated);
+  padding: 0.15em 0.4em;
+  font-size: 0.875em;
+  font-weight: 500;
+}
+
+.markdown :not(pre) > code::before,
+.markdown :not(pre) > code::after {
+  content: none;
+}
+
+.katex {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+.katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.25rem 0;
+}
+
+.shiki-wrap pre {
+  margin: 0;
+  padding: 1rem;
+  background: transparent !important;
+}
+
+/* ---- Small animations ------------------------------------------------------------ */
+
+@keyframes blink {
+  0%,
+  80%,
+  100% {
+    opacity: 0.25;
+  }
+  40% {
+    opacity: 1;
+  }
+}
+
+.typing-dot {
+  animation: blink 1.4s infinite both;
+}
+
+.typing-dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.typing-dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes flash {
+  from {
+    background: color-mix(in srgb, var(--color-accent) 18%, transparent);
+  }
+  to {
+    background: transparent;
+  }
+}
+
+.flash {
+  animation: flash 2s ease-out;
+  border-radius: 12px;
+}

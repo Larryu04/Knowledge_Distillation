@@ -1,0 +1,9 @@
+[project]
+name = "corecs-global"
+version = "0.1.0"
+description = "Syllabus -> synthetic dataset -> QLoRA fine-tune -> offline GGUF tutor bundle, for university lecturers"
+requires-python = ">=3.11"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
