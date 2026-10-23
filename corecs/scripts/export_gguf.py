@@ -1,12 +1,12 @@
 """
 export_gguf.py — merge a LoRA adapter into its base model and export a CoreCS-ready GGUF.
 
-Run from the TRAINING repo (Knowledge_Dis), with its venv active, so this script can read
-the exact prompt preamble + sampling settings from that repo's inference.py:
+Run from the monorepo's model_training/ folder, with its venv active, so this script can read
+the exact prompt preamble + sampling settings from its inference.py:
 
-    cd C:\\Users\\Larry\\Knowledge_Dis
+    cd model_training
     .venv\\Scripts\\activate
-    python ..\\corecs\\scripts\\export_gguf.py --adapter out/dictalm2-tutor-qlora-v7/adapter --name corecs-v7
+    python ..\\corecs\\scripts\\export_gguf.py --adapter out/dictalm2-tutor-qlora-v8/adapter --name corecs-v8
 
 Produces, in the CoreCS models folder (default: %APPDATA%\\com.corecs.app\\models):
     corecs-v7-q4_k_m.gguf           the model (chat template embedded in its metadata)

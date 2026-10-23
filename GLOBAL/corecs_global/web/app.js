@@ -80,7 +80,19 @@ async function api(path, opts = {}) {
     throw new Error(typeof detail === "string" ? detail : JSON.stringify(detail));
   }
   const ct = res.headers.get("content-type") || "";
-  return ct.includes("json") ? res.json() : res.text();
+  if (ct.includes("json")) return res.json();
+  // Every /api/ route answers JSON. Anything else is a page from something in between (ngrok's
+  // warning/offline page, or this frontend's own index.html when GLOBAL_API_URL is wrong).
+  if (path.startsWith("/api/")) throw new Error(`The backend at ${API_BASE || location.origin} did not return JSON. Check that the server and the ngrok tunnel are running and that GLOBAL_API_URL points at the tunnel (https://…).`);
+  return res.text();
+}
+
+// Responses are checked before rendering so a malformed one shows an error instead of crashing.
+const arr = (v) => (Array.isArray(v) ? v : []);
+function checkOptions(o) {
+  const ok = o && typeof o === "object" && o.defaults && ["base_models", "languages", "quant_types", "teacher_models"].every((k) => Array.isArray(o[k]));
+  if (!ok) throw new Error("The backend sent an unexpected /api/options response. Is GLOBAL_API_URL pointing at a CoreCS Global server?");
+  return o;
 }
 
 // ---------------------------------------------------------------- router
@@ -91,7 +103,7 @@ async function route() {
   window.scrollTo(0, 0);
   try {
     if (!OPTIONS) {
-      OPTIONS = await api("/api/options");
+      OPTIONS = checkOptions(await api("/api/options"));   // not cached unless valid, so a retry can succeed
       document.getElementById("demo-banner").hidden = !OPTIONS.demo_mode;
     }
     if (parts[0] === "jobs" && parts[1]) return await viewJob(parts[1]);
@@ -100,7 +112,9 @@ async function route() {
     if (parts[0] === "retry" && parts[1]) return await viewRetry(parts[1]);
     return viewNew();
   } catch (e) {
-    $view.innerHTML = `<div class="alert err">${esc(e.message)}</div>`;
+    $view.innerHTML = `<div class="alert err">${esc(e.message)}
+      <div style="margin-top:10px"><button type="button" class="btn btn-ghost" id="retry-route">Try again</button></div></div>`;
+    document.getElementById("retry-route").onclick = route;
   }
 }
 window.addEventListener("hashchange", route);
@@ -216,7 +230,7 @@ function viewNew(prefill = null) {
   </form>`;
 
   const files = [];
-  const kept = prefill ? [...prefill.files] : [];   // files already on the server from the job being re-run
+  const kept = prefill ? [...arr(prefill.files)] : [];   // files already on the server from the job being re-run
   const $ = (id) => document.getElementById(id);
   const fileInput = $("file"), drop = $("drop");
   const submitLabel = prefill ? "Re-run with changes" : "Build my tutor";
@@ -393,7 +407,9 @@ function viewNew(prefill = null) {
 
 // ---------------------------------------------------------------- job list
 async function viewJobs() {
-  const jobs = await api("/api/jobs");
+  const res = await api("/api/jobs");
+  if (!Array.isArray(res)) throw new Error("The backend sent an unexpected job list. Reload the page to try again.");
+  const jobs = res.filter((j) => j && j.config);
   if (!jobs.length) {
     $view.innerHTML = `<div class="card empty"><h2>No jobs yet</h2><p>Build your first tutor to see it here.</p><a class="btn btn-primary" href="#/">New tutor</a></div>`;
     return;
@@ -402,8 +418,8 @@ async function viewJobs() {
     <thead><tr><th>Program</th><th>Status</th><th>Progress</th><th>Started</th><th></th></tr></thead>
     <tbody>${jobs.map((j) => `<tr>
       <td><b${rtl(j.config.program_name)}>${esc(j.config.program_name)}</b><div class="hint">${esc(j.config.base_model)}</div></td>
-      <td><span class="pill ${j.status}">${esc(j.status.replace("_", " "))}</span></td>
-      <td style="min-width:140px"><div class="bar sm"><i style="width:${Math.round(j.fraction * 100)}%"></i></div></td>
+      <td><span class="pill ${esc(j.status)}">${esc(String(j.status ?? "").replace("_", " "))}</span></td>
+      <td style="min-width:140px"><div class="bar sm"><i style="width:${Math.round((j.fraction || 0) * 100)}%"></i></div></td>
       <td class="hint">${fmtTime(j.created_at)}</td>
       <td class="row-acts">${["failed", "cancelled"].includes(j.status) ? `<a href="#/retry/${j.id}">Edit &amp; re-run</a>` : ""}
         <a href="${j.status === "succeeded" ? "#/deploy/" : "#/jobs/"}${j.id}">Open →</a></td></tr>`).join("")}
@@ -413,6 +429,7 @@ async function viewJobs() {
 // ---------------------------------------------------------------- live job view
 async function viewJob(id) {
   let job = await api(`/api/jobs/${id}`);
+  if (!job?.config) throw new Error(`The backend sent an unexpected response for job ${id}.`);
   $view.innerHTML = `
     <div class="card">
       <div class="job-head">
@@ -446,6 +463,8 @@ async function viewJob(id) {
 
   let reviewShown = false;
   const render = (j) => {
+    if (!j?.config) return;   // ignore a malformed poll/stream update rather than crash the view
+    j = { ...j, stages: arr(j.stages) };
     job = j;
     document.getElementById("ov-bar").style.width = `${Math.round(j.fraction * 100)}%`;
     const running = j.stages.find((s) => s.status === "running");
@@ -527,7 +546,7 @@ async function viewJob(id) {
 }
 
 function retryDialog(id, job, render) {
-  const needsKey = !OPTIONS.demo_mode && ["ingest", "generate"].some((s) => job.stages.find((x) => x.name === s)?.status !== "done");
+  const needsKey = !OPTIONS.demo_mode && ["ingest", "generate"].some((s) => arr(job.stages).find((x) => x.name === s)?.status !== "done");
   const back = document.createElement("div");
   back.className = "modal-back";
   back.innerHTML = `<div class="modal"><h2>Resume job</h2>
@@ -552,6 +571,8 @@ async function showReview(id, perCourse) {
   const box = document.getElementById("review");
   let data;
   try { data = await api(`/api/jobs/${id}/syllabi`); } catch (e) { box.innerHTML = `<div class="alert err">${esc(e.message)}</div>`; return; }
+  const courses = arr(data?.courses).map((c) => ({ ...c, topics: arr(c.topics), out_of_scope: arr(c.out_of_scope) }));
+  if (!courses.length) { box.innerHTML = `<div class="alert warn">No courses were extracted from the syllabi. Cancel the job and use Edit &amp; re-run to fix the inputs.</div>`; return; }
   const courseHtml = (c, i) => `<div class="course" data-i="${i}">
       <div class="course-head"><input type="text" class="cname" value="${esc(c.course_name)}"${rtl(c.course_name)}>
         <button type="button" class="btn btn-ghost rm" title="Remove course">Remove</button></div>
@@ -565,10 +586,10 @@ async function showReview(id, perCourse) {
       </div>
       <p class="hint" style="margin:6px 0 0">From: ${esc(c.source || "")}</p>
     </div>`;
-  box.innerHTML = `<div class="card"><h2>Review extracted courses (${data.courses.length})</h2>
+  box.innerHTML = `<div class="card"><h2>Review extracted courses (${courses.length})</h2>
     <p class="hint">Edit names and topics, remove anything that isn't a course, then approve. Generation creates
       ${perCourse.toLocaleString()} examples for each course you keep.</p>
-    <div id="courses">${data.courses.map(courseHtml).join("")}</div>
+    <div id="courses">${courses.map(courseHtml).join("")}</div>
     <div class="actions"><button class="btn btn-primary" id="approve">Approve &amp; start generation</button></div></div>`;
   box.querySelector("#courses").onclick = (e) => { if (e.target.classList.contains("rm")) e.target.closest(".course").remove(); };
   box.querySelector("#approve").onclick = async (e) => {
@@ -592,6 +613,9 @@ async function showReview(id, perCourse) {
 // ---------------------------------------------------------------- deploy guide
 async function viewDeploy(id) {
   const [job, guide] = await Promise.all([api(`/api/jobs/${id}`), api(`/api/jobs/${id}/deploy`)]);
+  if (!job?.config || !guide || typeof guide !== "object") throw new Error(`The backend sent an unexpected response for job ${id}.`);
+  job.stages = arr(job.stages);
+  guide.sections = arr(guide.sections).map((sec) => ({ ...sec, body: sec.body || "", commands: arr(sec.commands) }));
   let user = "";
   try { user = localStorage.getItem("hf_user") || ""; } catch {}
   const fill = (s) => (user ? s.split(guide.placeholder).join(user) : s);
@@ -621,7 +645,7 @@ async function viewDeploy(id) {
       </div>
       <aside>
         <div class="card"><h2>Sample answers</h2>
-          ${(guide.samples || []).map((s) => `<div class="sample"><div class="q"${rtl(s.question)}>${esc(s.question)}</div><div class="a"${rtl(s.answer)}>${esc(s.answer)}</div></div>`).join("") || '<p class="hint">No samples recorded.</p>'}
+          ${arr(guide.samples).map((s) => `<div class="sample"><div class="q"${rtl(s.question)}>${esc(s.question)}</div><div class="a"${rtl(s.answer)}>${esc(s.answer)}</div></div>`).join("") || '<p class="hint">No samples recorded.</p>'}
           <p class="hint">Generated by your fine-tuned model on held-out questions.</p>
         </div>
       </aside>

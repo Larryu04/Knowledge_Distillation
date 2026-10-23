@@ -11,9 +11,14 @@ Syllabus Ingestion -> Dataset Generation -> Fine-Tuning -> Packaging & GGUF -> D
    (teacher LLM)        (teacher LLM)         (GPU)          (GPU / CPU)         (filled-in)
 ```
 
+Part of the [CoreCS monorepo](../README.md). All commands below run from this `GLOBAL/`
+directory.
+
 ## Quick start (single machine, Windows)
 
 ```powershell
+cd GLOBAL
+
 # 1. Platform (API, UI, ingestion/generation)
 python -m venv .venv
 .venv\Scripts\pip install -r requirements.txt
@@ -22,23 +27,101 @@ python -m venv .venv
 #    pip install torch==2.6.0 --index-url https://download.pytorch.org/whl/cu124
 #    pip install -r requirements-train.txt
 
-# 3. llama.cpp toolchain for GGUF conversion + the bundled student runtime
+# 3. llama.cpp toolchain for GGUF conversion + the bundled student runtime (-> GLOBAL\tools\)
 .venv\Scripts\python scripts\setup_toolchain.py
 
-# 4. Configure and run
-copy .env.example .env      # set GLOBAL_TRAIN_PYTHON etc.
+# 4. Configure
+copy .env.example .env
+
+# 5. Run the API/UI and one worker for both lanes
 powershell -ExecutionPolicy Bypass -File scripts\run_platform.ps1
 # -> http://127.0.0.1:8000
 ```
+
+### Configuration (`.env`)
+
+`.env.example` is the template and is committed. `.env` is your copy and is git-ignored.
+`run_platform.ps1` loads it at startup. Every setting is optional; uncomment a line to use it.
+
+| Variable | Purpose |
+|---|---|
+| `GLOBAL_DATA_DIR` | Where jobs, uploads, bundles and the SQLite DB live (default `./data`). Bundles are GBs each. |
+| `GLOBAL_TRAIN_PYTHON` | Interpreter with torch + CUDA + `requirements-train.txt`, used for the train/package stages |
+| `GLOBAL_TOOLCHAIN_DIR` | llama.cpp toolchain location (default `./tools`) |
+| `GLOBAL_DESKTOP_INSTALLER` | Prebuilt desktop installer to include in bundles (auto-detected from `runtime/desktop` builds) |
+| `GLOBAL_ACCESS_TOKEN` | Shared secret required by the UI/API. **Set it whenever the server is reachable by others** (e.g. via ngrok). |
+| `GLOBAL_SECRET_KEY` | Fernet key for credentials at rest (default: generated into `data/secret.key`) |
+| `GLOBAL_TEACHER_BACKEND` | `fake` simulates the teacher LLM: no API key, no cost |
+| `GLOBAL_VRAM_FRACTION` | Fraction of GPU memory training may use (default 0.85) |
+| `GLOBAL_CORS_ORIGINS` | Comma-separated origins allowed to call the API (default `*`). Set it to your Vercel URL in production. |
 
 Try it without an API key or GPU time: set `GLOBAL_TEACHER_BACKEND=fake` (simulated teacher)
 and pick "Qwen 2.5 1.5B Instruct (fast test runs)". A full run takes about 4 minutes on an
 RTX 4070 Super.
 
+## Deployment: Vercel frontend + local backend (via ngrok)
+
+The platform can run decoupled. The static UI (`corecs_global/web/`) is hosted on Vercel, and
+the API, worker and GPU stay on your own machine, exposed through an ngrok HTTPS tunnel:
+
+```
+ Lecturer's browser ──► https://<app>.vercel.app      (static: index.html, app.js, config.js)
+        │
+        │  fetch / SSE / downloads, to window.GLOBAL_API_URL
+        ▼
+ https://<name>.ngrok-free.app ──► ngrok agent ──► http://127.0.0.1:8000  (FastAPI + worker + GPU)
+```
+
+At build time `build-config.mjs` writes `config.js` with `window.GLOBAL_API_URL` from the
+`GLOBAL_API_URL` env var, and `app.js` sends every request there. If the backend serves the
+UI itself (local mode), its own `/config.js` sets the value to `""` (same origin).
+
+### 1. Backend (your machine)
+
+```powershell
+cd GLOBAL
+# In .env, set at least:
+#   GLOBAL_ACCESS_TOKEN=<a long random string>      # the tunnel is public; lecturers send API keys
+#   GLOBAL_CORS_ORIGINS=https://<app>.vercel.app    # optional, tightens the default "*"
+powershell -ExecutionPolicy Bypass -File scripts\run_platform.ps1
+```
+
+### 2. Tunnel
+
+```powershell
+ngrok config add-authtoken <your-ngrok-token>      # once
+ngrok http 8000 --url=<name>.ngrok-free.app       # free static domain from the ngrok dashboard
+```
+
+Use the free static domain: a random URL changes on every restart, and Vercel would need a
+redeploy each time. `app.js` sends the `ngrok-skip-browser-warning` header, so ngrok's
+interstitial page doesn't intercept API calls.
+
+### 3. Frontend (Vercel)
+
+1. Import the GitHub repo into Vercel.
+2. **Root Directory:** `GLOBAL/corecs_global/web`. `vercel.json` there sets the build
+   (`node build-config.mjs`), the output directory and the SPA rewrites. Framework preset: *Other*.
+3. **Environment variable:** `GLOBAL_API_URL` = `https://<name>.ngrok-free.app` (no trailing
+   slash needed; `https://` is added if you leave it out).
+4. Deploy. After changing `GLOBAL_API_URL`, **redeploy**, because the value is baked into `config.js` at build time.
+
+On first load the dashboard asks for the access token, stores it in the browser, and sends it
+as a `Bearer` header (or as `?token=` for the event stream and download links).
+
+### Troubleshooting
+
+| Symptom | Cause / fix |
+|---|---|
+| "Could not reach the CoreCS Global server" | Backend or ngrok isn't running, or `GLOBAL_API_URL` is wrong. Open `https://<name>.ngrok-free.app/api/options` directly; it should return JSON. |
+| "The backend … did not return JSON" | The request hit an HTML page instead of the API: the ngrok tunnel is offline, or `GLOBAL_API_URL` points at the Vercel site itself. Fix the variable and redeploy. |
+| Repeated access-token prompt | The token doesn't match `GLOBAL_ACCESS_TOKEN`. Clear the site's local storage and enter the right one. |
+| CORS error in the browser console | `GLOBAL_CORS_ORIGINS` doesn't list the exact Vercel origin (scheme + host, no trailing slash). |
+
 ## Architecture
 
 ```
- Browser (vanilla JS, no build)                         Lecturer
+ Browser (vanilla JS, no build; served by FastAPI or Vercel)        Lecturer
    │  multipart upload, REST, Server-Sent Events
    ▼
  FastAPI  (corecs_global/api.py)
@@ -106,16 +189,25 @@ on generation.
 ## Repository layout
 
 ```
-corecs_global/        platform package (api, worker, db, vault, progress, jobs, languages, llm/, stages/, web/)
-runtime/portable/     zero-install student runtime (copied into every bundle)
-runtime/desktop/      CoreCS desktop app sources (Tauri 2 + React + Rust), generic, model-agnostic
-scripts/              setup_toolchain.py, run_platform.ps1
-tests/                pytest: queue/lanes, vault, ETA, validation, ingestion, API + worker end to end
+GLOBAL/
+  corecs_global/        platform package (api, worker, db, vault, progress, jobs, languages, llm/, stages/)
+    web/                UI: index.html, app.js, styles.css, fonts/ + vercel.json, build-config.mjs (Vercel)
+  runtime/portable/     zero-install student runtime (copied into every bundle)
+  runtime/desktop/      CoreCS desktop app sources (Tauri 2 + React + Rust), generic, model-agnostic
+  scripts/              setup_toolchain.py, run_platform.ps1
+  tests/                pytest: queue/lanes, vault, ETA, validation, ingestion, API + worker end to end
+  .env.example          configuration template (copy to .env)
+  requirements*.txt     platform / GPU-stage / dev dependencies
+  data/, tools/         git-ignored: job data, llama.cpp toolchain
 ```
+
+`runtime/desktop/` is a generic, model-agnostic copy of the Hebrew-specific app in
+[`../corecs/`](../corecs/). Changes to one are not synced to the other automatically.
 
 ## Tests
 
 ```powershell
+cd GLOBAL
 .venv\Scripts\pip install -r requirements-dev.txt
 .venv\Scripts\python -m pytest
 ```

@@ -2,6 +2,10 @@
 
 A research project on offline knowledge distillation that trains a specialized, resource-efficient language model to act as an academic tutor for undergraduate Computer Science students (B.Sc. in Computer Science). The tutor answers Hebrew questions with a structured, numbered, step-by-step rationale followed by a concise final answer, grounded in the syllabi of the Academic College of Ramat Gan.
 
+> Part of the [CoreCS monorepo](../README.md): this folder holds the research and training
+> pipeline, [`../corecs/`](../corecs/) the offline desktop app that ships the model, and
+> [`../GLOBAL/`](../GLOBAL/) the lecturer platform that generalizes the pipeline.
+
 > **Final model: v8.** The tutor covers **23 Computer Science subjects**, trained on **27,600 rows** (1,200 per course) generated with `gpt-4o-mini`, and evaluated on a **92-item, 23-domain gold benchmark**. v8 beats the base model on all 92 items, is the best adapter on all 11 newly added subjects, and keeps ~97% of its gain on the 12 earlier ones. In a pairwise LLM-as-a-judge benchmark on generated answers, v8 **wins or ties 84.8%** of comparisons against its own base model. The model runs fully offline in **CoreCS**, a native desktop app (Tauri UI + Rust core + llama.cpp) at **~93 tokens/s** on an RTX 4070 SUPER, packaged as a standalone Windows installer.
 
 ---
@@ -156,7 +160,7 @@ Renders publication-quality charts (300-dpi PNG plus SVG) into `figures/`, with 
 
 ## Deployment: CoreCS Desktop App
 
-The trained tutor ships as **CoreCS**, a fully offline Windows desktop application maintained in a sibling folder (`../corecs`):
+The trained tutor ships as **CoreCS**, a fully offline Windows desktop application in [`corecs/`](../corecs/) at the monorepo root:
 
 * **Architecture:** Tauri 2 shell with a React/TypeScript UI (Hebrew RTL), a Rust core (SQLite chat history, model discovery, engine lifecycle), and a bundled llama.cpp `llama-server` sidecar running on Vulkan.
 * **Model format:** the QLoRA adapter is merged into the base model and quantized to a Q4_K_M GGUF by `corecs/scripts/export_gguf.py`, together with an optional profile JSON carrying the training preamble and sampling settings. The app is model-agnostic: any new GGUF appears in its model picker without code changes.
@@ -164,7 +168,7 @@ The trained tutor ships as **CoreCS**, a fully offline Windows desktop applicati
 * **Shipped model:** v8 is exported as `corecs-v8-q4_k_m.gguf` and loaded in the app.
 * **Installer:** `npm run tauri build -- --bundles nsis` produces a standalone 18.5 MB `setup.exe` (app + inference engine); the ~4.4 GB model file is distributed separately.
 
-Export a trained adapter for the app (from this repository; this is how v8 was exported):
+Export a trained adapter for the app (from this `model_training/` folder; this is how v8 was exported):
 
 ```powershell
 python ..\corecs\scripts\export_gguf.py --adapter out/dictalm2-tutor-qlora-v8/adapter --name corecs-v8
@@ -175,6 +179,7 @@ python ..\corecs\scripts\export_gguf.py --adapter out/dictalm2-tutor-qlora-v8/ad
 ## Repository Structure
 
 ```text
+model_training/
 ├── train.py                          # QLoRA training pipeline with sequence masking
 ├── inference.py                      # Interactive REPL & single-turn query CLI
 ├── evaluate_models.py                # Base vs. adapter masked-loss evaluation + blind A/B sheets
@@ -200,10 +205,26 @@ python ..\corecs\scripts\export_gguf.py --adapter out/dictalm2-tutor-qlora-v8/ad
 ├── summary.md                        # Detailed evaluation reports (v5 through v8, judge benchmark)
 ├── project_memory.md                 # Project context, constraints, and changelog
 ├── requirements.txt                  # Locked Python dependencies
-└── .gitignore                        # Excludes checkpoints, local venv, secrets, and IDE configs
+├── out/                              # (git-ignored) adapters and checkpoints, e.g. out/dictalm2-tutor-qlora-v8/
+├── models/                           # (git-ignored) downloaded GGUFs for the judge benchmark
+└── logs/, archive/                   # (git-ignored) run logs and retired artifacts
+```
+
+Ignore rules for all three sub-projects live in the monorepo's root [`.gitignore`](../.gitignore).
+
+## Setup
+
+```powershell
+cd model_training
+python -m venv .venv
+.venv\Scripts\activate
+pip install -r requirements.txt
+$env:OPENAI_API_KEY = "sk-..."    # only for dataset generation and the judge benchmark
 ```
 
 ## Usage
+
+All commands run from `model_training/` with the venv active.
 
 ```bash
 # Train the v8 adapter (writes to out/dictalm2-tutor-qlora-v8)

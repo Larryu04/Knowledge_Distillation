@@ -4,6 +4,11 @@ An offline, privacy-first AI tutor for Computer Science undergraduates. CoreCS r
 fine-tuned 7B model entirely on the student's own computer via a bundled llama.cpp engine;
 no account, no cloud, and nothing leaves the machine.
 
+Part of the [CoreCS monorepo](../README.md). It ships the v8 model trained in
+[`../model_training/`](../model_training/). A generic, model-agnostic copy of this app is bundled by
+CoreCS Global in [`../GLOBAL/runtime/desktop/`](../GLOBAL/runtime/desktop/). All commands below
+run from this `corecs/` directory.
+
 - Architecture, stack and data locations: [`docs/summary.md`](docs/summary.md)
 - Progress, decisions and gotchas (living log): [`docs/project_memory.md`](docs/project_memory.md)
 
@@ -16,13 +21,21 @@ no account, no cloud, and nothing leaves the machine.
 ## Setup
 
 ```powershell
+cd corecs
 npm install
 powershell -ExecutionPolicy Bypass -File scripts\fetch-llama.ps1   # llama-server sidecar (git-ignored)
 ```
 
 Put a model (`*.gguf`, optionally with its `*.corecs.json` profile) in
 `%APPDATA%\com.corecs.app\models`, or create one from a LoRA adapter with
-[`scripts/export_gguf.py`](scripts/export_gguf.py).
+[`scripts/export_gguf.py`](scripts/export_gguf.py). Run the export from `model_training/` with its
+venv active, so it reads the exact preamble and sampling settings from `inference.py`:
+
+```powershell
+cd model_training
+.venv\Scripts\activate
+python ..\corecs\scripts\export_gguf.py --adapter out/dictalm2-tutor-qlora-v8/adapter --name corecs-v8
+```
 
 ## Development
 
@@ -37,5 +50,8 @@ npx tsc --noEmit                                                   # type-check 
 ## Build an installer
 
 ```powershell
-npm run tauri build
+npm run tauri build -- --bundles nsis   # -> src-tauri\target\release\bundle\nsis\*-setup.exe
 ```
+
+The installer contains the app and the inference engine (~18.5 MB). The ~4.4 GB model file is
+distributed separately.
