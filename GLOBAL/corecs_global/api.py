@@ -44,11 +44,29 @@ async def lifespan(_app: FastAPI):
 app = FastAPI(title="CoreCS Global", version=__version__, lifespan=lifespan)
 app.mount("/static", StaticFiles(directory=WEB_DIR), name="static")
 
+_ORIGIN = re.compile(r"https?://[^/\s,\[\]()<>\"']+", re.I)
+
+
+def cors_origins(raw: str) -> list[str]:
+    """Parse GLOBAL_CORS_ORIGINS. Browsers send a bare origin (scheme://host[:port]), and the match
+    is exact, so reduce each entry to that: drops paths, trailing slashes, quotes, and recovers a
+    URL pasted as a Markdown link. Entries with no URL in them are reported and skipped."""
+    origins = []
+    for item in filter(None, (s.strip() for s in raw.split(","))):
+        if item == "*":
+            origins.append(item)
+        elif m := _ORIGIN.search(item):
+            origins.append(m.group(0).lower())
+        else:
+            print(f"WARNING: GLOBAL_CORS_ORIGINS entry {item!r} is not a URL; ignored.", flush=True)
+    return list(dict.fromkeys(origins))
+
+
 # The web UI may be hosted elsewhere (e.g. Vercel) and call this API cross-origin.
 # GLOBAL_CORS_ORIGINS: comma-separated allowed origins; "*" (default) allows any.
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[o.strip() for o in os.environ.get("GLOBAL_CORS_ORIGINS", "*").split(",") if o.strip()],
+    allow_origins=cors_origins(os.environ.get("GLOBAL_CORS_ORIGINS", "*")),
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

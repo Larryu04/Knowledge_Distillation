@@ -67,7 +67,12 @@ async function api(path, opts = {}) {
   // no-store: otherwise the browser can replay a cached ngrok "endpoint offline" page after the
   // server is back, and retrying never actually reaches it.
   try { res = await fetch(API_BASE + path, { cache: "no-store", ...opts, headers }); }
-  catch { throw new Error("Could not reach the CoreCS Global server. Check your connection and that the server is running, then try again."); }
+  // The browser reports a CORS rejection exactly like a network failure, so name both causes.
+  catch {
+    throw new Error(API_BASE && new URL(API_BASE, location.href).origin !== location.origin
+      ? `Could not reach the CoreCS Global server at ${API_BASE}. Check that the server and the ngrok tunnel are running, and that GLOBAL_CORS_ORIGINS on the server allows ${location.origin} (exactly, no trailing slash). Then try again.`
+      : "Could not reach the CoreCS Global server. Check your connection and that the server is running, then try again.");
+  }
   if (res.status === 401) {
     const t = prompt("This CoreCS Global server requires an access token:");
     if (t) {

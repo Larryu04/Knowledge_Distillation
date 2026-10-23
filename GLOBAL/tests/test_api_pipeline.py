@@ -173,3 +173,13 @@ def test_access_token(monkeypatch):
         assert client.get("/api/options", headers={"Authorization": "Bearer s3cret"}).status_code == 200
         assert client.get("/api/options?token=s3cret").status_code == 200
         assert client.get("/").status_code == 200                      # the page itself is public
+
+
+def test_cors_origins_are_normalized():
+    from corecs_global.api import cors_origins
+    site = "https://knowledgedistillation-web.vercel.app"
+    assert cors_origins("*") == ["*"]
+    assert cors_origins(f"{site}/") == [site]
+    assert cors_origins(f"[{site}]({site})") == [site]          # pasted as a Markdown link
+    assert cors_origins(f' "{site}" , http://localhost:5173/x') == [site, "http://localhost:5173"]
+    assert cors_origins("not-a-url") == []
