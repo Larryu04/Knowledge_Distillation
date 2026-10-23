@@ -64,7 +64,9 @@ async function api(path, opts = {}) {
   const headers = { "ngrok-skip-browser-warning": "1", ...(opts.headers || {}) };
   if (token()) headers.Authorization = `Bearer ${token()}`;
   let res;
-  try { res = await fetch(API_BASE + path, { ...opts, headers }); }
+  // no-store: otherwise the browser can replay a cached ngrok "endpoint offline" page after the
+  // server is back, and retrying never actually reaches it.
+  try { res = await fetch(API_BASE + path, { cache: "no-store", ...opts, headers }); }
   catch { throw new Error("Could not reach the CoreCS Global server. Check your connection and that the server is running, then try again."); }
   if (res.status === 401) {
     const t = prompt("This CoreCS Global server requires an access token:");
@@ -96,14 +98,19 @@ function checkOptions(o) {
 }
 
 // ---------------------------------------------------------------- router
+let routeSeq = 0;   // only the newest route() call may render (retry clicks, hash changes)
+
 async function route() {
   cleanup();
   cleanup = () => {};
+  const seq = ++routeSeq;
   const parts = location.hash.replace(/^#\/?/, "").split("/");
   window.scrollTo(0, 0);
   try {
     if (!OPTIONS) {
-      OPTIONS = checkOptions(await api("/api/options"));   // not cached unless valid, so a retry can succeed
+      const opts = checkOptions(await api("/api/options"));   // not cached unless valid, so a retry can succeed
+      if (seq !== routeSeq) return;
+      OPTIONS = opts;
       document.getElementById("demo-banner").hidden = !OPTIONS.demo_mode;
     }
     if (parts[0] === "jobs" && parts[1]) return await viewJob(parts[1]);
@@ -112,10 +119,20 @@ async function route() {
     if (parts[0] === "retry" && parts[1]) return await viewRetry(parts[1]);
     return viewNew();
   } catch (e) {
-    $view.innerHTML = `<div class="alert err">${esc(e.message)}
+    if (seq !== routeSeq) return;
+    $view.innerHTML = `<div class="alert err" role="alert">${esc(e.message)}
+      <div class="hint" style="margin-top:6px">Last attempt: ${new Date().toLocaleTimeString()}</div>
       <div style="margin-top:10px"><button type="button" class="btn btn-ghost" id="retry-route">Try again</button></div></div>`;
-    document.getElementById("retry-route").onclick = route;
+    document.getElementById("retry-route").onclick = retryRoute;
   }
+}
+
+// "Try again": clear the error, show that a new attempt is running, then re-run the whole route
+// (options + the current view's data) from scratch.
+async function retryRoute() {
+  $view.innerHTML = `<div class="card empty"><p class="hint">Connecting to the CoreCS Global server…</p></div>`;
+  await route();
+  if ($view.querySelector("#retry-route")) toast("Still can't reach the server.");
 }
 window.addEventListener("hashchange", route);
 
