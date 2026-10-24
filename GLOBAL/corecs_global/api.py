@@ -21,7 +21,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, HTMLResponse, JSONResponse, Response, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 
-from . import __version__, db, vault
+from . import __version__, db, hf_publish, student_app, vault
 from .config import BASE_MODELS, QUANT_TYPES, get_settings
 from .jobs import STAGE_LABELS, STAGE_LANE, STAGE_NAMES, TERMINAL, ConfigError, JobConfig, estimate
 from .languages import PRESETS
@@ -101,6 +101,8 @@ def job_view(job: dict) -> dict:
     stages = []
     for name in STAGE_NAMES:
         p = dict(job["progress"].get(name, {}))
+        if not p and job["status"] == "succeeded":
+            p["status"] = "skipped"        # a stage added after this job ran (e.g. publish)
         p.update(name=name, label=STAGE_LABELS[name], lane=STAGE_LANE[name])
         stages.append(p)
     bundle = Path(job["bundle_path"]) if job.get("bundle_path") else None
@@ -150,6 +152,7 @@ def options():
         "defaults": JobConfig(program_name="-").to_dict(),
         "max_upload_mb": s.max_upload_mb,
         "demo_mode": s.teacher_backend == "fake",
+        "hf_token_required": s.teacher_backend != "fake",
         "desktop_installer": s.desktop_installer.name if s.desktop_installer else None,
         "stages": [{"name": n, "label": STAGE_LABELS[n]} for n in STAGE_NAMES],
     }
@@ -176,6 +179,13 @@ def _verify_key(api_key: str, model: str) -> None:
         raise HTTPException(400, str(e))
     except Exception as e:  # noqa: BLE001 - network trouble etc.; don't enqueue a doomed job
         raise HTTPException(502, f"Could not verify the API key with the provider: {type(e).__name__}.")
+
+
+def _hf_user(token: str) -> str:
+    try:
+        return hf_publish.check_token(token)
+    except hf_publish.PublishError as e:
+        raise HTTPException(400, str(e))
 
 
 def _save_sources(ws: Workspace, files: list[UploadFile], pasted: str, max_bytes: int,
@@ -268,6 +278,13 @@ def create_job(
         if not api_key:
             raise HTTPException(400, "An API key for the teacher model is required.")
         _verify_key(api_key, cfg.teacher_model)
+    hf_token = hf_token.strip()
+    cfg.hf_repo = ""                       # server-assigned, from the token's account
+    if hf_token:
+        cfg.hf_repo = hf_publish.repo_for(_hf_user(hf_token), slugify(cfg.program_name, fallback="tutor"))
+    elif s.teacher_backend != "fake":
+        raise HTTPException(400, "A Hugging Face token with Write access is required: the server publishes "
+                                 f"your model to your account when training finishes. {hf_publish.TOKEN_HELP}")
 
     n_inputs = len(kept) + len([f for f in files if f.filename]) + len([b for b in PASTE_SEPARATOR.split(pasted_text) if b.strip()])
     if n_inputs == 0:
@@ -284,8 +301,8 @@ def create_job(
     atomic_write_json(ws.sources, sources)
     if api_key:
         vault.store(job_id, vault.TEACHER_KEY, api_key)
-    if hf_token.strip():
-        vault.store(job_id, vault.HF_TOKEN, hf_token.strip())
+    if hf_token:
+        vault.store(job_id, vault.HF_TOKEN, hf_token)
     if retry_of:
         db.add_event(job_id, "log", {"message": f"Re-run of job {retry_of} with edited inputs."})
         db.update_job(retry_of, replaced_by=job_id)
@@ -426,8 +443,16 @@ async def retry(job_id: str, request: Request):
             raise HTTPException(400, "This retry re-runs a stage that calls the teacher model; provide the API key again.")
         _verify_key(api_key, job["config"]["teacher_model"])
         vault.store(job_id, vault.TEACHER_KEY, api_key)
-    if (body.get("hf_token") or "").strip():
-        vault.store(job_id, vault.HF_TOKEN, body["hf_token"].strip())
+    hf_token = (body.get("hf_token") or "").strip()
+    hf_repo = job["config"].get("hf_repo") or ""
+    if hf_repo and "publish" in remaining:
+        if not hf_token:
+            raise HTTPException(400, "This retry publishes the model to Hugging Face; enter your Write token again.")
+        if _hf_user(hf_token) != hf_repo.split("/")[0]:
+            raise HTTPException(400, f"Use a token for the Hugging Face account {hf_repo.split('/')[0]}, "
+                                     "which this job publishes to.")
+    if hf_token:
+        vault.store(job_id, vault.HF_TOKEN, hf_token)
     db.update_stage_progress(job_id, stage, {"status": "pending", "eta_s": None})
     db.update_job(job_id, status="queued", next_stage=stage, current_stage=None, error=None, cancel_requested=0)
     db.add_event(job_id, "status", {"status": "queued", "message": f"Retrying from {STAGE_LABELS[stage]}."})
@@ -469,3 +494,35 @@ def deploy_guide(job_id: str):
     if guide is None:
         raise HTTPException(404, "The deployment guide is not ready yet.")
     return JSONResponse(guide)
+
+
+def _manifest(job_id: str, repo: str) -> tuple[dict, dict]:
+    _job_or_404(job_id)
+    guide = read_json(Workspace(db.job_dir(job_id)).deploy)
+    if guide is None:
+        raise HTTPException(404, "The deployment guide is not ready yet.")
+    try:
+        return guide, student_app.build_manifest(guide, repo)
+    except student_app.ManifestError as e:
+        raise HTTPException(400, str(e))
+
+
+@app.get("/api/jobs/{job_id}/model-manifest", dependencies=[Depends(require_access)])
+def model_manifest(job_id: str, repo: str = ""):
+    """corecs-model.json alone: tells a CoreCS desktop app which model to pull on first launch."""
+    _, manifest = _manifest(job_id, repo)
+    return JSONResponse(manifest, headers={
+        "Content-Disposition": f'attachment; filename="{student_app.MANIFEST_FILE}"'})
+
+
+@app.get("/api/jobs/{job_id}/student-app", dependencies=[Depends(require_access)])
+def student_app_download(job_id: str, repo: str = ""):
+    """The generic desktop installer + this job's model manifest, as one ZIP for students."""
+    guide, manifest = _manifest(job_id, repo)
+    installer = get_settings().desktop_installer
+    if not installer or not installer.exists():
+        raise HTTPException(404, "No desktop installer is configured on this server "
+                                 "(build runtime/desktop or set GLOBAL_DESKTOP_INSTALLER).")
+    root = f"{slugify(guide['display_name'], fallback='tutor')}-app"
+    return Response(student_app.build_zip(installer, manifest, root), media_type="application/zip",
+                    headers={"Content-Disposition": f'attachment; filename="{root}.zip"'})

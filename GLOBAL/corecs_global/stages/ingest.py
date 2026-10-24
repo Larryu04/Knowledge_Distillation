@@ -16,6 +16,7 @@ import re
 from .. import db
 from ..jobs import estimate
 from ..llm.teacher import make_teacher
+from ..outline import parse_outline, strip_unit_prefix
 from .base import StageContext, StageError, atomic_write_json, read_json, slugify
 
 MAX_SOURCE_CHARS = 100_000      # ~30-50k tokens; well inside gpt-4o-mini's context
@@ -30,14 +31,17 @@ Rules:
 Return one entry per distinct course.
 2. "topics" must be granular, concrete subtopics taken ONLY from the syllabus (lecture \
 topics, weekly units, learning outcomes). Split broad units into specific teachable points. \
-Aim for 12-60 topics per course. Never invent topics the syllabus does not cover.
+Aim for 12-60 topics per course, but a short outline is still a course: a plain list such as \
+"Week 1: X / Week 2: Y" gives one topic per line (keep its wording, drop the "Week N:" prefix). \
+Never invent topics the syllabus does not cover.
 3. "out_of_scope": terms the syllabus explicitly defers to other/later courses or excludes. \
 Empty list if none are stated. Do not guess.
 4. "style_note": only if the course needs special handling (e.g. a proof-heavy math course: \
 "prefer verbal, conceptual explanations over long formal proofs"). Otherwise null.
 5. Keep course names and topics in the syllabus's own language. "domain" is a short English \
 label (2-5 words) for the subject.
-6. If the text is not a syllabus at all, return {"courses": []}.
+6. If the text names no course title, set "course_name" to "" rather than inventing one.
+7. If the text is not a syllabus at all, return {"courses": []}.
 
 Return ONLY a JSON object:
 {"courses": [{"course_name": str, "domain": str, "language": str, "summary": str, \
@@ -89,22 +93,29 @@ def _str_list(val) -> list[str]:
         return []
     out, seen = [], set()
     for item in val:
-        s = re.sub(r"^\s*(?:[-*•]|\d+[.)])\s*", "", str(item)).strip()
+        s = strip_unit_prefix(re.sub(r"^\s*(?:[-*•]|\d+[.)])\s*", "", str(item)))
         if s and s.lower() not in seen:
             seen.add(s.lower())
             out.append(s)
     return out
 
 
-def normalize_courses(raw_courses: list, source_name: str) -> list[dict]:
-    courses = []
+def normalize_courses(raw_courses: list, source_name: str, fallback_name: str = "") -> list[dict]:
+    """Untitled courses get `fallback_name` (numbered if a source holds several), else the
+    source name, so an outline without a "Course:" line is still usable."""
+    courses, untitled = [], 0
     for c in raw_courses or []:
         if not isinstance(c, dict):
             continue
         name = str(c.get("course_name") or "").strip()
         topics = _str_list(c.get("topics"))
-        if not name or len(topics) < MIN_TOPICS:
+        if len(topics) < MIN_TOPICS:
             continue
+        if not name:
+            untitled += 1
+            name = fallback_name or source_name or "Course"
+            if untitled > 1:
+                name = f"{name} {untitled}"
         style = c.get("style_note")
         courses.append({
             "course_name": name,
@@ -166,7 +177,7 @@ def run(ctx: StageContext) -> None:
             text = clean_text(extract_text(path))
         except Exception as e:  # noqa: BLE001 - a broken file should name itself, not crash opaquely
             raise StageError(f"Could not read {src['name']}: {type(e).__name__}: {e}") from e
-        if len(text) < 200:
+        if len(text) < 200 and not parse_outline(text, MIN_TOPICS):
             ctx.log(f"Skipping {src['name']}: only {len(text)} characters of text "
                     "(scanned PDFs need OCR before upload).")
             ctx.reporter.update(i + 1, len(sources), f"Skipped {src['name']}")
@@ -177,14 +188,21 @@ def run(ctx: StageContext) -> None:
 
         ctx.reporter.update(i, len(sources), f"Structuring {src['name']}", force=True)
         user = f"# Source: {src['name']}\n\n{text}"
+        # One source -> the program name is the natural title; several -> say which source it was.
+        fallback = (ctx.config.program_name if len(sources) == 1
+                    else f"{ctx.config.program_name} ({src['name']})")
         courses = []
         for attempt in range(3):
             raw = teacher.complete_json(SYSTEM_PROMPT, user, temperature=0.2)
             try:
-                courses = normalize_courses(json.loads(raw).get("courses"), src["name"])
+                courses = normalize_courses(json.loads(raw).get("courses"), src["name"], fallback)
                 break
             except (json.JSONDecodeError, AttributeError):
                 ctx.log(f"{src['name']}: malformed extraction (attempt {attempt + 1}/3), retrying")
+        if not courses and (outline := parse_outline(text, MIN_TOPICS)):
+            # The teacher found nothing usable in a short or informal outline: read the list as-is.
+            courses = normalize_courses(outline, src["name"], fallback)
+            ctx.log(f"{src['name']}: read as a plain topic outline")
         if not courses:
             ctx.log(f"No course with at least {MIN_TOPICS} topics found in {src['name']}.")
         for c in courses:

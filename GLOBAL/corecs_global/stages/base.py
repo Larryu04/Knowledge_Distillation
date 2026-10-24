@@ -35,6 +35,10 @@ class Workspace:
         return self.root / "pasted.txt"
 
     @property
+    def publish(self) -> Path:
+        return self.root / "publish.json"
+
+    @property
     def syllabi(self) -> Path:
         return self.root / "syllabi.json"
 

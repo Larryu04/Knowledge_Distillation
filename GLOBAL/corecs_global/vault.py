@@ -1,10 +1,10 @@
 """
-Encrypted, short-lived storage for lecturer credentials (LLM API key, optional HF token).
+Encrypted, short-lived storage for lecturer credentials (LLM API key, Hugging Face write token).
 
 Keys are Fernet-encrypted with a per-installation key (data/secret.key, or GLOBAL_SECRET_KEY)
 before they touch SQLite, are never returned by the API, and are deleted as soon as the
-stages that need them are finished (the teacher key after dataset generation, everything
-when the job reaches a terminal state).
+stages that need them are finished (the teacher key after dataset generation, the Hugging Face
+token after publishing, everything when the job reaches a terminal state).
 """
 
 import os

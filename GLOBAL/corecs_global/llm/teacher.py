@@ -188,6 +188,16 @@ class FakeTeacher:
         self.usage.add(1000, 500)
         time.sleep(0.01)
         if "COURSE_EXTRACTION" in system:
+            # Short outlines ("Week 1: ...") yield their real topics, like the real teacher would.
+            from ..outline import parse_outline   # lazy: keeps llm/ free of platform imports
+
+            body = "\n".join(ln for ln in user.splitlines() if not ln.startswith("# Source:"))
+            if outline := parse_outline(body):
+                return json.dumps({"courses": [{
+                    **c, "domain": c["course_name"], "language": "English",
+                    "summary": f"Fake summary of {c['course_name'] or 'the course'}.",
+                    "out_of_scope": [], "style_note": None,
+                } for c in outline]})
             first_line = next((ln.strip() for ln in user.splitlines() if ln.strip() and not ln.startswith("#")), "Course")
             name = first_line[:60]
             return json.dumps({"courses": [{

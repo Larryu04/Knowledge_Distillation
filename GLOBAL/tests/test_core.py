@@ -71,7 +71,7 @@ def test_vault_roundtrip_is_encrypted():
 
 def test_reporter_eta_and_pipeline_eta():
     job_id = db.create_job(JobConfig.from_dict({"program_name": "x"}).to_dict(),
-                           {"stage_seconds": {"ingest": 10, "generate": 100, "train": 1000, "package": 100, "deploy": 1}})
+                           {"stage_seconds": {"ingest": 10, "generate": 100, "train": 1000, "package": 100, "publish": 10, "deploy": 1}})
     r = Reporter(job_id, "generate")
     r.start("go")
     for i in range(1, 6):
@@ -81,7 +81,7 @@ def test_reporter_eta_and_pipeline_eta():
     assert p["status"] == "running" and p["done"] == 5
     assert 8 <= p["eta_s"] <= 12              # 5 units left x ~2 s
     job = db.get_job(job_id)
-    assert pipeline_eta(job) == pytest.approx(10 + p["eta_s"] + 1000 + 100 + 1, abs=2)
+    assert pipeline_eta(job) == pytest.approx(10 + p["eta_s"] + 1000 + 100 + 10 + 1, abs=2)
     assert 0 < overall_fraction(job) < 0.1
 
 

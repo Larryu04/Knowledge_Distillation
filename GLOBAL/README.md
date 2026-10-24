@@ -1,14 +1,14 @@
 # CoreCS Global
 
-Turn a degree program's syllabi into a private, offline AI tutor. A lecturer uploads syllabi
-and their own LLM API key in a web UI. The platform writes a syllabus-grounded synthetic
-training set, QLoRA-fine-tunes an open model on it, quantizes it to GGUF, and hands back a
-downloadable bundle that students run on their own computers, plus a step-by-step guide for
-publishing it on Hugging Face.
+Turn a degree program's syllabi into a private, offline AI tutor. A lecturer uploads syllabi,
+their own LLM API key and a Hugging Face Write token in a web UI. The platform writes a
+syllabus-grounded synthetic training set, QLoRA-fine-tunes an open model on it, quantizes it to
+GGUF, publishes the model to the lecturer's Hugging Face account, and hands back a bundle that
+students run on their own computers, plus a student app ZIP and a sharing guide.
 
 ```
-Syllabus Ingestion -> Dataset Generation -> Fine-Tuning -> Packaging & GGUF -> Deployment Guide
-   (teacher LLM)        (teacher LLM)         (GPU)          (GPU / CPU)         (filled-in)
+Syllabus Ingestion -> Dataset Generation -> Fine-Tuning -> Packaging & GGUF -> Publishing -> Deployment Guide
+   (teacher LLM)        (teacher LLM)         (GPU)          (GPU / CPU)      (HF Hub)       (filled-in)
 ```
 
 Part of the [CoreCS monorepo](../README.md). All commands below run from this `GLOBAL/`
@@ -48,7 +48,7 @@ powershell -ExecutionPolicy Bypass -File scripts\run_platform.ps1
 | `GLOBAL_DATA_DIR` | Where jobs, uploads, bundles and the SQLite DB live (default `./data`). Bundles are GBs each. |
 | `GLOBAL_TRAIN_PYTHON` | Interpreter with torch + CUDA + `requirements-train.txt`, used for the train/package stages |
 | `GLOBAL_TOOLCHAIN_DIR` | llama.cpp toolchain location (default `./tools`) |
-| `GLOBAL_DESKTOP_INSTALLER` | Prebuilt desktop installer to include in bundles (auto-detected from `runtime/desktop` builds) |
+| `GLOBAL_DESKTOP_INSTALLER` | Full path to the desktop installer to serve. Default: the newest `*-setup.exe` in `runtime/installer/`, else in the `runtime/desktop` build output |
 | `GLOBAL_ACCESS_TOKEN` | Shared secret required by the UI/API. **Set it whenever the server is reachable by others** (e.g. via ngrok). |
 | `GLOBAL_SECRET_KEY` | Fernet key for credentials at rest (default: generated into `data/secret.key`) |
 | `GLOBAL_TEACHER_BACKEND` | `fake` simulates the teacher LLM: no API key, no cost |
@@ -125,7 +125,7 @@ as a `Bearer` header (or as `?token=` for the event stream and download links).
    │  multipart upload, REST, Server-Sent Events
    ▼
  FastAPI  (corecs_global/api.py)
-   │  validates config, verifies the API key, stores uploads,
+   │  validates config, verifies the API key and HF Write token, stores uploads,
    │  encrypts credentials (vault.py), enqueues; never runs pipeline work
    ▼
  SQLite, WAL  (db.py)  jobs · events · secrets(ciphertext)
@@ -134,7 +134,7 @@ as a `Bearer` header (or as `?token=` for the event stream and download links).
  Worker(s)  (worker.py)  --lanes io | gpu | io,gpu
    │  one subprocess per stage: killable on cancel, crash-isolated, frees VRAM
    ▼
- stages/run_stage.py ──► ingest · generate · deploy      (platform Python, io lane)
+ stages/run_stage.py ──► ingest · generate · publish · deploy   (platform Python, io lane)
                      └─► train · package                (GLOBAL_TRAIN_PYTHON, gpu lane)
 ```
 
@@ -170,7 +170,8 @@ on generation.
 | Dataset generation | `stages/generate.py` | `dataset/merged.json`: `{course_name, domain, instruction, rationale, output}` rows, validated (3-5 numbered steps, worked example, synthesis, scope, language, near-duplicates) |
 | Fine-tuning | `stages/train.py` | `train/adapter/`: 4-bit QLoRA, frozen vocabulary, prompt masking, PAD≠EOS, macro per-course early stopping, VRAM preflight with automatic micro-batch fallback |
 | Packaging & GGUF | `stages/package.py` | merge → GGUF (bf16 or q8_0 intermediate by free disk) → quantize → verify → `<program>-bundle.zip` |
-| Deployment guide | `stages/deploy.py` | `deploy.json` + `DEPLOY.md`: local test, `hf upload`, student download link, optional Docker Space |
+| Publishing | `stages/publish.py` | Creates `<hf-user>/<program>-tutor-gguf` (public) if needed and pushes the GGUF, its `.corecs.json` and the model card in one commit → `publish.json` |
+| Deployment guide | `stages/deploy.py` | `deploy.json` + `DEPLOY.md`: local test, the published model, sharing with students, optional Docker Space |
 
 ## The bundle
 
@@ -186,6 +187,30 @@ on generation.
   dataset/                            generated data + structured syllabi, for review
 ```
 
+### Student desktop app
+
+The desktop installer is one generic build, so nothing is compiled per lecturer. Once the
+publish stage has pushed the model, the deploy page offers a **student app** ZIP
+(`GET /api/jobs/<id>/student-app`): the installer plus a generated `corecs-model.json` naming
+the published repository, file, size and SHA-256 (`student_app.py`). On first
+launch the app pulls that model. Without a manifest it pulls the default CoreCS v8 model from
+[`Larryu04/corecs-v8-gguf`](https://huggingface.co/Larryu04/corecs-v8-gguf). See
+[`runtime/desktop/README.md`](runtime/desktop/README.md#first-launch-which-model-gets-pulled).
+
+**Serving the installer.** Build it from `runtime/desktop` (`npm run tauri build -- --bundles nsis`)
+and copy `CoreCS_<version>_x64-setup.exe` into **`GLOBAL/runtime/installer/`**. The server
+uses the newest `*-setup.exe` there and re-checks on every request, so no restart is needed.
+The deploy page hides the ZIP button while no installer is found. Only a `runtime/desktop`
+build reads `corecs-model.json`. A build of the standalone `corecs/` app ignores it.
+
+**What lecturers do** (also shown on the deploy page):
+
+1. Download the student app ZIP.
+2. Share the ZIP with the students.
+3. Tell the students to extract the ZIP completely before running the installer. The
+   `README.txt` inside says the same. Run from inside the ZIP, the installer can't see
+   `corecs-model.json`, and the app installs the default v8 model instead.
+
 ## Repository layout
 
 ```
@@ -194,6 +219,7 @@ GLOBAL/
     web/                UI: index.html, app.js, styles.css, fonts/ + vercel.json, build-config.mjs (Vercel)
   runtime/portable/     zero-install student runtime (copied into every bundle)
   runtime/desktop/      CoreCS desktop app sources (Tauri 2 + React + Rust), generic, model-agnostic
+  runtime/installer/    drop folder for the prebuilt desktop installer the server hands out (*.exe git-ignored)
   scripts/              setup_toolchain.py, run_platform.ps1
   tests/                pytest: queue/lanes, vault, ETA, validation, ingestion, API + worker end to end
   .env.example          configuration template (copy to .env)
@@ -215,9 +241,26 @@ cd GLOBAL
 The suite runs fully offline (fake teacher, no GPU). It drives the real API and real worker
 subprocesses through ingestion, review, generation, resume, cancel/retry and failure paths.
 
+### Publishing to Hugging Face
+
+The lecturer's Hugging Face token must have **Write** access. It is checked when the job is
+submitted (`hf_publish.check_token`), so a read-only or mistyped token is rejected in seconds,
+not after hours of training. The check also gives the account name, which fixes the repository
+(`<hf-user>/<program-slug>-tutor-gguf`) up front. The model card, `DEPLOY.md` and the Space
+template in the bundle all link to it. Right after packaging, the publish stage creates the
+repository as a public model repository (students' apps download without a token). It then
+pushes `<name>.gguf`, `<name>.corecs.json` and `README.md` in one commit. Re-running is safe:
+files the Hub already has aren't uploaded again. If the repository already existed as a private
+one, the deploy page warns that students can't download it.
+
+The token is encrypted in the vault and deleted as soon as publishing succeeds, or when the
+job fails or is cancelled. A retry that still has to publish asks for it again, and it must
+belong to the same account. In demo mode (`GLOBAL_TEACHER_BACKEND=fake`) the token is optional:
+without one the stage records "not published", and the deploy page offers the bundle only.
+
 ## Production notes
 
-- Put the server behind HTTPS and set `GLOBAL_ACCESS_TOKEN`: lecturers submit API keys. The
+- Put the server behind HTTPS and set `GLOBAL_ACCESS_TOKEN`: lecturers submit API keys and Hugging Face Write tokens. The
   token is a single shared secret. Per-lecturer accounts are the natural next step and would
   scope `jobs` by owner.
 - Bundles are 1-6 GB each. Delete finished jobs from the UI, or point `GLOBAL_DATA_DIR` at a

@@ -4,6 +4,7 @@ pub mod db;
 pub mod engine;
 pub mod error;
 pub mod models;
+pub mod provision;
 
 use std::sync::{Arc, Mutex};
 
@@ -38,18 +39,15 @@ pub fn run() {
                 engine: engine.clone(),
                 generation: Default::default(),
                 models_dir: data_dir.join("models"),
+                provisioning: Default::default(),
             });
 
-            // Load the model in the background; the UI follows along via ENGINE_STATUS_EVENT.
+            // Pull the model on first launch (lecturer manifest or default), then load it, in the
+            // background; the UI follows along via ENGINE_STATUS_EVENT.
             let handle = app.handle().clone();
             tauri::async_runtime::spawn(async move {
-                let state = handle.state::<AppState>();
-                match state.startup_model() {
-                    Ok(Some(model)) => {
-                        let _ = engine.start(model, state.device_override()).await;
-                    }
-                    Ok(None) => {} // status stays NoModel -> UI shows model setup
-                    Err(e) => eprintln!("[startup] {e}"),
+                if let Err(e) = handle.state::<AppState>().boot().await {
+                    eprintln!("[startup] {e}");
                 }
             });
             Ok(())
@@ -67,6 +65,7 @@ pub fn run() {
             commands::list_models,
             commands::models_dir,
             commands::load_model,
+            commands::provision_model,
             commands::stop_engine,
         ])
         .build(tauri::generate_context!())

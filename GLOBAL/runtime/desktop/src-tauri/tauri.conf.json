@@ -28,6 +28,11 @@
     "active": true,
     "targets": "all",
     "externalBin": ["binaries/llama-server"],
+    "windows": {
+      "nsis": {
+        "installerHooks": "./windows/hooks.nsh"
+      }
+    },
     "resources": {
       "binaries/*.dll": "./",
       "binaries/LICENSE-LLVM-OpenMP": "./"

@@ -1,7 +1,8 @@
 import { openPath } from "@tauri-apps/plugin-opener";
-import { FolderOpen, HardDrive, LoaderCircle, Power, RefreshCw, TriangleAlert } from "lucide-react";
+import { Download, FolderOpen, HardDrive, LoaderCircle, Power, RefreshCw, TriangleAlert } from "lucide-react";
 import { useState } from "react";
 
+import { formatBytes } from "../lib/format";
 import { useStore } from "../store";
 
 const buttonClass =
@@ -21,6 +22,29 @@ export function EngineBanner() {
       <div className="flex items-center gap-2 border-b border-border bg-accent/10 px-5 py-2.5 text-sm text-accent">
         <LoaderCircle className="size-4 animate-spin" />
         Loading <span className="font-medium">{engine.model}</span>… this takes a few seconds.
+      </div>
+    );
+  }
+
+  if (engine.state === "downloading") {
+    const pct = engine.total ? Math.min(100, (engine.received / engine.total) * 100) : null;
+    return (
+      <div className="border-b border-border bg-sky-500/10 px-5 py-2.5 text-sm text-sky-200">
+        <div className="flex items-center gap-2">
+          <Download className="size-4 shrink-0" />
+          <span className="flex-1">
+            Downloading <span className="font-medium">{engine.model}</span> (one time only)…{" "}
+            {formatBytes(engine.received)}
+            {engine.total ? ` of ${formatBytes(engine.total)}` : ""}
+          </span>
+          {pct !== null && <span className="tabular-nums">{pct.toFixed(0)}%</span>}
+        </div>
+        <div className="mt-2 h-1 overflow-hidden rounded-full bg-white/10">
+          <div
+            className={pct === null ? "h-full w-1/3 animate-pulse bg-sky-400" : "h-full bg-sky-400 transition-[width]"}
+            style={pct === null ? undefined : { width: `${pct}%` }}
+          />
+        </div>
       </div>
     );
   }

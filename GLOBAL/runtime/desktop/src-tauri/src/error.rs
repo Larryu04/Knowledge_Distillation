@@ -6,7 +6,7 @@ pub enum Error {
     Db(#[from] rusqlite::Error),
     #[error("i/o error: {0}")]
     Io(#[from] std::io::Error),
-    #[error("engine request failed: {0}")]
+    #[error("request failed: {0}")]
     Http(#[from] reqwest::Error),
     #[error("{0}")]
     Msg(String),

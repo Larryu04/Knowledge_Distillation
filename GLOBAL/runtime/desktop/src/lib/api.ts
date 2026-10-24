@@ -39,6 +39,7 @@ export interface ModelInfo {
 
 export type EngineStatus =
   | { state: "noModel" }
+  | { state: "downloading"; model: string; received: number; total: number | null }
   | { state: "starting"; model: string; modelId: string }
   | { state: "ready"; model: string; modelId: string; device: string | null }
   | { state: "stopped" }
@@ -81,5 +82,7 @@ export const api = {
   listModels: () => invoke<ModelInfo[]>("list_models"),
   modelsDir: () => invoke<string>("models_dir"),
   loadModel: (modelId: string) => invoke<void>("load_model", { modelId }),
+  /** First-launch model pull (lecturer's manifest or the default model), then load. */
+  provisionModel: () => invoke<void>("provision_model"),
   stopEngine: () => invoke<void>("stop_engine"),
 };

@@ -24,12 +24,33 @@ powershell -ExecutionPolicy Bypass -File scripts\fetch-llama.ps1   # llama-serve
 Put a model (`*.gguf`, optionally with its `*.corecs.json` profile) in
 `%APPDATA%\com.corecs.app\models`. Models are produced by the CoreCS Global pipeline.
 
+## First launch: which model gets pulled
+
+The installer is one generic build. Which model it pulls from the Hugging Face Hub on first
+launch is decided by an optional `corecs-model.json` manifest (`src-tauri/src/provision.rs`):
+
+1. **Lecturer's model.** CoreCS Global publishes the lecturer's model to their Hugging Face
+   account, and its deploy page offers a "student app" ZIP: this installer plus a
+   `corecs-model.json` naming that repository. The NSIS hook
+   (`src-tauri/windows/hooks.nsh`) copies the manifest from the installer's folder into the
+   install folder, and the app pulls that model once (also if other models exist), then makes it
+   the active model. A manifest dropped into `%APPDATA%\com.corecs.app\` works too.
+2. **Default model.** No manifest and an empty models folder: the app pulls CoreCS v8,
+   [`Larryu04/corecs-v8-gguf`](https://huggingface.co/Larryu04/corecs-v8-gguf) /
+   `corecs-v8-q4_k_m.gguf` (4.37 GB, SHA-256 pinned in `provision.rs`) plus its
+   `.corecs.json` profile. To ship a different default, set `CORECS_DEFAULT_REPO` /
+   `CORECS_DEFAULT_GGUF` at build time. A different default isn't checksum-verified.
+
+Downloads resume after an interruption ("Retry" in the banner) and are checked against the
+manifest's size and SHA-256 when it has them. `CORECS_MODEL` skips all of this.
+
 ## Development
 
 ```powershell
 npm run tauri dev                                                  # run the app
 $env:CORECS_MODEL = "C:\path\to\model.gguf"; npm run tauri dev     # force a specific model
 cd src-tauri; cargo test --lib                                     # Rust unit tests
+cd src-tauri; cargo test --lib -- --ignored hub_download           # Hugging Face download + resume (network)
 cd src-tauri; cargo run --example smoke -- C:\path\to\model.gguf   # end-to-end core test
 npx tsc --noEmit                                                   # type-check the UI
 ```
@@ -40,9 +61,13 @@ npx tsc --noEmit                                                   # type-check 
 npm run tauri build -- --bundles nsis
 ```
 
-The installer lands in `src-tauri/target/release/bundle/nsis/`. CoreCS Global picks it up
-automatically from there (or from `GLOBAL_DESKTOP_INSTALLER`) and includes it in every
+The installer lands in `src-tauri/target/release/bundle/nsis/`. To serve it from CoreCS Global,
+copy it into `GLOBAL/runtime/installer/`. The server also finds it in the build folder, and
+`GLOBAL_DESKTOP_INSTALLER` overrides both. It goes into the student app ZIP and into every
 lecturer bundle.
+
+Build from this folder, not from the standalone `corecs/` app. Only this build has the
+first-launch download and the NSIS hook that reads `corecs-model.json`.
 
 ## Architecture
 

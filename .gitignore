@@ -113,6 +113,8 @@ GLOBAL/build/
 GLOBAL/runtime/portable/bin/
 GLOBAL/runtime/portable/webui/profile.json
 GLOBAL/runtime/desktop/tools/
+# prebuilt desktop installer served by the backend (runtime/installer/README.md)
+GLOBAL/runtime/installer/*.exe
 
 # ==========================================
 # 9. corecs (Student App / React + Tauri)

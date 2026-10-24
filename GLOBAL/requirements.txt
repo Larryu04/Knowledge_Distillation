@@ -1,4 +1,4 @@
-# Platform (web API + io-lane worker: ingestion, dataset generation, deployment guide).
+# Platform (web API + io-lane worker: ingestion, dataset generation, publishing, deployment guide).
 # GPU stages need requirements-train.txt in the interpreter GLOBAL_TRAIN_PYTHON points to.
 fastapi==0.143.0
 uvicorn[standard]==0.54.0
@@ -7,3 +7,4 @@ openai==3.29.0
 pypdf==6.20.1
 python-docx==1.2.0
 cryptography==50.0.2
+huggingface_hub==1.33.0

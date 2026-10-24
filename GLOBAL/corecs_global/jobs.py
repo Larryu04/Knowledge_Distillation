@@ -16,6 +16,7 @@ STAGES = (
     ("generate", "io"),
     ("train", "gpu"),
     ("package", "gpu"),
+    ("publish", "io"),
     ("deploy", "io"),
 )
 STAGE_NAMES = tuple(s for s, _ in STAGES)
@@ -25,6 +26,7 @@ STAGE_LABELS = {
     "generate": "Dataset generation",
     "train": "Fine-tuning",
     "package": "Packaging & GGUF quantization",
+    "publish": "Publishing to Hugging Face",
     "deploy": "Deployment guide",
 }
 
@@ -51,6 +53,9 @@ class JobConfig:
     include_adapter: bool = True
     generation_concurrency: int = 4
     display_name: str = ""
+    # Set by the server from the lecturer's Hugging Face token (hf_publish.check_token), never by
+    # the client. Empty: the publish stage is skipped (demo mode without a token).
+    hf_repo: str = ""
 
     @classmethod
     def from_dict(cls, data: dict) -> "JobConfig":
@@ -89,6 +94,9 @@ class JobConfig:
             raise ConfigError("learning_rate must be between 1e-6 and 1e-3.")
         self.language = (self.language or "English").strip()
         self.display_name = (self.display_name or "").strip() or f"{self.program_name} Tutor"
+        self.hf_repo = (self.hf_repo or "").strip()
+        if self.hf_repo and not re.fullmatch(r"[\w.\-]+/[\w.\-]+", self.hf_repo):
+            raise ConfigError("Invalid Hugging Face repository.")
 
 
 # --------------------------------------------------------------------------------------
@@ -123,6 +131,7 @@ def estimate(cfg: JobConfig, n_courses: int, n_sources: int) -> dict:
         "generate": rows * SECONDS_PER_EXAMPLE * RETRY_FACTOR / gen_lanes,
         "train": 300 + steps * sec_per_step,
         "package": 120 + 160 * size,
+        "publish": (30 + 60 * size * 0.62) if cfg.hf_repo else 1,   # ~17 MB/s upload of the GGUF
         "deploy": 2,
     }
 

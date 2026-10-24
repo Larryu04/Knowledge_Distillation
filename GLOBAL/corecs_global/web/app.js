@@ -140,6 +140,8 @@ async function retryRoute() {
   if ($view.querySelector("#retry-route")) toast("Still can't reach the server.");
 }
 window.addEventListener("hashchange", route);
+// A "?" bubble sits inside a <label>: keep clicks on it from focusing the input (which would close the tip).
+document.addEventListener("click", (e) => { if (e.target.closest(".info") && !e.target.closest("a")) e.preventDefault(); });
 
 // ---------------------------------------------------------------- new tutor / edit & re-run
 async function viewRetry(id) {
@@ -217,27 +219,27 @@ function viewNew(prefill = null) {
             <input id="key" name="api_key" type="password" placeholder="${OPTIONS.demo_mode ? "not needed in demo mode" : "sk-..."}" ${OPTIONS.demo_mode ? "" : "required"}>
           </div>
           <div>
-            <label for="hf">Hugging Face token <span class="hint">(only for gated models)</span></label>
-            <input id="hf" name="hf_token" type="password" placeholder="hf_...">
+            <label for="hf">Hugging Face token <span class="hint">(${OPTIONS.hf_token_required ? "Write access" : "Write access, optional in demo mode"})</span>
+              <span class="info" tabindex="0" role="button" aria-label="How to get a Hugging Face token" aria-describedby="hf-tip">?
+                <span class="info-tip" id="hf-tip" role="tooltip">
+                  <b>A Write token is required.</b> When training finishes, the server automatically publishes
+                  your fine-tuned model to your Hugging Face account (a new public repository), so your
+                  students’ apps can download it.
+                  <b style="display:block;margin-top:8px">To generate a token:</b>
+                  <ol>
+                    <li>Sign in at <a href="https://huggingface.co/settings/tokens" target="_blank" rel="noopener">huggingface.co</a>.</li>
+                    <li>Go to <b>Settings → Access Tokens</b>.</li>
+                    <li>Click <b>Create new token</b>, choose the <b>Write</b> token type, and copy the token (it starts with <code>hf_</code>).</li>
+                  </ol>
+                  A Read token won’t work: the job is rejected before it starts. The token is encrypted and deleted
+                  as soon as the model is published.
+                </span>
+              </span></label>
+            <input id="hf" name="hf_token" type="password" placeholder="hf_..." ${OPTIONS.hf_token_required ? "required" : ""}>
           </div>
         </div>
         <p class="hint" style="margin-top:8px">Keys are encrypted at rest, never shown again, and deleted as soon as
            the stage that needs them finishes. The teacher model is fixed to <code>${esc(OPTIONS.teacher_models.join(", "))}</code>.</p>
-
-        <details>
-          <summary>Advanced training settings</summary>
-          <label for="n">Examples per course: <b id="n-val">${d.examples_per_course}</b></label>
-          <input id="n" name="examples_per_course" type="range" min="50" max="2000" step="50" value="${d.examples_per_course}">
-          <div class="row">
-            <div><label for="epochs">Epochs</label><input id="epochs" name="epochs" type="number" min="1" max="5" value="${d.epochs}"></div>
-            <div><label for="lora">LoRA rank</label><input id="lora" name="lora_r" type="number" min="4" max="64" step="4" value="${d.lora_r}"></div>
-            <div><label for="lr">Learning rate</label><input id="lr" name="learning_rate" type="number" min="0.000001" max="0.001" step="any" value="${d.learning_rate}"></div>
-            <div><label for="seq">Max sequence length</label><input id="seq" name="max_seq_len" type="number" min="256" max="4096" step="64" value="${d.max_seq_len}"></div>
-            <div><label for="quant">Quantization</label><select id="quant" name="quant">${OPTIONS.quant_types.map((q) => `<option ${q === d.quant ? "selected" : ""}>${q}</option>`).join("")}</select></div>
-            <div><label for="conc">Parallel courses (API)</label><input id="conc" name="generation_concurrency" type="number" min="1" max="16" value="${d.generation_concurrency}"></div>
-          </div>
-          <label class="check"><input id="adapter" name="include_adapter" type="checkbox" ${d.include_adapter ? "checked" : ""}><span>Include the LoRA adapter in the bundle</span></label>
-        </details>
       </div>
     </div>
 
@@ -284,22 +286,18 @@ function viewNew(prefill = null) {
   };
   $("base").onchange = () => { $("base-custom").hidden = $("base").value !== "__custom"; estimateSoon(); };
   $("language").onchange = () => { $("language-other").hidden = $("language").value !== "__other"; };
-  $("n").oninput = () => { $("n-val").textContent = $("n").value; };
 
   const pastedBlocks = () => $("pasted").value.split(/^\s*-{3,}\s*$/m).filter((b) => b.trim()).length;
+  // Training hyperparameters are not exposed: the server's defaults apply. An edited re-run keeps
+  // the values the original job ran with, so only the inputs the lecturer changed differ.
+  const TUNING = ["examples_per_course", "epochs", "lora_r", "learning_rate", "max_seq_len", "quant", "generation_concurrency", "include_adapter"];
+  const tuning = prefill ? Object.fromEntries(TUNING.filter((k) => k in prefill.config).map((k) => [k, prefill.config[k]])) : {};
   const config = () => ({
+    ...tuning,
     program_name: $("program").value.trim(),
     language: $("language").value === "__other" ? $("language-other").value.trim() : $("language").value,
     base_model: $("base").value === "__custom" ? $("base-custom").value.trim() : $("base").value,
-    examples_per_course: +$("n").value,
     review_syllabi: $("review").checked,
-    epochs: +$("epochs").value,
-    lora_r: +$("lora").value,
-    learning_rate: +$("lr").value,
-    max_seq_len: +$("seq").value,
-    quant: $("quant").value,
-    generation_concurrency: +$("conc").value,
-    include_adapter: $("adapter").checked,
   });
 
   let timer = null;
@@ -335,24 +333,13 @@ function viewNew(prefill = null) {
     else { $("language").value = "__other"; $("language-other").value = c.language || ""; $("language-other").hidden = false; }
     if (hasOption("base", c.base_model)) $("base").value = c.base_model;
     else { $("base").value = "__custom"; $("base-custom").value = c.base_model || ""; $("base-custom").hidden = false; }
-    $("n").value = c.examples_per_course; $("n-val").textContent = $("n").value;
     $("review").checked = !!c.review_syllabi;
-    $("epochs").value = c.epochs;
-    $("lora").value = c.lora_r;
-    $("lr").value = c.learning_rate;
-    $("seq").value = c.max_seq_len;
-    if (hasOption("quant", c.quant)) $("quant").value = c.quant;
-    $("conc").value = c.generation_concurrency;
-    $("adapter").checked = !!c.include_adapter;
     $("pasted").value = prefill.pasted_text || "";
-    // Show the advanced settings if any of them differ from the defaults, so the lecturer sees them.
-    const adv = ["examples_per_course", "epochs", "lora_r", "learning_rate", "max_seq_len", "quant", "generation_concurrency", "include_adapter"];
-    if (adv.some((k) => c[k] !== d[k])) document.querySelector("#f details").open = true;
     renderFiles();
   }
 
   // The form is `novalidate`: native validation silently aborts submit when the offending control is
-  // hidden (e.g. inside the collapsed "Advanced" <details>), so validation lives here and mirrors
+  // hidden (e.g. the "Other…" language field), so validation lives here and mirrors
   // JobConfig.validate() on the server.
   const $err = $("form-error");
   const showError = (title, items = []) => {
@@ -368,22 +355,12 @@ function viewNew(prefill = null) {
   function validate() {
     const errs = [];
     const bad = (id, msg) => errs.push({ id, msg });
-    const num = (id) => ($(id).value.trim() === "" ? NaN : Number($(id).value));
-    const intIn = (id, label, lo, hi) => {
-      const v = num(id);
-      if (!Number.isInteger(v) || v < lo || v > hi) bad(id, `${label} must be a whole number between ${lo} and ${hi}.`);
-    };
     if (!$("program").value.trim()) bad("program", "Degree / program name is required.");
     if ($("language").value === "__other" && !$("language-other").value.trim()) bad("language-other", "Enter the language the tutor should answer in.");
     if ($("base").value === "__custom" && !/^[\w.-]+\/[\w.-]+$/.test($("base-custom").value.trim())) bad("base-custom", "Custom base model must be a Hugging Face id like org/model-name.");
     if (!OPTIONS.demo_mode && !$("key").value.trim()) bad("key", "An OpenAI API key is required to generate the training data.");
+    if (OPTIONS.hf_token_required && !$("hf").value.trim()) bad("hf", "A Hugging Face Write token is required to publish your model.");
     if (!files.length && !kept.length && !pastedBlocks()) bad("drop", "Add at least one syllabus file or paste syllabus text.");
-    intIn("epochs", "Epochs", 1, 5);
-    intIn("lora", "LoRA rank", 4, 64);
-    intIn("seq", "Max sequence length", 256, 4096);
-    intIn("conc", "Parallel courses (API)", 1, 16);
-    const lr = num("lr");
-    if (!Number.isFinite(lr) || lr < 1e-6 || lr > 1e-3) bad("lr", "Learning rate must be a number between 0.000001 and 0.001.");
     return errs;
   }
 
@@ -397,10 +374,7 @@ function viewNew(prefill = null) {
     if (errs.length) {
       errs.forEach(({ id }) => $(id).setAttribute("aria-invalid", "true"));
       showError("Please fix the following before building your tutor:", errs.map((x) => x.msg));
-      const first = $(errs[0].id);
-      const det = first.closest("details");
-      if (det) det.open = true;
-      first.focus({ preventScroll: true });
+      $(errs[0].id).focus({ preventScroll: true });
       return;
     }
     const fd = new FormData();
@@ -568,19 +542,24 @@ async function viewJob(id) {
 }
 
 function retryDialog(id, job, render) {
-  const needsKey = !OPTIONS.demo_mode && ["ingest", "generate"].some((s) => arr(job.stages).find((x) => x.name === s)?.status !== "done");
+  const pending = (s) => arr(job.stages).find((x) => x.name === s)?.status !== "done";
+  const needsKey = !OPTIONS.demo_mode && ["ingest", "generate"].some(pending);
+  const needsHf = !!job.config?.hf_repo && pending("publish");
   const back = document.createElement("div");
   back.className = "modal-back";
   back.innerHTML = `<div class="modal"><h2>Resume job</h2>
     <p class="hint">The job resumes from the first unfinished stage with the same inputs, reusing every checkpoint.
       To change the syllabus or settings, use <b>Edit &amp; re-run</b> instead.</p>
     ${needsKey ? `<label for="rk">API key <span class="hint">(needed again for data generation)</span></label><input id="rk" type="password" placeholder="sk-...">` : ""}
+    ${needsHf ? `<label for="rh">Hugging Face Write token <span class="hint">(needed again to publish to ${esc(job.config.hf_repo)})</span></label><input id="rh" type="password" placeholder="hf_...">` : ""}
     <div class="actions" style="margin-top:18px"><button class="btn btn-primary" id="rgo">Resume</button><button class="btn btn-ghost" id="rno">Close</button></div></div>`;
   document.body.appendChild(back);
   back.querySelector("#rno").onclick = () => back.remove();
   back.querySelector("#rgo").onclick = async () => {
     try {
-      const body = needsKey ? { api_key: back.querySelector("#rk").value } : {};
+      const body = {};
+      if (needsKey) body.api_key = back.querySelector("#rk").value;
+      if (needsHf) body.hf_token = back.querySelector("#rh").value;
       render(await api(`/api/jobs/${id}/retry`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) }));
       back.remove();
       toast("Resume queued.");
@@ -638,21 +617,22 @@ async function viewDeploy(id) {
   if (!job?.config || !guide || typeof guide !== "object") throw new Error(`The backend sent an unexpected response for job ${id}.`);
   job.stages = arr(job.stages);
   guide.sections = arr(guide.sections).map((sec) => ({ ...sec, body: sec.body || "", commands: arr(sec.commands) }));
-  let user = "";
-  try { user = localStorage.getItem("hf_user") || ""; } catch {}
-  const fill = (s) => (user ? s.split(guide.placeholder).join(user) : s);
+  const repo = guide.published ? guide.model_repo : null;
+  const publish = guide.publish || {};
   const renderGuide = () => {
     document.getElementById("guide").innerHTML = guide.sections.map((sec, i) => `
       <section class="guide-sec"><h3><span class="num">${i + 1}</span>${esc(sec.title)}</h3>
-        <div class="body">${md(fill(sec.body))}</div>
-        ${sec.commands.map((c) => `<div class="cmd"><div class="lbl">${esc(c.label)}</div><pre><code>${esc(fill(c.code))}</code><button type="button" data-copy>Copy</button></pre></div>`).join("")}
+        <div class="body">${md(sec.body)}</div>
+        ${sec.commands.map((c) => `<div class="cmd"><div class="lbl">${esc(c.label)}</div><pre><code>${esc(c.code)}</code><button type="button" data-copy>Copy</button></pre></div>`).join("")}
       </section>`).join("");
   };
+  const appLink = (path) => esc(apiUrl(`/api/jobs/${id}/${path}`));
   $view.innerHTML = `
     <div class="card success">
       <div class="check-big">✓</div>
       <h1${rtl(guide.display_name)}>${esc(guide.display_name)} is ready</h1>
       <p class="hint">Fine-tuned from ${esc(job.config.base_model)} · ${job.stages.find((s) => s.name === "generate")?.rows?.toLocaleString() ?? ""} training examples</p>
+      ${repo ? `<p class="hint">Published to <a href="https://huggingface.co/${esc(repo)}" target="_blank" rel="noopener">huggingface.co/${esc(repo)}</a></p>` : ""}
       <div class="actions" style="justify-content:center;margin-top:16px">
         ${job.bundle ? `<a class="btn btn-primary" href="${esc(apiUrl(`/api/jobs/${id}/download`))}">Download bundle (${fmtBytes(job.bundle.bytes)})</a>` : `<span class="alert err">Bundle file missing on the server.</span>`}
         <a class="btn btn-ghost" href="#/jobs/${id}">Pipeline details</a>
@@ -661,11 +641,28 @@ async function viewDeploy(id) {
     <div class="grid">
       <div class="card">
         <h2>Deployment guide</h2>
-        <label for="hfu">Your Hugging Face username <span class="hint">— fills in the commands below</span></label>
-        <input id="hfu" type="text" placeholder="e.g. prof-cohen" value="${esc(user)}" style="margin-bottom:20px">
         <div id="guide"></div>
       </div>
       <aside>
+        <div class="card"><h2>Student desktop app</h2>
+          ${repo ? `
+          <p class="hint">Your model is already on Hugging Face. On first launch the app downloads it by itself.</p>
+          ${publish.private ? `<div class="alert warn">The repository <b>${esc(repo)}</b> is private, so students’ apps can’t download it. Make it public in its settings on Hugging Face.</div>` : ""}
+          <ol class="steps">
+            <li><b>Download this ZIP.</b></li>
+            <li><b>Share the ZIP</b> with your students (course website, Moodle, email…).</li>
+            <li>Tell students they <b>must extract the ZIP completely</b> (right-click → “Extract All”)
+              before running the installer. If they run it from inside the ZIP, they get the default model instead of yours.</li>
+          </ol>
+          <div class="actions" style="margin-top:12px">
+            ${OPTIONS.desktop_installer ? `<a class="btn btn-primary" href="${appLink("student-app")}">Download student app (.zip)</a>`
+              : `<span class="alert warn" style="margin:0">No desktop installer on this server yet. Copy <code>CoreCS_…_x64-setup.exe</code> into <code>GLOBAL/runtime/installer/</code> and reload.</span>`}
+            <a class="btn btn-ghost" href="${appLink("model-manifest")}">corecs-model.json only</a>
+          </div>
+          <p class="hint" style="margin-top:8px">The app will pull ${esc(guide.gguf)} from huggingface.co/${esc(repo)}.</p>`
+          : `<div class="alert warn" style="margin:0">This model wasn’t published to Hugging Face (the job ran without a token), so the
+              student app has nothing to download. Run the job again with a Hugging Face Write token, or share the bundle instead.</div>`}
+        </div>
         <div class="card"><h2>Sample answers</h2>
           ${arr(guide.samples).map((s) => `<div class="sample"><div class="q"${rtl(s.question)}>${esc(s.question)}</div><div class="a"${rtl(s.answer)}>${esc(s.answer)}</div></div>`).join("") || '<p class="hint">No samples recorded.</p>'}
           <p class="hint">Generated by your fine-tuned model on held-out questions.</p>
@@ -673,11 +670,7 @@ async function viewDeploy(id) {
       </aside>
     </div>`;
   renderGuide();
-  document.getElementById("hfu").oninput = (e) => {
-    user = e.target.value.trim().replace(/[^\w.-]/g, "");
-    try { localStorage.setItem("hf_user", user); } catch {}
-    renderGuide();
-  };
+
   document.getElementById("guide").onclick = async (e) => {
     if (!e.target.hasAttribute("data-copy")) return;
     const code = e.target.parentElement.querySelector("code").textContent;

@@ -25,6 +25,8 @@ const LOG_TAIL_LINES: usize = 40;
 #[serde(tag = "state", rename_all = "camelCase", rename_all_fields = "camelCase")]
 pub enum EngineStatus {
     NoModel,
+    /// First launch: pulling the model from the Hugging Face Hub (see `provision`).
+    Downloading { model: String, received: u64, total: Option<u64> },
     Starting { model: String, model_id: String },
     Ready { model: String, model_id: String, device: Option<String> },
     Stopped,
@@ -86,7 +88,7 @@ impl Engine {
         self.status.lock().unwrap().clone()
     }
 
-    fn set_status(&self, s: EngineStatus) {
+    pub fn set_status(&self, s: EngineStatus) {
         publish(&self.status, &self.listener, s);
     }
 

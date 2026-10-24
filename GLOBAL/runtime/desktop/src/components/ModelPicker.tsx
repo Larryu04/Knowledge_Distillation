@@ -9,6 +9,7 @@ import { useStore } from "../store";
 const DOT: Record<string, string> = {
   ready: "bg-emerald-400",
   starting: "bg-amber-400 animate-pulse",
+  downloading: "bg-sky-400 animate-pulse",
   failed: "bg-red-400",
   stopped: "bg-zinc-500",
   noModel: "bg-zinc-500",

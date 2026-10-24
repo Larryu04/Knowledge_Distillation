@@ -6,6 +6,7 @@ resumable: a stage can be killed at any point (cancel, crash, worker restart) an
     generate -> dataset/merged.json     (teacher LLM -> validated Q&A rows per course)
     train    -> train/adapter/          (QLoRA on the base model)
     package  -> package/<name>.zip      (merge -> GGUF -> quantize -> runtime bundle)
+    publish  -> publish.json            (GGUF + profile + model card -> lecturer's HF account)
     deploy   -> deploy.json             (filled-in hosting & sharing instructions)
 """
 

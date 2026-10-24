@@ -234,8 +234,14 @@ export const useStore = create<ChatStore>()((set, get) => ({
   async retryEngine() {
     const models = await get().refreshModels();
     const id = models.find((m) => m.id === get().lastModelId)?.id ?? models[0]?.id;
-    if (id) await get().loadModel(id);
-    else get().showToast("No model found in the models folder.");
+    if (id) return get().loadModel(id);
+    // Nothing installed (e.g. the first-launch download failed): pull it again, resuming.
+    try {
+      await api.provisionModel();
+    } catch {
+      // Reported through the engine status banner.
+    }
+    await get().refreshModels();
   },
 
   showToast(message) {

@@ -290,7 +290,8 @@ def run(ctx: StageContext) -> None:
     (hf / "space").mkdir(parents=True, exist_ok=True)
     (hf / "README.md").write_text(model_card(ctx, meta, profile, final_gguf.name), encoding="utf-8")
     shutil.copytree(portable / "webui", hf / "space" / "webui", dirs_exist_ok=True)
-    for name, text in deploy.space_files(profile, final_gguf.name, slug).items():
+    model_repo, _ = deploy.repo_ids(cfg.hf_repo, slug)
+    for name, text in deploy.space_files(profile, final_gguf.name, model_repo).items():
         (hf / "space" / name).write_text(text, encoding="utf-8")
 
     data_dir = stage_dir / "dataset"

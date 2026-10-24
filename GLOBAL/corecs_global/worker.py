@@ -3,14 +3,15 @@ Job worker. Claims queued jobs whose next stage belongs to one of its lanes, run
 in a subprocess, and advances the job.
 
     python -m corecs_global.worker                  # all lanes (single-machine default)
-    python -m corecs_global.worker --lanes io       # API-bound stages: ingest, generate, deploy
+    python -m corecs_global.worker --lanes io       # API-bound stages: ingest, generate, publish, deploy
     python -m corecs_global.worker --lanes gpu      # GPU stages: train, package
 
 Run one gpu-lane worker per GPU and as many io-lane workers as your API rate limits allow.
 
 Secrets: the worker decrypts the lecturer's credentials from the vault and passes them to the
 stage subprocess as environment variables, only for the stages that need them. The teacher
-key is deleted once dataset generation succeeds; everything is deleted at a terminal state.
+key is deleted once dataset generation succeeds, the Hugging Face token once the model is
+published; everything is deleted at a terminal state.
 """
 
 import argparse
@@ -27,7 +28,7 @@ from .jobs import STAGE_LANE, STAGE_NAMES, JobConfig
 POLL_S = 2.0
 CHECK_S = 1.0
 TEACHER_STAGES = ("ingest", "generate")
-HF_STAGES = ("train", "package")
+HF_STAGES = ("train", "package", "publish")
 
 
 def kill_tree(proc: subprocess.Popen) -> None:
@@ -69,6 +70,8 @@ def advance(job: dict, stage: str) -> None:
     cfg = JobConfig.from_dict(job["config"])
     if stage == "generate":
         vault.forget(job_id, vault.TEACHER_KEY)
+    if stage == "publish":
+        vault.forget(job_id, vault.HF_TOKEN)
     idx = STAGE_NAMES.index(stage)
     if idx == len(STAGE_NAMES) - 1:
         db.update_job(job_id, status="succeeded", next_stage=None, current_stage=None, worker_id=None)

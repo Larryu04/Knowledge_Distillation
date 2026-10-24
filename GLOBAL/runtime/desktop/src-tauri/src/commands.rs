@@ -2,6 +2,7 @@
 //! from JS (`conversationId`) and are mapped to snake_case here by Tauri.
 
 use std::path::PathBuf;
+use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::{Arc, Mutex};
 
 use tauri::ipc::Channel;
@@ -12,15 +13,19 @@ use crate::db::{Conversation, Db, Message, SearchHit};
 use crate::engine::{Engine, EngineStatus};
 use crate::error::{Error, Result};
 use crate::models::{self, ModelInfo};
+use crate::provision::{self, ModelManifest};
 
 pub const SETTING_ACTIVE_MODEL: &str = "engine.active_model";
 pub const SETTING_DEVICE: &str = "engine.device";
+/// `ModelManifest::key()` of the last model pulled on first launch.
+pub const SETTING_PROVISIONED: &str = "provision.manifest";
 
 pub struct AppState {
     pub db: Mutex<Db>,
     pub engine: Arc<Engine>,
     pub generation: Generation,
     pub models_dir: PathBuf,
+    pub provisioning: AtomicBool,
 }
 
 impl AppState {
@@ -38,6 +43,67 @@ impl AppState {
 
     pub fn device_override(&self) -> Option<String> {
         self.db.lock().unwrap().setting(SETTING_DEVICE).ok().flatten()
+    }
+
+    /// Where a lecturer's `corecs-model.json` can be: next to the executable (the installer
+    /// copies it into the install folder) or in the app data folder (for a manual drop-in).
+    fn manifest_dirs(&self) -> Vec<PathBuf> {
+        let exe_dir = std::env::current_exe().ok().and_then(|e| e.parent().map(PathBuf::from));
+        exe_dir.into_iter().chain(self.models_dir.parent().map(PathBuf::from)).collect()
+    }
+
+    /// The model still to be pulled, if any (see `provision` for the rules).
+    fn pending_download(&self) -> Result<Option<ModelManifest>> {
+        if std::env::var_os("CORECS_MODEL").is_some() {
+            return Ok(None);
+        }
+        let available = models::scan(&self.models_dir)?;
+        if let Some(m) = provision::find_custom(&self.manifest_dirs()) {
+            let db = self.db.lock().unwrap();
+            if db.setting(SETTING_PROVISIONED)?.as_deref() == Some(m.key().as_str()) {
+                return Ok(None); // pulled on an earlier launch; the student may have switched since
+            }
+            if available.iter().any(|a| a.id == m.gguf) {
+                // Already there (copied by hand, or a reinstall): just make it the active model.
+                db.set_setting(SETTING_ACTIVE_MODEL, &m.gguf)?;
+                db.set_setting(SETTING_PROVISIONED, &m.key())?;
+                return Ok(None);
+            }
+            return Ok(Some(m));
+        }
+        Ok(available.is_empty().then(provision::default_manifest))
+    }
+
+    /// Pulls the lecturer's (or the default) model if needed and makes it the active model.
+    /// Progress is reported through the engine status (`Downloading`).
+    pub async fn provision(&self) -> Result<()> {
+        let Some(m) = self.pending_download()? else { return Ok(()) };
+        if self.provisioning.swap(true, Ordering::SeqCst) {
+            return Err(Error::msg("the model is already being downloaded"));
+        }
+        let model = m.label();
+        let result = provision::download(&m, &self.models_dir, |received, total| {
+            self.engine.set_status(EngineStatus::Downloading { model: model.clone(), received, total });
+        })
+        .await;
+        self.provisioning.store(false, Ordering::SeqCst);
+        if let Err(e) = result {
+            self.engine.set_status(EngineStatus::Failed { message: format!("Could not download {model}: {e}") });
+            return Err(e);
+        }
+        let db = self.db.lock().unwrap();
+        db.set_setting(SETTING_ACTIVE_MODEL, &m.gguf)?;
+        db.set_setting(SETTING_PROVISIONED, &m.key())?;
+        Ok(())
+    }
+
+    /// Startup and "Retry" with an empty models folder: pull a model if needed, then load one.
+    pub async fn boot(&self) -> Result<()> {
+        self.provision().await?;
+        match self.startup_model()? {
+            Some(model) => self.engine.start(model, self.device_override()).await,
+            None => Ok(()), // status stays NoModel -> UI shows model setup
+        }
     }
 }
 
@@ -123,6 +189,12 @@ pub async fn load_model(state: State<'_, AppState>, model_id: String) -> Result<
         .ok_or_else(|| Error::msg(format!("model {model_id} not found")))?;
     state.db.lock().unwrap().set_setting(SETTING_ACTIVE_MODEL, &model.id)?;
     state.engine.start(model, state.device_override()).await
+}
+
+/// Pulls the first-launch model (lecturer's or default) if none is installed yet, then loads one.
+#[tauri::command]
+pub async fn provision_model(state: State<'_, AppState>) -> Result<()> {
+    state.boot().await
 }
 
 #[tauri::command]

@@ -50,13 +50,17 @@ class Settings:
     runtime_dir: Path              # portable runtime + desktop app sources shipped in bundles
     train_python: str              # interpreter for train/package stages (needs torch + CUDA)
     platform_python: str           # interpreter for ingest/generate stages
-    desktop_installer: Path | None
     access_token: str | None       # if set, every /api call must present it
     teacher_backend: str           # "openai" (default) or "fake" (offline tests / demos)
     price_in_per_m: float
     price_out_per_m: float
     max_upload_mb: int
     allowed_teacher_models: tuple = field(default=ALLOWED_TEACHER_MODELS)
+
+    @property
+    def desktop_installer(self) -> Path | None:
+        """Looked up on every use, so a newly dropped installer is served without a restart."""
+        return _find_desktop_installer(self.runtime_dir)
 
     @property
     def jobs_dir(self) -> Path:
@@ -80,13 +84,18 @@ class Settings:
 
 
 def _find_desktop_installer(runtime_dir: Path) -> Path | None:
+    """GLOBAL_DESKTOP_INSTALLER, else the newest *-setup.exe in runtime/installer/ (the drop
+    folder for a prebuilt installer), else the newest one from a local runtime/desktop build."""
     explicit = os.environ.get("GLOBAL_DESKTOP_INSTALLER")
     if explicit:
         p = Path(explicit)
         return p if p.is_file() else None
     nsis = runtime_dir / "desktop" / "src-tauri" / "target" / "release" / "bundle" / "nsis"
-    found = sorted(nsis.glob("*-setup.exe")) if nsis.is_dir() else []
-    return found[-1] if found else None
+    for folder in (runtime_dir / "installer", nsis):
+        found = sorted(folder.glob("*-setup.exe"), key=lambda p: p.stat().st_mtime) if folder.is_dir() else []
+        if found:
+            return found[-1]
+    return None
 
 
 @lru_cache(maxsize=1)
@@ -100,7 +109,6 @@ def get_settings() -> Settings:
         runtime_dir=runtime_dir,
         train_python=os.environ.get("GLOBAL_TRAIN_PYTHON") or sys.executable,
         platform_python=os.environ.get("GLOBAL_PLATFORM_PYTHON") or sys.executable,
-        desktop_installer=_find_desktop_installer(runtime_dir),
         access_token=os.environ.get("GLOBAL_ACCESS_TOKEN") or None,
         teacher_backend=os.environ.get("GLOBAL_TEACHER_BACKEND", "openai"),
         price_in_per_m=float(os.environ.get("GLOBAL_PRICE_IN", DEFAULT_PRICE_IN_PER_M)),

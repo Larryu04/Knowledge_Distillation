@@ -49,7 +49,7 @@ Full methodology, per-domain tables and caveats: [`model_training/README.md`](mo
  corecs-v8-q4_k_m.gguf   ──►  CoreCS desktop app   (Tauri 2 + React + Rust + llama.cpp, fully offline)
         │
         ▼  generalize every step above into a multi-tenant pipeline
- CoreCS Global  ──  lecturer uploads syllabi + API key  →  ingest → generate → fine-tune → package → deploy guide
+ CoreCS Global  ──  lecturer uploads syllabi + API key + HF token  →  ingest → generate → fine-tune → package → publish to HF → deploy guide
                     (Vercel dashboard  ⇄  FastAPI + SQLite job queue + GPU worker)
 ```
 
@@ -74,6 +74,7 @@ How they connect:
 
 - `model_training/` produces the adapter. `corecs/scripts/export_gguf.py` merges it into a GGUF the desktop app loads.
 - `GLOBAL/` reimplements the generate → train → package steps as resumable pipeline stages, and ships a generic copy of the desktop app in `GLOBAL/runtime/desktop/` inside every bundle.
+- The v8 GGUF is published at [`Larryu04/corecs-v8-gguf`](https://huggingface.co/Larryu04/corecs-v8-gguf). On first launch, the `GLOBAL/runtime/desktop` app downloads it. CoreCS Global publishes each lecturer's model to their own Hugging Face account automatically. The lecturer's student app ZIP adds a `corecs-model.json` naming that model, and the app downloads it instead.
 
 ## Quick start
 
