@@ -171,7 +171,7 @@ def test_deploy_guide_unpublished_model():
     assert guide["published"] is False and guide["model_repo"] is None
     text = deploy.render_markdown(guide)
     assert "not published" in text and "hf upload" not in text and "{HF_USER}" not in text
-    assert [s["id"] for s in guide["sections"]] == ["download", "test", "hub", "share", "checklist"]
+    assert [s["id"] for s in guide["sections"]] == ["download", "hub", "checklist"]
 
 
 class FakeHub:

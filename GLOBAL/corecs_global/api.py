@@ -320,8 +320,14 @@ def get_inputs(job_id: str):
 
 
 @app.get("/api/jobs", dependencies=[Depends(require_access)])
-def list_jobs():
-    return [job_view(j) for j in db.list_jobs()]
+def list_jobs(ids: str = "", admin: str = ""):
+    """No accounts: each browser remembers the ids of the jobs it created and asks only for those
+    (`ids`, comma-separated). The admin key (GLOBAL_ADMIN_KEY) lists every job on the server."""
+    if admin and admin == get_settings().admin_key:
+        return [job_view(j) for j in db.list_jobs()]
+    wanted = list(dict.fromkeys(i for i in ids.split(",") if re.fullmatch(r"[0-9a-f]{12}", i)))[:200]
+    jobs = [j for j in map(db.get_job, wanted) if j and not j.get("replaced_by")]
+    return [job_view(j) for j in sorted(jobs, key=lambda j: j["created_at"], reverse=True)]
 
 
 @app.get("/api/jobs/{job_id}", dependencies=[Depends(require_access)])
@@ -513,6 +519,17 @@ def model_manifest(job_id: str, repo: str = ""):
     _, manifest = _manifest(job_id, repo)
     return JSONResponse(manifest, headers={
         "Content-Disposition": f'attachment; filename="{student_app.MANIFEST_FILE}"'})
+
+
+@app.get("/api/installer", dependencies=[Depends(require_access)])
+def installer_download():
+    """The plain desktop installer for the "Download App" page: with no corecs-model.json next
+    to it, the app pulls its built-in default model on first launch."""
+    installer = get_settings().desktop_installer
+    if not installer or not installer.exists():
+        raise HTTPException(404, "No desktop installer is configured on this server "
+                                 "(build runtime/desktop or set GLOBAL_DESKTOP_INSTALLER).")
+    return FileResponse(installer, filename=installer.name, media_type="application/octet-stream")
 
 
 @app.get("/api/jobs/{job_id}/student-app", dependencies=[Depends(require_access)])

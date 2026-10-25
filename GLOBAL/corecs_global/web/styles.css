@@ -196,3 +196,10 @@ label:has(> .info) { position: relative; }
 /* numbered how-to list (deploy page) */
 .steps { margin: 12px 0 4px; padding-left: 22px; font-size: .9rem; color: var(--text-2); }
 .steps li { margin-bottom: 6px; }
+/* Deploy page: the student app is the main action; the multi-GB bundle stays in the side panel. */
+.student-app { border: 2px solid var(--accent-strong); background: linear-gradient(var(--accent-soft), var(--accent-soft)), var(--panel); }
+.student-app .steps { font-size: 1rem; color: var(--text); }
+.bundle-card h2 { font-size: 1rem; }
+/* Students' "Download App" page: one centred card, one button. */
+.download-app { max-width: 620px; margin: 24px auto; padding: 32px; }
+.download-app .steps { font-size: 1rem; color: var(--text); }

@@ -41,7 +41,7 @@ class ConfigError(ValueError):
 class JobConfig:
     program_name: str
     language: str = "English"
-    base_model: str = "Qwen/Qwen2.5-7B-Instruct"
+    base_model: str = "dicta-il/dictalm2.0-instruct"
     teacher_model: str = DEFAULT_TEACHER_MODEL
     examples_per_course: int = 400
     review_syllabi: bool = True

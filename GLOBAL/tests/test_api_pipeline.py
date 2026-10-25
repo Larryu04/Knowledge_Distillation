@@ -29,6 +29,27 @@ def test_options_and_estimate():
         assert est["rows"] == 200
 
 
+def test_job_list_is_per_browser_unless_admin():
+    with TestClient(app) as client:
+        a, b = _submit(client, review=True), _submit(client, review=True)
+        assert client.get("/api/jobs").json() == []                    # no ids: nothing leaks
+        assert [j["id"] for j in client.get(f"/api/jobs?ids={a},nope,{a}").json()] == [a]
+        assert {j["id"] for j in client.get("/api/jobs?admin=w22222").json()} == {a, b}
+        assert client.get("/api/jobs?admin=wrong").json() == []
+
+
+def test_installer_download(tmp_path, monkeypatch):
+    with TestClient(app) as client:
+        monkeypatch.setenv("GLOBAL_DESKTOP_INSTALLER", str(tmp_path / "missing.exe"))
+        assert client.get("/api/installer").status_code == 404
+        exe = tmp_path / "CoreCS_0.1.0_x64-setup.exe"
+        exe.write_bytes(b"MZ installer")
+        monkeypatch.setenv("GLOBAL_DESKTOP_INSTALLER", str(exe))
+        r = client.get("/api/installer")
+        assert r.status_code == 200 and r.content == b"MZ installer"
+        assert "CoreCS_0.1.0_x64-setup.exe" in r.headers["content-disposition"]
+
+
 def test_rejects_bad_uploads_and_config():
     with TestClient(app) as client:
         r = client.post("/api/jobs", data={"config": json.dumps({"program_name": "x"})},
@@ -146,7 +167,7 @@ def test_edit_and_rerun_failed_job():
 
         # The old job is hidden from the list and can't be re-run or resumed twice.
         assert client.get(f"/api/jobs/{old_id}").json()["replaced_by"] == new_id
-        assert [j["id"] for j in client.get("/api/jobs").json()] == [new_id]
+        assert [j["id"] for j in client.get(f"/api/jobs?ids={old_id},{new_id}").json()] == [new_id]
         r = client.post("/api/jobs", data={"config": json.dumps(cfg), "pasted_text": SYLLABUS_B, "retry_of": old_id})
         assert r.status_code == 409
         assert client.post(f"/api/jobs/{old_id}/retry", json={}).status_code == 409

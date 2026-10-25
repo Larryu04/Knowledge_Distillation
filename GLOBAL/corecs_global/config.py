@@ -28,14 +28,17 @@ DEFAULT_PRICE_OUT_PER_M = 0.60
 # Base models offered in the UI. Any Hugging Face causal-LM with a chat template also works
 # via the "custom" field; these are the ones known to fit QLoRA on a 12 GB card.
 BASE_MODELS = (
-    {"id": "Qwen/Qwen2.5-7B-Instruct", "label": "Qwen 2.5 7B Instruct (multilingual)", "gated": False},
     {"id": "dicta-il/dictalm2.0-instruct", "label": "DictaLM 2.0 Instruct 7B (Hebrew-first)", "gated": False},
+    {"id": "Qwen/Qwen2.5-7B-Instruct", "label": "Qwen 2.5 7B Instruct (multilingual)", "gated": False},
     {"id": "mistralai/Mistral-7B-Instruct-v0.3", "label": "Mistral 7B Instruct v0.3", "gated": True},
     {"id": "meta-llama/Llama-3.1-8B-Instruct", "label": "Llama 3.1 8B Instruct", "gated": True},
     {"id": "Qwen/Qwen2.5-1.5B-Instruct", "label": "Qwen 2.5 1.5B Instruct (fast test runs)", "gated": False},
 )
 
 QUANT_TYPES = ("Q4_K_M", "Q5_K_M", "Q8_0")
+
+# "My jobs" has no accounts (see api.list_jobs); this key in ?admin= shows every job.
+DEFAULT_ADMIN_KEY = "w22222"
 
 
 def _path_env(name: str, default: Path) -> Path:
@@ -51,6 +54,7 @@ class Settings:
     train_python: str              # interpreter for train/package stages (needs torch + CUDA)
     platform_python: str           # interpreter for ingest/generate stages
     access_token: str | None       # if set, every /api call must present it
+    admin_key: str                 # ?admin=<key> on the web UI lists every job, not just this browser's
     teacher_backend: str           # "openai" (default) or "fake" (offline tests / demos)
     price_in_per_m: float
     price_out_per_m: float
@@ -110,6 +114,7 @@ def get_settings() -> Settings:
         train_python=os.environ.get("GLOBAL_TRAIN_PYTHON") or sys.executable,
         platform_python=os.environ.get("GLOBAL_PLATFORM_PYTHON") or sys.executable,
         access_token=os.environ.get("GLOBAL_ACCESS_TOKEN") or None,
+        admin_key=os.environ.get("GLOBAL_ADMIN_KEY") or DEFAULT_ADMIN_KEY,
         teacher_backend=os.environ.get("GLOBAL_TEACHER_BACKEND", "openai"),
         price_in_per_m=float(os.environ.get("GLOBAL_PRICE_IN", DEFAULT_PRICE_IN_PER_M)),
         price_out_per_m=float(os.environ.get("GLOBAL_PRICE_OUT", DEFAULT_PRICE_OUT_PER_M)),

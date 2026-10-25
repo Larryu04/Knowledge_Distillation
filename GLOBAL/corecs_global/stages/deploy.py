@@ -1,12 +1,13 @@
 """
 Stage 6 — Deployment instructions.
 
-Builds a step-by-step guide filled in with this job's real file names and Hugging Face
-repository: test locally, where the model was published (the publish stage uploads it to the
-lecturer's account), share it with students, and optionally host an online demo on a Hugging
-Face Space. The same guide ships inside the bundle as DEPLOY.md and is rendered by the web UI
-from deploy.json. Jobs run without a token (demo mode) have no repository: the guide then
-covers offline sharing only (and the Space template keeps a `{HF_USER}` placeholder).
+Builds a short guide filled in with this job's real file names and Hugging Face repository:
+what the (optional) bundle is, where the model was published (the publish stage uploads it to
+the lecturer's account) and a pre-sharing checklist. Sharing with students goes through the
+student app, which the web UI's deploy page puts front and centre. The same guide ships inside
+the bundle as DEPLOY.md and is rendered by the web UI from deploy.json. Jobs run without a token
+(demo mode) have no repository: the guide then points to sharing the bundle instead (and the
+Space template keeps a `{HF_USER}` placeholder).
 """
 
 import hashlib
@@ -23,53 +24,19 @@ def repo_ids(hf_repo: str, slug: str) -> tuple[str, str]:
     return hf_repo or f"{HF_USER}/{slug}-tutor-gguf", f"{owner}/{slug}-tutor-demo"
 
 
-def build_guide(ctx: StageContext, profile: dict, gguf: str, bundle: str, slug: str,
-                has_desktop: bool, has_bins: bool) -> dict:
+def build_guide(ctx: StageContext, profile: dict, gguf: str, bundle: str, slug: str) -> dict:
     published = bool(ctx.config.hf_repo)
     model_repo, space_repo = repo_ids(ctx.config.hf_repo, slug)
     profile_file = gguf.removesuffix(".gguf") + ".corecs.json"
     link = f"https://huggingface.co/{model_repo}/resolve/main/{gguf}?download=true"
-    root = f"{slug}-tutor"
-    runtime_note = ("" if has_bins else
-                    "\n\nThis bundle has no llama-server binary for your OS: install llama.cpp first "
-                    "(`winget install llama.cpp` on Windows, `brew install llama.cpp` on macOS) and the "
-                    "start script will use it.")
-    desktop_text = (
-        "**Option B: the CoreCS desktop app (Windows).** Download the **student app** ZIP from the "
-        "CoreCS Global deploy page and share it. It holds the installer plus `corecs-model.json`, which "
-        "names your Hugging Face repository: on first launch the app downloads your model by itself. "
-        "Students must extract the ZIP completely before running the installer, or they get the "
-        "default CoreCS model instead."
-        if has_desktop and published else
-        ("**Option B: the CoreCS desktop app (Windows).** Students install it from the bundle's "
-         "`runtime/desktop` folder" if has_desktop else
-         "**Option B: the CoreCS desktop app.** Build it from the `runtime/desktop` sources of the platform")
-        + f", then copy `{gguf}` and `{profile_file}` into `%APPDATA%\\com.corecs.app\\models`."
-    )
     sections = [
         {
             "id": "download",
-            "title": "Download your bundle",
-            "body": (f"Your bundle `{bundle}` contains everything needed to run the tutor offline:\n\n"
-                     f"- `model/{gguf}`: the fine-tuned, quantized model\n"
-                     f"- `model/{profile_file}`: the prompt preamble and sampling settings it was trained with\n"
-                     "- `runtime/portable/`: a zero-install chat app (llama.cpp server + browser UI)\n"
-                     + ("- `runtime/desktop/`: the CoreCS desktop installer\n" if has_desktop else "")
-                     + ("- `adapter/`: the LoRA adapter (for further training or Hugging Face)\n" if ctx.config.include_adapter else "")
-                     + "- `huggingface/`: a ready model card and a Space template\n"
-                     "- `dataset/`: the generated training data and structured syllabi, for your review"),
+            "title": "Download your bundle (optional backup)",
+            "body": (f"`{bundle}` is a full backup for you, not for students. It holds the raw model "
+                     "weights, the generated dataset for your review, and a portable local runtime to "
+                     "chat with the tutor offline. Students only need the student app."),
             "commands": [],
-        },
-        {
-            "id": "test",
-            "title": "Test it on your own computer",
-            "body": ("Unzip the bundle and start the portable runtime. A browser tab opens at "
-                     "http://127.0.0.1:8088 once the model is loaded (10-60 seconds). Ask a few questions "
-                     "from each course before sharing it with students." + runtime_note),
-            "commands": [
-                {"label": "Windows", "code": f"{root}\\runtime\\portable\\start-windows.bat"},
-                {"label": "macOS / Linux", "code": f"sh {root}/runtime/portable/start-macos-linux.sh"},
-            ],
         },
         {
             "id": "hub",
@@ -77,48 +44,15 @@ def build_guide(ctx: StageContext, profile: dict, gguf: str, bundle: str, slug: 
             "body": (f"CoreCS Global published your model automatically to your Hugging Face account: "
                      f"**https://huggingface.co/{model_repo}**. The repository holds `{gguf}`, `{profile_file}` "
                      "and a model card. It is public, so students need no Hugging Face account. If you make "
-                     "it private, the desktop app and the download link stop working for students."
+                     "it private, the student app and the download link stop working for students."
                      if published else
-                     "This job ran without a Hugging Face token, so the model was not published online. "
-                     "Students can still use it offline from the bundle (see below). To publish it "
-                     "automatically, run the job again with a Hugging Face token that has **Write** access."),
-            "commands": [{"label": "Model page", "code": f"https://huggingface.co/{model_repo}"}] if published else [],
+                     "This job ran without a Hugging Face token, so the model was not published online and "
+                     "the student app has nothing to download. Share the bundle ZIP instead (students unzip "
+                     "it and run the start script in `runtime/portable`), or run the job again with a "
+                     "Hugging Face token that has **Write** access."),
+            "commands": ([{"label": "Model page", "code": f"https://huggingface.co/{model_repo}"},
+                          {"label": "Direct model download", "code": link}] if published else []),
         },
-        {
-            "id": "share",
-            "title": "Share it with your students",
-            "body": (("Post these links on your course site (Moodle, Canvas, ...).\n\n"
-                      f"- **Model page:** https://huggingface.co/{model_repo}\n"
-                      f"- **Direct model download:** {link}\n\n"
-                      "**Option A: the portable runtime (any OS).** Share the bundle's `runtime/portable` "
-                      "folder (or the whole ZIP via your university drive). Students put the downloaded "
-                      "`.gguf` and `.corecs.json` into a `model` folder inside `portable`, then run the "
-                      "start script.\n\n"
-                      if published else
-                      "**Option A: the portable runtime (any OS).** Share the whole bundle ZIP (for example "
-                      "via your university drive). Students unzip it and run the start script.\n\n")
-                     + desktop_text + "\n\n"
-                     "Everything runs on the student's computer: questions never leave it. A 7B model "
-                     "needs about 6 GB of free RAM (or VRAM); a GPU makes it much faster."),
-            "commands": [{"label": "Download link", "code": link}] if published else [],
-        },
-        *([{
-            "id": "space",
-            "title": "Optional: host an online demo on Hugging Face Spaces",
-            "body": ("Useful for students on Chromebooks or tablets. Create a new Space at "
-                     "https://huggingface.co/new-space with the **Docker** SDK (Blank template) named "
-                     f"`{space_repo.split('/')[1]}`, then upload the template from the bundle's "
-                     "`huggingface/space` folder (Files → Add file → Upload files, or the command below). "
-                     "The Space downloads your published model when it starts.\n\n"
-                     "Free CPU Spaces answer slowly with 7B models (a few tokens per second) and sleep "
-                     "when idle; a GPU Space upgrade is fast but paid. Unlike the offline runtime, "
-                     "questions are processed on Hugging Face's servers."),
-            "commands": [
-                {"label": "Upload the Space template (after `pip install -U huggingface_hub` and `hf auth login`)",
-                 "code": f"cd {root}\nhf upload {space_repo} huggingface/space . --repo-type space"},
-                {"label": "Demo URL", "code": f"https://huggingface.co/spaces/{space_repo}"},
-            ],
-        }] if published else []),
         {
             "id": "checklist",
             "title": "Before you share: checklist",
@@ -213,9 +147,7 @@ def run(ctx: StageContext) -> None:
     profile = read_json(profiles[-1])
     gguf = profiles[-1].name.removesuffix(".corecs.json") + ".gguf"
     slug = slugify(ctx.config.program_name, fallback="tutor")
-    has_bins = any((bundle_dir / "runtime" / "portable" / "bin").glob("llama-server*"))
-    has_desktop = (bundle_dir / "runtime" / "desktop").is_dir()
-    guide = build_guide(ctx, profile, gguf, f"{slug}-bundle.zip", slug, has_desktop, has_bins)
+    guide = build_guide(ctx, profile, gguf, f"{slug}-bundle.zip", slug)
     # For the desktop app's model manifest (student_app.py): lets it verify the Hub download.
     gguf_path = bundle_dir / "model" / gguf
     if gguf_path.exists():

@@ -1,12 +1,14 @@
 // CoreCS Global web UI. Vanilla JS, hash routing:
 //   #/            new tutor (landing + form)
 //   #/retry/<id>  the same form, pre-filled from a failed/cancelled job, to edit and re-run it
-//   #/jobs        job history
+//   #/app         "Download App": the plain desktop installer, for students
+//   #/jobs        job history (this browser's jobs; all jobs with ?admin=<key>)
 //   #/jobs/<id>   live progress (+ syllabus review when the job pauses for it)
 //   #/deploy/<id> download + deployment guide
 
 const $view = document.getElementById("view");
 let OPTIONS = null;
+const DEFAULT_BASE_MODEL = "dicta-il/dictalm2.0-instruct";
 let cleanup = () => {};
 
 // ---------------------------------------------------------------- utilities
@@ -47,6 +49,18 @@ function md(text) {
 }
 
 function token() { try { return localStorage.getItem("global_token") || ""; } catch { return ""; } }
+
+// No accounts: "My jobs" lists the jobs this browser created, by id. ?admin=<key> (in the page URL
+// or after the hash) asks the server for every job instead; the server checks the key.
+function myJobIds() {
+  try { return arr(JSON.parse(localStorage.getItem("global_my_jobs") || "[]")).filter((i) => typeof i === "string"); }
+  catch { return []; }
+}
+function rememberJob(id) {
+  try { localStorage.setItem("global_my_jobs", JSON.stringify([id, ...myJobIds().filter((i) => i !== id)].slice(0, 200))); } catch {}
+}
+const adminKey = () => new URLSearchParams(location.search).get("admin")
+  || new URLSearchParams(location.hash.split("?")[1] || "").get("admin") || "";
 
 // Backend base URL. config.js sets window.GLOBAL_API_URL: "" when the FastAPI server serves this
 // page itself (same origin), the GLOBAL_API_URL env var on Vercel. Otherwise: local dev backend.
@@ -109,7 +123,7 @@ async function route() {
   cleanup();
   cleanup = () => {};
   const seq = ++routeSeq;
-  const parts = location.hash.replace(/^#\/?/, "").split("/");
+  const parts = location.hash.replace(/^#\/?/, "").split("?")[0].split("/");
   window.scrollTo(0, 0);
   try {
     if (!OPTIONS) {
@@ -120,6 +134,7 @@ async function route() {
     }
     if (parts[0] === "jobs" && parts[1]) return await viewJob(parts[1]);
     if (parts[0] === "jobs") return await viewJobs();
+    if (parts[0] === "app") return viewApp();
     if (parts[0] === "deploy" && parts[1]) return await viewDeploy(parts[1]);
     if (parts[0] === "retry" && parts[1]) return await viewRetry(parts[1]);
     return viewNew();
@@ -162,7 +177,9 @@ async function viewRetry(id) {
 // `prefill` (from viewRetry) = {id, config, pasted_text, files, status, error}.
 function viewNew(prefill = null) {
   const d = OPTIONS.defaults;
-  const models = OPTIONS.base_models.map((m) => `<option value="${esc(m.id)}">${esc(m.label)}${m.gated ? " · gated" : ""}</option>`).join("");
+  // DictaLM is the preferred default; fall back to the server's default if it's ever not offered.
+  const defaultBase = OPTIONS.base_models.some((m) => m.id === DEFAULT_BASE_MODEL) ? DEFAULT_BASE_MODEL : d.base_model;
+  const models = OPTIONS.base_models.map((m) => `<option value="${esc(m.id)}" ${m.id === defaultBase ? "selected" : ""}>${esc(m.label)}${m.gated ? " · gated" : ""}</option>`).join("");
   const hero = prefill ? `
   <section class="hero">
     <h1>Edit &amp; re-run</h1>
@@ -392,6 +409,7 @@ function viewNew(prefill = null) {
     btn.textContent = OPTIONS.demo_mode ? "Starting…" : "Verifying API key…";
     try {
       const { id } = await api("/api/jobs", { method: "POST", body: fd });
+      rememberJob(id);
       location.hash = `#/jobs/${id}`;
     } catch (err) {
       showError("Could not start the job.", [err.message || "Unknown error."]);
@@ -403,14 +421,19 @@ function viewNew(prefill = null) {
 
 // ---------------------------------------------------------------- job list
 async function viewJobs() {
-  const res = await api("/api/jobs");
+  const admin = adminKey(), ids = myJobIds();
+  const res = admin ? await api(`/api/jobs?admin=${encodeURIComponent(admin)}`)
+    : ids.length ? await api(`/api/jobs?ids=${ids.join(",")}`) : [];
   if (!Array.isArray(res)) throw new Error("The backend sent an unexpected job list. Reload the page to try again.");
   const jobs = res.filter((j) => j && j.config);
   if (!jobs.length) {
-    $view.innerHTML = `<div class="card empty"><h2>No jobs yet</h2><p>Build your first tutor to see it here.</p><a class="btn btn-primary" href="#/">New tutor</a></div>`;
+    $view.innerHTML = admin
+      ? `<div class="card empty"><h2>No jobs found</h2><p>Either the server has no jobs, or the admin key was not accepted.</p></div>`
+      : `<div class="card empty"><h2>No jobs yet</h2><p>Build your first tutor to see it here. Jobs are remembered by this browser,
+          so ones started on another computer or browser don’t appear.</p><a class="btn btn-primary" href="#/">New tutor</a></div>`;
     return;
   }
-  $view.innerHTML = `<div class="card"><h2>My jobs</h2><table>
+  $view.innerHTML = `<div class="card"><h2>${admin ? "All jobs <span class=\"hint\">(admin view)</span>" : "My jobs"}</h2><table>
     <thead><tr><th>Program</th><th>Status</th><th>Progress</th><th>Started</th><th></th></tr></thead>
     <tbody>${jobs.map((j) => `<tr>
       <td><b${rtl(j.config.program_name)}>${esc(j.config.program_name)}</b><div class="hint">${esc(j.config.base_model)}</div></td>
@@ -420,6 +443,24 @@ async function viewJobs() {
       <td class="row-acts">${["failed", "cancelled"].includes(j.status) ? `<a href="#/retry/${j.id}">Edit &amp; re-run</a>` : ""}
         <a href="${j.status === "succeeded" ? "#/deploy/" : "#/jobs/"}${j.id}">Open →</a></td></tr>`).join("")}
     </tbody></table></div>`;
+}
+
+// ---------------------------------------------------------------- download app (students)
+function viewApp() {
+  $view.innerHTML = `
+    <div class="card download-app">
+      <h1>Download the CoreCS app</h1>
+      <p class="hint">An AI tutor that runs entirely on your own computer (Windows 10/11, 64-bit).</p>
+      <ol class="steps">
+        <li><b>Download</b> the installer below and run it. If Windows shows “Windows protected your PC”, click <b>More info → Run anyway</b>.</li>
+        <li><b>Open CoreCS.</b> On first launch it downloads the tutor model once (a few GB), so stay online until it finishes.</li>
+        <li>After that, it works offline. Your questions never leave your computer.</li>
+      </ol>
+      <div class="actions" style="margin-top:18px">
+        ${OPTIONS.desktop_installer ? `<a class="btn btn-primary btn-lg" href="${esc(apiUrl("/api/installer"))}">Download ${esc(OPTIONS.desktop_installer)}</a>`
+          : `<span class="alert warn" style="margin:0">The installer isn’t available on this server yet. Please check back later.</span>`}
+      </div>
+    </div>`;
 }
 
 // ---------------------------------------------------------------- live job view
@@ -616,7 +657,11 @@ async function viewDeploy(id) {
   const [job, guide] = await Promise.all([api(`/api/jobs/${id}`), api(`/api/jobs/${id}/deploy`)]);
   if (!job?.config || !guide || typeof guide !== "object") throw new Error(`The backend sent an unexpected response for job ${id}.`);
   job.stages = arr(job.stages);
-  guide.sections = arr(guide.sections).map((sec) => ({ ...sec, body: sec.body || "", commands: arr(sec.commands) }));
+  // The bundle ("download") gets its own side panel; older jobs' deploy.json still carries
+  // sections the student app card replaced (test, share, space), so they are dropped here too.
+  guide.sections = arr(guide.sections)
+    .filter((sec) => !["download", "test", "share", "space"].includes(sec.id))
+    .map((sec) => ({ ...sec, body: sec.body || "", commands: arr(sec.commands) }));
   const repo = guide.published ? guide.model_repo : null;
   const publish = guide.publish || {};
   const renderGuide = () => {
@@ -634,34 +679,42 @@ async function viewDeploy(id) {
       <p class="hint">Fine-tuned from ${esc(job.config.base_model)} · ${job.stages.find((s) => s.name === "generate")?.rows?.toLocaleString() ?? ""} training examples</p>
       ${repo ? `<p class="hint">Published to <a href="https://huggingface.co/${esc(repo)}" target="_blank" rel="noopener">huggingface.co/${esc(repo)}</a></p>` : ""}
       <div class="actions" style="justify-content:center;margin-top:16px">
-        ${job.bundle ? `<a class="btn btn-primary" href="${esc(apiUrl(`/api/jobs/${id}/download`))}">Download bundle (${fmtBytes(job.bundle.bytes)})</a>` : `<span class="alert err">Bundle file missing on the server.</span>`}
         <a class="btn btn-ghost" href="#/jobs/${id}">Pipeline details</a>
       </div>
     </div>
     <div class="grid">
-      <div class="card">
-        <h2>Deployment guide</h2>
-        <div id="guide"></div>
-      </div>
-      <aside>
-        <div class="card"><h2>Student desktop app</h2>
+      <div>
+        <div class="card student-app"><h2>Share with your students: the student app</h2>
           ${repo ? `
-          <p class="hint">Your model is already on Hugging Face. On first launch the app downloads it by itself.</p>
+          <p class="hint">This is the file your students need. It’s small: your model is already on Hugging Face, and the app downloads it by itself on first launch.</p>
           ${publish.private ? `<div class="alert warn">The repository <b>${esc(repo)}</b> is private, so students’ apps can’t download it. Make it public in its settings on Hugging Face.</div>` : ""}
           <ol class="steps">
-            <li><b>Download this ZIP.</b></li>
+            <li><b>Download the student app ZIP</b> below.</li>
             <li><b>Share the ZIP</b> with your students (course website, Moodle, email…).</li>
             <li>Tell students they <b>must extract the ZIP completely</b> (right-click → “Extract All”)
               before running the installer. If they run it from inside the ZIP, they get the default model instead of yours.</li>
           </ol>
-          <div class="actions" style="margin-top:12px">
-            ${OPTIONS.desktop_installer ? `<a class="btn btn-primary" href="${appLink("student-app")}">Download student app (.zip)</a>`
+          <div class="actions" style="margin-top:16px">
+            ${OPTIONS.desktop_installer ? `<a class="btn btn-primary btn-lg" href="${appLink("student-app")}">Download student app (.zip)</a>`
               : `<span class="alert warn" style="margin:0">No desktop installer on this server yet. Copy <code>CoreCS_…_x64-setup.exe</code> into <code>GLOBAL/runtime/installer/</code> and reload.</span>`}
             <a class="btn btn-ghost" href="${appLink("model-manifest")}">corecs-model.json only</a>
           </div>
           <p class="hint" style="margin-top:8px">The app will pull ${esc(guide.gguf)} from huggingface.co/${esc(repo)}.</p>`
           : `<div class="alert warn" style="margin:0">This model wasn’t published to Hugging Face (the job ran without a token), so the
               student app has nothing to download. Run the job again with a Hugging Face Write token, or share the bundle instead.</div>`}
+        </div>
+        <div class="card">
+          <h2>Deployment guide</h2>
+          <div id="guide"></div>
+        </div>
+      </div>
+      <aside>
+        <div class="card bundle-card"><h2>Full bundle (optional)</h2>
+          <p class="hint">A backup for <b>you</b>, not for students: the raw model weights, the generated dataset for your review,
+            and a portable local runtime to chat with the tutor offline.</p>
+          <div class="actions" style="margin-top:12px">
+            ${job.bundle ? `<a class="btn btn-ghost" href="${esc(apiUrl(`/api/jobs/${id}/download`))}">Download bundle (${fmtBytes(job.bundle.bytes)})</a>` : `<span class="alert err" style="margin:0">Bundle file missing on the server.</span>`}
+          </div>
         </div>
         <div class="card"><h2>Sample answers</h2>
           ${arr(guide.samples).map((s) => `<div class="sample"><div class="q"${rtl(s.question)}>${esc(s.question)}</div><div class="a"${rtl(s.answer)}>${esc(s.answer)}</div></div>`).join("") || '<p class="hint">No samples recorded.</p>'}

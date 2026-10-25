@@ -300,8 +300,7 @@ def run(ctx: StageContext) -> None:
         if f.exists():
             shutil.copy2(f, data_dir / f.name)
 
-    guide = deploy.build_guide(ctx, profile, final_gguf.name, f"{slug}-bundle.zip", slug,
-                               has_desktop=bool(s.desktop_installer), has_bins=n_bins > 0)
+    guide = deploy.build_guide(ctx, profile, final_gguf.name, f"{slug}-bundle.zip", slug)
     (stage_dir / "DEPLOY.md").write_text(deploy.render_markdown(guide), encoding="utf-8")
     (stage_dir / "README.txt").write_text(deploy.bundle_readme(profile, final_gguf.name), encoding="utf-8")
 
