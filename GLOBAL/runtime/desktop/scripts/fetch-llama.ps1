@@ -22,5 +22,18 @@ foreach ($pattern in $keep) { Copy-Item (Join-Path $tmp $pattern) $bin -Force }
 Copy-Item (Join-Path $tmp "llama-server.exe") (Join-Path $bin "llama-server-x86_64-pc-windows-msvc.exe") -Force
 Set-Content -Path (Join-Path $bin "LLAMA_CPP_VERSION.txt") -Value "$Build-win-vulkan-x64" -Encoding utf8
 
+# llama-server links the VC++ runtime dynamically and the llama.cpp release does not ship it. Copy it
+# from the local Visual Studio redist folder (app-local deployment), so the installed app also runs
+# on a clean Windows without the VC++ Redistributable. corecs.exe itself links it statically.
+$vswhere = Join-Path ${env:ProgramFiles(x86)} "Microsoft Visual Studio\Installer\vswhere.exe"
+$vs = & $vswhere -latest -products * -property installationPath
+$crt = Get-ChildItem (Join-Path $vs "VC\Redist\MSVC\*\x64\Microsoft.VC14*.CRT") -Directory |
+    Sort-Object { [version]$_.Parent.Parent.Name } | Select-Object -Last 1
+if (-not $crt) { throw "VC++ redist folder not found under $vs (install the MSVC build tools)." }
+foreach ($dll in @("vcruntime140.dll", "vcruntime140_1.dll", "msvcp140.dll")) {
+    Copy-Item (Join-Path $crt.FullName $dll) $bin -Force
+}
+Write-Host "Bundled VC++ runtime from $($crt.FullName)"
+
 Remove-Item -Recurse -Force $tmp, $zip
 & (Join-Path $bin "llama-server-x86_64-pc-windows-msvc.exe") --version

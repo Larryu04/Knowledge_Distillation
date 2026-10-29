@@ -69,6 +69,18 @@ lecturer bundle.
 Build from this folder, not from the standalone `corecs/` app. Only this build has the
 first-launch download and the NSIS hook that reads `corecs-model.json`.
 
+`fetch-llama.ps1` also copies the VC++ runtime (`vcruntime140.dll`, `vcruntime140_1.dll`,
+`msvcp140.dll`) from the Visual Studio redist folder into `src-tauri/binaries/`, and the installer
+ships it next to `llama-server`. The app therefore runs on a clean Windows without the
+VC++ Redistributable.
+
+### Testing a first install
+
+`scripts/reset-test-machine.ps1` returns a machine to "never installed": it uninstalls CoreCS
+silently and removes `%APPDATA%\com.corecs.app` and `%LOCALAPPDATA%\com.corecs.app`. It is
+standalone, so it can be copied to a test laptop on its own. `-BackupModels` moves the
+downloaded models aside instead of deleting them, and `-RestoreModels` puts them back.
+
 ## Architecture
 
 | Layer | Technology |
