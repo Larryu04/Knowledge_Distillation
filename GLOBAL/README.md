@@ -50,6 +50,7 @@ powershell -ExecutionPolicy Bypass -File scripts\run_platform.ps1
 | `GLOBAL_TOOLCHAIN_DIR` | llama.cpp toolchain location (default `./tools`) |
 | `GLOBAL_DESKTOP_INSTALLER` | Full path to the desktop installer to serve. Default: the newest `*-setup.exe` in `runtime/installer/`, else in the `runtime/desktop` build output |
 | `GLOBAL_ACCESS_TOKEN` | Shared secret required by the UI/API. **Set it whenever the server is reachable by others** (e.g. via ngrok). |
+| `GLOBAL_DISABLE_BUNDLE_DOWNLOAD` | `1` stops serving the multi-GB bundle ZIP (it contains the GGUF), e.g. behind a metered ngrok tunnel. The student app ZIP still works. |
 | `GLOBAL_SECRET_KEY` | Fernet key for credentials at rest (default: generated into `data/secret.key`) |
 | `GLOBAL_TEACHER_BACKEND` | `fake` simulates the teacher LLM: no API key, no cost |
 | `GLOBAL_VRAM_FRACTION` | Fraction of GPU memory training may use (default 0.85) |

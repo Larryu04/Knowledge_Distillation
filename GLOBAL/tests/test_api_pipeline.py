@@ -50,6 +50,19 @@ def test_installer_download(tmp_path, monkeypatch):
         assert "CoreCS_0.1.0_x64-setup.exe" in r.headers["content-disposition"]
 
 
+def test_bundle_download_can_be_disabled(tmp_path, monkeypatch):
+    with TestClient(app) as client:
+        job_id = _submit(client, review=True)
+        bundle = tmp_path / "x-bundle.zip"
+        bundle.write_bytes(b"PK big")
+        db.update_job(job_id, bundle_path=str(bundle))
+        assert client.get("/api/options").json()["bundle_download"] is True
+        assert client.get(f"/api/jobs/{job_id}/download").content == b"PK big"
+        monkeypatch.setenv("GLOBAL_DISABLE_BUNDLE_DOWNLOAD", "1")
+        assert client.get("/api/options").json()["bundle_download"] is False
+        assert client.get(f"/api/jobs/{job_id}/download").status_code == 403
+
+
 def test_rejects_bad_uploads_and_config():
     with TestClient(app) as client:
         r = client.post("/api/jobs", data={"config": json.dumps({"program_name": "x"})},

@@ -68,6 +68,12 @@ class Settings:
         return _find_desktop_installer(self.runtime_dir)
 
     @property
+    def bundle_download(self) -> bool:
+        """False with GLOBAL_DISABLE_BUNDLE_DOWNLOAD=1: the multi-GB bundle (it holds the GGUF) is
+        not served, e.g. behind a metered tunnel. Students' models come from Hugging Face anyway."""
+        return os.environ.get("GLOBAL_DISABLE_BUNDLE_DOWNLOAD", "").strip().lower() not in ("1", "true", "yes")
+
+    @property
     def jobs_dir(self) -> Path:
         return self.data_dir / "jobs"
 

@@ -155,6 +155,7 @@ def options():
         # Forced demo (GLOBAL_TEACHER_BACKEND=fake); otherwise each job chooses with JobConfig.demo.
         "demo_mode": s.teacher_backend == "fake",
         "desktop_installer": s.desktop_installer.name if s.desktop_installer else None,
+        "bundle_download": s.bundle_download,
         "stages": [{"name": n, "label": STAGE_LABELS[n]} for n in STAGE_NAMES],
     }
 
@@ -519,6 +520,8 @@ async def delete_job(job_id: str):
 @app.get("/api/jobs/{job_id}/download", dependencies=[Depends(require_access)])
 def download(job_id: str):
     job = _job_or_404(job_id)
+    if not get_settings().bundle_download:
+        raise HTTPException(403, "Bundle downloads are disabled on this server (GLOBAL_DISABLE_BUNDLE_DOWNLOAD).")
     path = Path(job["bundle_path"]) if job.get("bundle_path") else None
     if not path or not path.exists():
         raise HTTPException(404, "The bundle is not ready yet.")

@@ -747,7 +747,8 @@ async function viewDeploy(id) {
           <p class="hint">A backup for <b>you</b>, not for students: the raw model weights, the generated dataset for your review,
             and a portable local runtime to chat with the tutor offline.</p>
           <div class="actions" style="margin-top:12px">
-            ${job.bundle ? `<a class="btn btn-ghost" href="${esc(apiUrl(`/api/jobs/${id}/download`))}">Download bundle (${fmtBytes(job.bundle.bytes)})</a>` : `<span class="alert err" style="margin:0">Bundle file missing on the server.</span>`}
+            ${OPTIONS.bundle_download === false ? `<span class="hint">Bundle downloads are turned off on this server. Your model is on Hugging Face.</span>`
+              : job.bundle ? `<a class="btn btn-ghost" href="${esc(apiUrl(`/api/jobs/${id}/download`))}">Download bundle (${fmtBytes(job.bundle.bytes)})</a>` : `<span class="alert err" style="margin:0">Bundle file missing on the server.</span>`}
           </div>
         </div>
         <div class="card"><h2>Sample answers</h2>
