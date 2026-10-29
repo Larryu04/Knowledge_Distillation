@@ -59,6 +59,7 @@ class Settings:
     price_in_per_m: float
     price_out_per_m: float
     max_upload_mb: int
+    max_demo_jobs: int             # demo jobs allowed at once (real jobs: always one at a time)
     allowed_teacher_models: tuple = field(default=ALLOWED_TEACHER_MODELS)
 
     @property
@@ -119,4 +120,5 @@ def get_settings() -> Settings:
         price_in_per_m=float(os.environ.get("GLOBAL_PRICE_IN", DEFAULT_PRICE_IN_PER_M)),
         price_out_per_m=float(os.environ.get("GLOBAL_PRICE_OUT", DEFAULT_PRICE_OUT_PER_M)),
         max_upload_mb=int(os.environ.get("GLOBAL_MAX_UPLOAD_MB", 50)),
+        max_demo_jobs=int(os.environ.get("GLOBAL_MAX_DEMO_JOBS", 3)),
     )

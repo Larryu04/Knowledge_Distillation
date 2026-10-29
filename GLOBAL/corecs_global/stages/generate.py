@@ -315,7 +315,8 @@ def run(ctx: StageContext) -> None:
     target = ctx.config.examples_per_course
     total = target * len(courses)
 
-    teacher = make_teacher(os.environ.get("GLOBAL_TEACHER_API_KEY"), ctx.config.teacher_model, log=ctx.log)
+    teacher = make_teacher(os.environ.get("GLOBAL_TEACHER_API_KEY"), ctx.config.teacher_model, log=ctx.log,
+                           demo=ctx.config.demo)
     ctx.reporter.start(f"Generating {total:,} examples across {len(courses)} course(s)")
 
     lock = threading.Lock()

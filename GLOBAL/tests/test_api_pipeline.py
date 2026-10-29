@@ -123,9 +123,7 @@ def test_cancel_and_retry_queued_job():
         assert vault.load(job_id, vault.TEACHER_KEY) is None
         r = client.post(f"/api/jobs/{job_id}/retry", json={})
         assert r.status_code == 200 and r.json()["status"] == "queued" and r.json()["next_stage"] == "ingest"
-        assert client.delete(f"/api/jobs/{job_id}").status_code == 409   # not terminal
-        client.post(f"/api/jobs/{job_id}/cancel")
-        assert client.delete(f"/api/jobs/{job_id}").status_code == 200
+        assert client.delete(f"/api/jobs/{job_id}").status_code == 200   # queued jobs can be deleted too
         assert client.get(f"/api/jobs/{job_id}").status_code == 404
 
 
@@ -204,3 +202,39 @@ def test_cors_origins_are_normalized():
     assert cors_origins(f"[{site}]({site})") == [site]          # pasted as a Markdown link
     assert cors_origins(f' "{site}" , http://localhost:5173/x') == [site, "http://localhost:5173"]
     assert cors_origins("not-a-url") == []
+
+
+def test_one_real_job_at_a_time_and_demo_cap(monkeypatch):
+    import pytest
+    from fastapi import HTTPException
+
+    from corecs_global import api, config
+
+    monkeypatch.setenv("GLOBAL_MAX_DEMO_JOBS", "2")
+    config.get_settings.cache_clear()
+    real = db.create_job({"program_name": "Real", "demo": False}, {})
+    with pytest.raises(HTTPException) as e:
+        api._check_capacity(demo=False)
+    assert e.value.status_code == 409 and "Demo mode" in e.value.detail
+    api._check_capacity(demo=False, exclude=real)          # retrying that same job is fine
+    api._check_capacity(demo=True)                         # demos still run alongside
+    for _ in range(2):
+        db.create_job({"program_name": "Demo", "demo": True}, {})
+    with pytest.raises(HTTPException) as e:
+        api._check_capacity(demo=True)
+    assert e.value.status_code == 429
+    db.update_job(real, status="succeeded")
+    api._check_capacity(demo=False)                        # a finished job frees the slot
+
+
+def test_delete_any_job_including_unfinished_and_stale():
+    from corecs_global.config import get_settings
+
+    with TestClient(app) as client:
+        queued = _submit(client, review=True)
+        stale = db.create_job({"program_name": "Stuck", "demo": True}, {})
+        db.update_job(stale, status="running", heartbeat=0)      # its worker died long ago
+        for job_id in (queued, stale):
+            assert client.delete(f"/api/jobs/{job_id}").status_code == 200
+            assert db.get_job(job_id) is None and not (get_settings().jobs_dir / job_id).exists()
+        assert client.delete(f"/api/jobs/{queued}").status_code == 404

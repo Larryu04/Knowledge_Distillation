@@ -167,7 +167,8 @@ def run(ctx: StageContext) -> None:
     if not sources:
         raise StageError("No syllabus files or pasted text were provided.")
 
-    teacher = make_teacher(os.environ.get("GLOBAL_TEACHER_API_KEY"), ctx.config.teacher_model, log=ctx.log)
+    teacher = make_teacher(os.environ.get("GLOBAL_TEACHER_API_KEY"), ctx.config.teacher_model, log=ctx.log,
+                           demo=ctx.config.demo)
     ctx.reporter.start(f"Reading {len(sources)} source(s)")
 
     all_courses = []

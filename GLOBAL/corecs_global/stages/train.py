@@ -43,6 +43,7 @@ from transformers import (
     set_seed,
 )
 
+from ..jobs import DEMO_TRAIN_FRACTION
 from ..languages import build_preamble, preset
 from .base import StageContext, StageError, atomic_write_json, read_json
 
@@ -362,6 +363,9 @@ def run(ctx: StageContext) -> None:
     samples_per_epoch = int(round(weights.sum().item())) if use_weighted else len(train_ds)
     steps_per_epoch = math.ceil(samples_per_epoch / EFFECTIVE_BATCH)
     total_steps = steps_per_epoch * cfg.epochs
+    if cfg.demo:
+        total_steps = max(1, math.ceil(total_steps * DEMO_TRAIN_FRACTION))
+        ctx.log(f"Demo run: training for {total_steps} steps ({DEMO_TRAIN_FRACTION:.0%} of the normal run)")
     warmup = max(min(20, total_steps // 10), round(WARMUP_FRAC * total_steps))
     # ~4 evals/epoch on real runs; small runs still get at least two evals.
     eval_every = max(1, min(max(50, steps_per_epoch // 4), total_steps // 2))
@@ -371,6 +375,7 @@ def run(ctx: StageContext) -> None:
     args = TrainingArguments(
         output_dir=out_dir,
         num_train_epochs=cfg.epochs,
+        max_steps=total_steps if cfg.demo else -1,   # overrides num_train_epochs when set
         per_device_train_batch_size=micro,
         per_device_eval_batch_size=micro,
         gradient_accumulation_steps=accum,

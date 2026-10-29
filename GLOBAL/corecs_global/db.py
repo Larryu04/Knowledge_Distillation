@@ -139,6 +139,13 @@ def list_jobs(limit: int = 50, include_replaced: bool = False) -> list[dict]:
     return [_row(r) for r in rows]
 
 
+def active_jobs() -> list[dict]:
+    """Jobs not yet in a terminal state (staging, queued, running, awaiting review)."""
+    with connect() as c:
+        rows = c.execute("SELECT * FROM jobs WHERE status NOT IN ('succeeded', 'failed', 'cancelled')").fetchall()
+    return [_row(r) for r in rows]
+
+
 def update_job(job_id: str, **fields) -> None:
     if not fields:
         return

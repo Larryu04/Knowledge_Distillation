@@ -85,6 +85,10 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: rgba(12
 @media (max-width: 600px) { .row { grid-template-columns: 1fr; } }
 .check { display: flex; gap: 10px; align-items: flex-start; font-weight: 500; }
 .check input { margin-top: 4px; accent-color: var(--accent); }
+.demo-toggle { padding: 12px 14px; margin-bottom: 14px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--panel-2); cursor: pointer; }
+.demo-toggle:has(input:checked) { border-color: rgba(124, 156, 255, .5); background: var(--accent-soft); }
+.demo-toggle:has(input:disabled) { cursor: default; }
+.pill.demo { background: var(--warn-soft); color: #fde68a; }
 
 .drop { border: 2px dashed var(--border); border-radius: var(--radius); padding: 26px; text-align: center; color: var(--muted); cursor: pointer; transition: .15s; background: var(--panel-2); }
 .drop.over, .drop:hover { border-color: rgba(124, 156, 255, .5); color: var(--accent); background: var(--accent-soft); }
@@ -100,6 +104,9 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: rgba(12
 .btn-ghost:hover { background: var(--hover); }
 .btn-danger { background: var(--err-soft); border-color: rgba(239, 68, 68, .3); color: var(--err-text); }
 .btn-danger:hover { background: rgba(239, 68, 68, .2); }
+.link-danger { background: none; border: 0; padding: 0; font: inherit; color: var(--err-text); cursor: pointer; }
+.link-danger:hover { text-decoration: underline; }
+.link-danger:disabled { color: var(--muted); cursor: default; text-decoration: none; }
 .btn[disabled], .btn.disabled { opacity: .5; cursor: not-allowed; }
 .btn.disabled { pointer-events: none; }
 .btn-primary[disabled] { background: var(--panel-2); color: var(--muted); opacity: 1; }
@@ -183,7 +190,7 @@ th { color: var(--muted); font-weight: 500; font-size: .72rem; text-transform: u
 .empty { text-align: center; color: var(--muted); padding: 40px; }
 [dir=rtl] { text-align: right; }
 .row-acts { white-space: nowrap; text-align: right; }
-.row-acts a + a { margin-left: 14px; }
+.row-acts > * + * { margin-left: 14px; }
 
 /* "?" info bubble; the tip spans its label so it never overflows a narrow column */
 label:has(> .info) { position: relative; }

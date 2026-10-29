@@ -35,6 +35,16 @@ def test_estimate_scales_with_courses_and_model_size():
     assert estimate(small, 3, 3)["stage_seconds"]["train"] < e3["stage_seconds"]["train"]
 
 
+def test_demo_job_halves_training_and_costs_nothing():
+    real = JobConfig.from_dict({"program_name": "x"})
+    demo = JobConfig.from_dict({"program_name": "x", "demo": True})
+    assert not real.demo and demo.demo
+    er, ed = estimate(real, 2, 2), estimate(demo, 2, 2)
+    assert ed["train_steps"] == -(-er["train_steps"] // 2)
+    assert ed["api_cost_usd"] == 0 and er["api_cost_usd"] > 0
+    assert ed["total_seconds"] < er["total_seconds"]
+
+
 def test_queue_lanes_and_staging():
     cfg = JobConfig.from_dict({"program_name": "x"}).to_dict()
     job_id = db.create_job(cfg, {"stage_seconds": {}})

@@ -115,7 +115,11 @@ def run_stage(job: dict, worker_id: str) -> None:
                 time.sleep(CHECK_S)
                 db.heartbeat(job_id)
                 current = db.get_job(job_id)
-                if current is None or current["cancel_requested"]:
+                if current is None:                 # deleted from under us
+                    kill_tree(proc)
+                    print(f"[worker] job {job_id}: deleted", flush=True)
+                    return
+                if current["cancel_requested"]:
                     kill_tree(proc)
                     fail(job_id, stage, "cancelled", None)
                     print(f"[worker] job {job_id}: cancelled", flush=True)

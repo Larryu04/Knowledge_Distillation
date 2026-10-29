@@ -12,6 +12,7 @@ import json
 import os
 import re
 import shutil
+import threading
 import time
 from contextlib import asynccontextmanager
 from pathlib import Path
@@ -151,8 +152,8 @@ def options():
         "teacher_models": s.allowed_teacher_models,
         "defaults": JobConfig(program_name="-").to_dict(),
         "max_upload_mb": s.max_upload_mb,
+        # Forced demo (GLOBAL_TEACHER_BACKEND=fake); otherwise each job chooses with JobConfig.demo.
         "demo_mode": s.teacher_backend == "fake",
-        "hf_token_required": s.teacher_backend != "fake",
         "desktop_installer": s.desktop_installer.name if s.desktop_installer else None,
         "stages": [{"name": n, "label": STAGE_LABELS[n]} for n in STAGE_NAMES],
     }
@@ -172,6 +173,25 @@ async def estimate_endpoint(request: Request):
 # --------------------------------------------------------------------------------------
 # Jobs
 # --------------------------------------------------------------------------------------
+# One GPU: a single real job may be in flight at a time (a second one would sit in the queue for
+# hours behind the first), plus a few short demo jobs. Checked and claimed under this lock so two
+# simultaneous submissions can't both slip past the check.
+_admission = threading.Lock()
+
+
+def _check_capacity(demo: bool, exclude: str | None = None) -> None:
+    active = [j for j in db.active_jobs() if j["id"] != exclude]
+    if demo:
+        limit = get_settings().max_demo_jobs
+        if sum(1 for j in active if j["config"].get("demo")) >= limit:
+            raise HTTPException(429, f"{limit} demo runs are already in progress on this server. "
+                                     "Try again when one of them finishes.")
+    elif any(not j["config"].get("demo") for j in active):
+        raise HTTPException(409, "Another lecturer's tutor is already being built on this server, and only one "
+                                 "real run can use the GPU at a time. Try again when it finishes, or turn on "
+                                 "Demo mode to try the pipeline now.")
+
+
 def _verify_key(api_key: str, model: str) -> None:
     try:
         make_teacher(api_key, model).verify()
@@ -273,8 +293,10 @@ def create_job(
             raise HTTPException(400, "keep_files must be a JSON list.")
         old_uploads = Workspace(db.job_dir(retry_of)).uploads
         kept = [(f["name"], old_uploads / f["file"]) for f in _uploaded_files(retry_of) if f["file"] in wanted]
+    cfg.demo = cfg.demo or s.teacher_backend == "fake"
+    _check_capacity(cfg.demo, exclude=retry_of or None)   # fail fast, before verifying keys
     api_key = api_key.strip()
-    if s.teacher_backend != "fake":
+    if not cfg.demo:
         if not api_key:
             raise HTTPException(400, "An API key for the teacher model is required.")
         _verify_key(api_key, cfg.teacher_model)
@@ -282,7 +304,7 @@ def create_job(
     cfg.hf_repo = ""                       # server-assigned, from the token's account
     if hf_token:
         cfg.hf_repo = hf_publish.repo_for(_hf_user(hf_token), slugify(cfg.program_name, fallback="tutor"))
-    elif s.teacher_backend != "fake":
+    elif not cfg.demo:
         raise HTTPException(400, "A Hugging Face token with Write access is required: the server publishes "
                                  f"your model to your account when training finishes. {hf_publish.TOKEN_HELP}")
 
@@ -290,7 +312,9 @@ def create_job(
     if n_inputs == 0:
         raise HTTPException(400, "Upload at least one syllabus file or paste syllabus text.")
 
-    job_id = db.create_job(cfg.to_dict(), estimate(cfg, n_inputs, n_inputs))
+    with _admission:
+        _check_capacity(cfg.demo, exclude=retry_of or None)
+        job_id = db.create_job(cfg.to_dict(), estimate(cfg, n_inputs, n_inputs))
     ws = Workspace(db.job_dir(job_id))
     try:
         sources = _save_sources(ws, files, pasted_text, s.max_upload_mb << 20, kept)
@@ -444,7 +468,8 @@ async def retry(job_id: str, request: Request):
         raise HTTPException(409, "Every stage already finished.")
     api_key = (body.get("api_key") or "").strip()
     remaining = STAGE_NAMES[STAGE_NAMES.index(stage):]
-    if get_settings().teacher_backend != "fake" and any(s in TEACHER_STAGES for s in remaining):
+    demo = job["config"].get("demo") or get_settings().teacher_backend == "fake"
+    if not demo and any(s in TEACHER_STAGES for s in remaining):
         if not api_key:
             raise HTTPException(400, "This retry re-runs a stage that calls the teacher model; provide the API key again.")
         _verify_key(api_key, job["config"]["teacher_model"])
@@ -459,17 +484,33 @@ async def retry(job_id: str, request: Request):
                                      "which this job publishes to.")
     if hf_token:
         vault.store(job_id, vault.HF_TOKEN, hf_token)
-    db.update_stage_progress(job_id, stage, {"status": "pending", "eta_s": None})
-    db.update_job(job_id, status="queued", next_stage=stage, current_stage=None, error=None, cancel_requested=0)
+    with _admission:
+        _check_capacity(bool(demo), exclude=job_id)
+        db.update_stage_progress(job_id, stage, {"status": "pending", "eta_s": None})
+        db.update_job(job_id, status="queued", next_stage=stage, current_stage=None, error=None, cancel_requested=0)
     db.add_event(job_id, "status", {"status": "queued", "message": f"Retrying from {STAGE_LABELS[stage]}."})
     return job_view(db.get_job(job_id))
 
 
+DELETE_WAIT_S = 45          # the worker polls cancel every second; killing the stage tree can take a while
+STALE_HEARTBEAT_S = 30      # a "running" job this quiet has no live worker behind it
+
+
 @app.delete("/api/jobs/{job_id}", dependencies=[Depends(require_access)])
-def delete_job(job_id: str):
+async def delete_job(job_id: str):
+    """Deletes a job in any state. A running stage is cancelled first (so its process lets go of
+    the job's files and the GPU); a job whose worker died is deleted straight away."""
     job = _job_or_404(job_id)
-    if job["status"] not in TERMINAL:
-        raise HTTPException(409, "Cancel the job before deleting it.")
+    if job["status"] == "running" and time.time() - (job.get("heartbeat") or 0) < STALE_HEARTBEAT_S:
+        db.update_job(job_id, cancel_requested=1)
+        deadline = time.time() + DELETE_WAIT_S
+        while (job := db.get_job(job_id)) and job["status"] == "running":
+            if time.time() > deadline:
+                raise HTTPException(409, "The job is still stopping. Try deleting it again in a moment.")
+            await asyncio.sleep(1.0)
+    elif job["status"] not in TERMINAL:
+        db.update_job(job_id, status="cancelled", cancel_requested=1)   # nothing may claim it meanwhile
+    vault.forget(job_id)
     shutil.rmtree(get_settings().jobs_dir / job_id, ignore_errors=True)
     db.delete_job(job_id)
     return {"deleted": job_id}

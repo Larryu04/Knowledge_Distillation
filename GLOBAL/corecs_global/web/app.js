@@ -59,6 +59,9 @@ function myJobIds() {
 function rememberJob(id) {
   try { localStorage.setItem("global_my_jobs", JSON.stringify([id, ...myJobIds().filter((i) => i !== id)].slice(0, 200))); } catch {}
 }
+function forgetJob(id) {
+  try { localStorage.setItem("global_my_jobs", JSON.stringify(myJobIds().filter((i) => i !== id))); } catch {}
+}
 const adminKey = () => new URLSearchParams(location.search).get("admin")
   || new URLSearchParams(location.hash.split("?")[1] || "").get("admin") || "";
 
@@ -227,16 +230,20 @@ function viewNew(prefill = null) {
 
       <div class="card">
         <h2><span class="num">3</span> Model &amp; credentials</h2>
+        <label class="check demo-toggle"><input id="demo" type="checkbox" ${OPTIONS.demo_mode || prefill?.config.demo ? "checked" : ""} ${OPTIONS.demo_mode ? "disabled" : ""}>
+          <span>Demo mode <span class="hint">— no API key or token needed. The teacher model is simulated (placeholder
+            training data, no cost) and fine-tuning runs for half the usual steps, so the whole pipeline can be shown quickly.
+            ${OPTIONS.demo_mode ? "This server runs every job in demo mode." : "Turn off to build a real tutor with your own keys."}</span></span></label>
         <label for="base">Base model</label>
         <select id="base" name="base_model">${models}<option value="__custom">Custom Hugging Face model…</option></select>
         <input id="base-custom" name="base_model_custom" type="text" placeholder="org/model-name (must have a chat template)" hidden style="margin-top:8px">
         <div class="row">
           <div>
             <label for="key">${OPTIONS.teacher_models[0]} API key <span class="hint">(OpenAI)</span></label>
-            <input id="key" name="api_key" type="password" placeholder="${OPTIONS.demo_mode ? "not needed in demo mode" : "sk-..."}" ${OPTIONS.demo_mode ? "" : "required"}>
+            <input id="key" name="api_key" type="password" placeholder="sk-...">
           </div>
           <div>
-            <label for="hf">Hugging Face token <span class="hint">(${OPTIONS.hf_token_required ? "Write access" : "Write access, optional in demo mode"})</span>
+            <label for="hf">Hugging Face token <span class="hint" id="hf-hint">(Write access)</span>
               <span class="info" tabindex="0" role="button" aria-label="How to get a Hugging Face token" aria-describedby="hf-tip">?
                 <span class="info-tip" id="hf-tip" role="tooltip">
                   <b>A Write token is required.</b> When training finishes, the server automatically publishes
@@ -252,7 +259,7 @@ function viewNew(prefill = null) {
                   as soon as the model is published.
                 </span>
               </span></label>
-            <input id="hf" name="hf_token" type="password" placeholder="hf_..." ${OPTIONS.hf_token_required ? "required" : ""}>
+            <input id="hf" name="hf_token" type="password" placeholder="hf_...">
           </div>
         </div>
         <p class="hint" style="margin-top:8px">Keys are encrypted at rest, never shown again, and deleted as soon as
@@ -303,6 +310,15 @@ function viewNew(prefill = null) {
   };
   $("base").onchange = () => { $("base-custom").hidden = $("base").value !== "__custom"; estimateSoon(); };
   $("language").onchange = () => { $("language-other").hidden = $("language").value !== "__other"; };
+  const demo = () => $("demo").checked;
+  const syncDemo = () => {
+    $("key").disabled = demo();
+    $("key").placeholder = demo() ? "not needed in demo mode" : "sk-...";
+    $("hf-hint").textContent = demo() ? "(Write access, optional in demo mode)" : "(Write access)";
+    $("go").textContent = demo() ? `${submitLabel} (demo)` : submitLabel;
+  };
+  $("demo").onchange = () => { syncDemo(); estimateSoon(); };
+  syncDemo();
 
   const pastedBlocks = () => $("pasted").value.split(/^\s*-{3,}\s*$/m).filter((b) => b.trim()).length;
   // Training hyperparameters are not exposed: the server's defaults apply. An edited re-run keeps
@@ -315,6 +331,7 @@ function viewNew(prefill = null) {
     language: $("language").value === "__other" ? $("language-other").value.trim() : $("language").value,
     base_model: $("base").value === "__custom" ? $("base-custom").value.trim() : $("base").value,
     review_syllabi: $("review").checked,
+    demo: demo(),
   });
 
   let timer = null;
@@ -331,7 +348,7 @@ function viewNew(prefill = null) {
         <div class="big">${fmtDuration(e.total_seconds)}</div><p class="hint">end-to-end, assuming ~${n} course(s)</p>
         <dl>
           <dt>Training examples</dt><dd>${e.rows.toLocaleString()}</dd>
-          <dt>Teacher API cost</dt><dd>≈ $${e.api_cost_usd.toFixed(2)}</dd>
+          <dt>Teacher API cost</dt><dd>${demo() ? "none (demo)" : `≈ $${e.api_cost_usd.toFixed(2)}`}</dd>
           <dt>Dataset generation</dt><dd>${fmtDuration(s.generate)}</dd>
           <dt>Fine-tuning (${e.train_steps.toLocaleString()} steps)</dt><dd>${fmtDuration(s.train)}</dd>
           <dt>Packaging</dt><dd>${fmtDuration(s.package)}</dd>
@@ -375,8 +392,8 @@ function viewNew(prefill = null) {
     if (!$("program").value.trim()) bad("program", "Degree / program name is required.");
     if ($("language").value === "__other" && !$("language-other").value.trim()) bad("language-other", "Enter the language the tutor should answer in.");
     if ($("base").value === "__custom" && !/^[\w.-]+\/[\w.-]+$/.test($("base-custom").value.trim())) bad("base-custom", "Custom base model must be a Hugging Face id like org/model-name.");
-    if (!OPTIONS.demo_mode && !$("key").value.trim()) bad("key", "An OpenAI API key is required to generate the training data.");
-    if (OPTIONS.hf_token_required && !$("hf").value.trim()) bad("hf", "A Hugging Face Write token is required to publish your model.");
+    if (!demo() && !$("key").value.trim()) bad("key", "An OpenAI API key is required to generate the training data (or turn on Demo mode).");
+    if (!demo() && !$("hf").value.trim()) bad("hf", "A Hugging Face Write token is required to publish your model (or turn on Demo mode).");
     if (!files.length && !kept.length && !pastedBlocks()) bad("drop", "Add at least one syllabus file or paste syllabus text.");
     return errs;
   }
@@ -396,7 +413,7 @@ function viewNew(prefill = null) {
     }
     const fd = new FormData();
     fd.append("config", JSON.stringify(config()));
-    fd.append("api_key", $("key").value);
+    fd.append("api_key", demo() ? "" : $("key").value);
     fd.append("hf_token", $("hf").value);
     fd.append("pasted_text", $("pasted").value);
     files.forEach((f) => fd.append("files", f, f.name));
@@ -406,7 +423,7 @@ function viewNew(prefill = null) {
     }
     const btn = $("go");
     btn.disabled = true;
-    btn.textContent = OPTIONS.demo_mode ? "Starting…" : "Verifying API key…";
+    btn.textContent = demo() ? "Starting…" : "Verifying API key…";
     try {
       const { id } = await api("/api/jobs", { method: "POST", body: fd });
       rememberJob(id);
@@ -414,7 +431,7 @@ function viewNew(prefill = null) {
     } catch (err) {
       showError("Could not start the job.", [err.message || "Unknown error."]);
       btn.disabled = false;
-      btn.textContent = submitLabel;
+      syncDemo();
     }
   };
 }
@@ -441,8 +458,25 @@ async function viewJobs() {
       <td style="min-width:140px"><div class="bar sm"><i style="width:${Math.round((j.fraction || 0) * 100)}%"></i></div></td>
       <td class="hint">${fmtTime(j.created_at)}</td>
       <td class="row-acts">${["failed", "cancelled"].includes(j.status) ? `<a href="#/retry/${j.id}">Edit &amp; re-run</a>` : ""}
-        <a href="${j.status === "succeeded" ? "#/deploy/" : "#/jobs/"}${j.id}">Open →</a></td></tr>`).join("")}
+        <a href="${j.status === "succeeded" ? "#/deploy/" : "#/jobs/"}${j.id}">Open →</a>
+        <button type="button" class="link-danger" data-del="${esc(j.id)}">Delete</button></td></tr>`).join("")}
     </tbody></table></div>`;
+  $view.querySelector("table").onclick = async (e) => {
+    const id = e.target.dataset?.del;
+    if (!id) return;
+    const j = jobs.find((x) => x.id === id);
+    const running = !["succeeded", "failed", "cancelled"].includes(j.status);
+    if (!confirm(`Delete "${j.config.program_name}"?${running ? " It is still in progress and will be stopped." : ""} `
+      + "Its files, dataset and model bundle are removed for good.")) return;
+    e.target.disabled = true;
+    e.target.textContent = running ? "Stopping…" : "Deleting…";
+    try {
+      await api(`/api/jobs/${id}`, { method: "DELETE" });
+      forgetJob(id);
+      toast("Job deleted.");
+      route();
+    } catch (err) { toast(err.message, 6000); e.target.disabled = false; e.target.textContent = "Delete"; }
+  };
 }
 
 // ---------------------------------------------------------------- download app (students)
@@ -471,7 +505,7 @@ async function viewJob(id) {
     <div class="card">
       <div class="job-head">
         <div><h1 style="font-size:1.6rem"${rtl(job.config.program_name)}>${esc(job.config.program_name)}</h1>
-          <div class="hint">${esc(job.config.base_model)} · ${esc(job.config.language)} · job ${esc(id)}</div></div>
+          <div class="hint">${job.config.demo ? '<span class="pill demo">demo</span> ' : ""}${esc(job.config.base_model)} · ${esc(job.config.language)} · job ${esc(id)}</div></div>
         <div class="actions" id="acts"></div>
       </div>
       <div class="overall"><div class="bar"><i id="ov-bar" style="width:0"></i></div></div>
@@ -584,7 +618,7 @@ async function viewJob(id) {
 
 function retryDialog(id, job, render) {
   const pending = (s) => arr(job.stages).find((x) => x.name === s)?.status !== "done";
-  const needsKey = !OPTIONS.demo_mode && ["ingest", "generate"].some(pending);
+  const needsKey = !OPTIONS.demo_mode && !job.config?.demo && ["ingest", "generate"].some(pending);
   const needsHf = !!job.config?.hf_repo && pending("publish");
   const back = document.createElement("div");
   back.className = "modal-back";

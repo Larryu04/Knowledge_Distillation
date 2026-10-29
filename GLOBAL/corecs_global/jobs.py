@@ -53,6 +53,9 @@ class JobConfig:
     include_adapter: bool = True
     generation_concurrency: int = 4
     display_name: str = ""
+    # Demo run: a simulated teacher (no API key, no cost) and half the training steps, so the
+    # whole pipeline can be shown live. Forced on for every new job when GLOBAL_TEACHER_BACKEND=fake.
+    demo: bool = False
     # Set by the server from the lecturer's Hugging Face token (hf_publish.check_token), never by
     # the client. Empty: the publish stage is skipped (demo mode without a token).
     hf_repo: str = ""
@@ -95,6 +98,7 @@ class JobConfig:
         self.language = (self.language or "English").strip()
         self.display_name = (self.display_name or "").strip() or f"{self.program_name} Tutor"
         self.hf_repo = (self.hf_repo or "").strip()
+        self.demo = self.demo is True
         if self.hf_repo and not re.fullmatch(r"[\w.\-]+/[\w.\-]+", self.hf_repo):
             raise ConfigError("Invalid Hugging Face repository.")
 
@@ -109,6 +113,7 @@ SECONDS_PER_EXAMPLE = 7.0          # one gpt-4o-mini call incl. pacing, per conc
 INGEST_TOKENS_IN_PER_SOURCE = 15000
 INGEST_TOKENS_OUT_PER_SOURCE = 3000
 EFFECTIVE_BATCH = 16
+DEMO_TRAIN_FRACTION = 0.5          # demo jobs train for this share of the normal steps
 
 
 def model_size_b(model_id: str) -> float:
@@ -125,10 +130,13 @@ def estimate(cfg: JobConfig, n_courses: int, n_sources: int) -> dict:
 
     gen_lanes = min(cfg.generation_concurrency, n_courses)
     steps = math.ceil(rows * 0.95 / EFFECTIVE_BATCH) * cfg.epochs
+    if cfg.demo:
+        steps = max(1, math.ceil(steps * DEMO_TRAIN_FRACTION))
     sec_per_step = 1.2 * size + 0.5            # ~9 s/step for 7B on an RTX 4070-class GPU
     seconds = {
-        "ingest": 20 + 15 * max(1, n_sources),
-        "generate": rows * SECONDS_PER_EXAMPLE * RETRY_FACTOR / gen_lanes,
+        "ingest": 5 if cfg.demo else 20 + 15 * max(1, n_sources),
+        # The simulated teacher answers instantly; the time goes to validation and writing rows.
+        "generate": rows * 0.02 if cfg.demo else rows * SECONDS_PER_EXAMPLE * RETRY_FACTOR / gen_lanes,
         "train": 300 + steps * sec_per_step,
         "package": 120 + 160 * size,
         "publish": (30 + 60 * size * 0.62) if cfg.hf_repo else 1,   # ~17 MB/s upload of the GGUF
@@ -137,7 +145,7 @@ def estimate(cfg: JobConfig, n_courses: int, n_sources: int) -> dict:
 
     tok_in = rows * TOKENS_IN_PER_EXAMPLE * RETRY_FACTOR + n_sources * INGEST_TOKENS_IN_PER_SOURCE
     tok_out = rows * TOKENS_OUT_PER_EXAMPLE * RETRY_FACTOR + n_sources * INGEST_TOKENS_OUT_PER_SOURCE
-    cost = tok_in / 1e6 * s.price_in_per_m + tok_out / 1e6 * s.price_out_per_m
+    cost = 0.0 if cfg.demo else tok_in / 1e6 * s.price_in_per_m + tok_out / 1e6 * s.price_out_per_m
     return {
         "rows": rows,
         "train_steps": steps,

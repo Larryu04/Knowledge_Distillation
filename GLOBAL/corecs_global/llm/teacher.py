@@ -126,7 +126,7 @@ class OpenAITeacher:
 
 
 class FakeTeacher:
-    """Deterministic offline teacher (GLOBAL_TEACHER_BACKEND=fake) for tests and UI demos.
+    """Deterministic offline teacher for demo jobs (JobConfig.demo) and tests.
     Answers the two prompt shapes this platform sends: syllabus structuring and Q&A synthesis."""
 
     WORDS = ("graph tree stack queue proof lemma induction recursion pointer cache kernel thread "
@@ -230,8 +230,8 @@ class FakeTeacher:
         })
 
 
-def make_teacher(api_key: str | None, model: str, log=print):
-    if get_settings().teacher_backend == "fake":
+def make_teacher(api_key: str | None, model: str, log=print, demo: bool = False):
+    if demo or get_settings().teacher_backend == "fake":
         return FakeTeacher()
     if not api_key:
         raise FatalAPIError("No teacher API key is stored for this job. Retry the job and provide the key.")
